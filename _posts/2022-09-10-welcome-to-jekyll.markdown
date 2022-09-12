@@ -2,6 +2,7 @@
 layout: post
 title:  "First Post!"
 date:   2022-09-10 01:24:17 -0700
+usemathjax: true
 categories: test posts
 ---
 
