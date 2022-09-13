@@ -1,15 +1,14 @@
 ---
 layout: page
-title: Welcome to Lagrange!
+title: About
 permalink: /about
 ---
 
-I work at Google on statistical modelling at scale.
+I work at Google on statistical modelling at scale and help maintain [TensorFlow
+Probability](https://github.com/tensorflow/probability)
 
 I'm interested in understanding various math, physics, and science topics and
 trying to distill them down.
-
-[jekyll-organization]: https://github.com/tensorflow/probability
 
 ### Questions?
 
