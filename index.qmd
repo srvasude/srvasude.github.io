@@ -1,0 +1,18 @@
+---
+title: "Srinivas Vasudevan"
+toc: false
+---
+
+## [![](images/github.svg){.icon}](https://github.com/srvasude) [![](images/scholar.svg){.icon}](https://scholar.google.com/citations?user=Bpj56uIAAAAJ) [![](images/gmail.svg){.icon}](mailto:srvasude@gmail.com) {style="text-align: center;"}
+
+Formerly at [Google Research](https://research.google.com).
+
+Below is my list of publications. See my [Blog](blog.qmd) for recent writing or [Board Games](boardgames/index.qmd) for boardgame design.
+
+
+## Packages
+
+I've worked on libraries in the general ML infrastructure, with a focus on
+probability and scientific computing
+
+![](images/eigen.png){.icon} [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page), ![](images/jax.svg){.icon} [JAX](https://github.com/jax-ml/jax), ![](images/tensorflow.svg){.icon} [TensorFlow Probability](https://www.tensorflow.org/probability), ![](images/tensorflow.svg){.icon} [TensorFlow](https://github.com/tensorflow/tensorflow)

@@ -1,0 +1,20 @@
+---
+title: "Tensorflow distributions"
+date: 2017-11-28
+author: 
+  - 'Joshua V. Dillon'
+  - 'Ian Langmore'
+  - 'Dustin Tran'
+  - 'Eugene Brevdo'
+  - 'Srinivas Vasudevan'
+  - 'Dave Moore'
+  - 'Brian Patton'
+  - 'Alex Alemi'
+  - 'Matt Hoffman'
+  - 'Rif A Sauros'
+url_source: 
+links:
+  - name: Arxiv
+    url: https://arxiv.org/abs/1711.10604
+    icon: ai ai-arxiv
+---

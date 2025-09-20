@@ -1,0 +1,16 @@
+---
+title: "Board Games"
+listing:
+  id: boardgames
+  template: ../_ejs/boardgames.ejs
+  contents:
+    - "**/*.qmd"
+  sort: "title asc"
+  categories: true
+toc: false
+page-layout: full
+include-back-link: false
+---
+
+:::{#boardgames}
+:::

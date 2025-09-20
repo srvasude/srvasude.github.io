@@ -1,0 +1,9 @@
+---
+title: "Pikel"
+link: https://boardgamegeek.com/boardgame/447094/pikel
+description: "2P May Follow Scout-Like Domino Shedding."
+author: 
+  - "Srinivas Vasudevan"
+player_count: 2
+categories: ["domino", "climbing", "shedding"]
+---

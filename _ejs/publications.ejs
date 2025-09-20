@@ -1,0 +1,46 @@
+```{=html}
+<div class="research project-list">
+<ul class="list">
+    <% for (const item of items) { %>
+        <li class="project" <%=metadataAttrs(item) %>>
+            <div class="project-content listing-pub-info">
+                <p><%= item.author %></p>
+                <p><%= item.date %></p>
+                <p><b><%= item.title %></b></p>
+                <% if (item.image) { %>
+                <img src="<%= item.image %>" height=200></img>
+                <% } %>
+            </div>
+            <% if(item.categories) { %>
+            <div class="project-categories">
+                <% for (const cat of item.categories) { %>
+                    <div class="project-category"><a href="#category=<%= cat %>">
+                            <%= cat %>
+                        </a></div>
+                    <% } %>
+            </div>
+            <% } %>
+
+            <div class="project-details-listing">
+                <ul class="project-links">
+                    <% if (item.links) { %>
+                        <% for (const link of item.links) { %>
+                    <li class="project-link details">
+                        <% if (link.local) { %>
+                        <a href="<%- item.path.substring(0, item.path.lastIndexOf('/')) %>/<%- link.url %>">
+                        <% } else { %>
+                        <a href="<%- link.url %>">
+                        <% } %>
+                            {{< ai orcid >}} <!-- Figure out how to get rid of this to link Academicons -->
+                            <i class="<%= link.icon %>"></i> <%= link.name %>
+                        </a>
+                    </li>
+                        <% } %>
+                    <% } %>
+                </ul>
+            </div>
+        </li>
+        <% } %>
+</ul>
+</div>
+```

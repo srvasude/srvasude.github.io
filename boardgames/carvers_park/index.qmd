@@ -1,0 +1,11 @@
+---
+title: "Carvers Park"
+link: https://boardgamegeek.com/boardgame/437021/carvers-park
+description: "Climbing-Shedding Slalom"
+image: carvers_park.webp
+author: 
+  - "DJ Kenel"
+  - "Srinivas Vasudevan"
+player_count: 3-4
+categories: ["domino", "climbing", "shedding"]
+---

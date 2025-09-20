@@ -1,0 +1,18 @@
+---
+title: "Simple, distributed, and accelerated probabilitic programming"
+date: 2018-11-05
+author: 
+  - 'Dustin Tran'
+  - 'Matthew W Hoffman'
+  - 'Dave Moore'
+  - 'Christopher Suter'
+  - 'Srinivas Vasudevan'
+  - 'Alexey Radul'
+links:
+  - name: Arxiv
+    url: https://arxiv.org/abs/1811.02091
+    icon: ai ai-arxiv
+  - name: Neurips'18
+    url: https://papers.nips.cc/paper_files/paper/2018/hash/201e5bacd665709851b77148e225b332-Abstract.html
+    icon: ai ai-academia
+---

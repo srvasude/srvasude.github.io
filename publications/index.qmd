@@ -1,0 +1,17 @@
+---
+title: Research
+listing:
+  id: papers
+  template: ../_ejs/publications.ejs
+  contents:
+    - "**/*.qmd"
+  categories: false
+  sort: "date desc"
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+include-back-link: false
+---
+
+:::{#papers}
+:::

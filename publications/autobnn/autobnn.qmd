@@ -1,0 +1,13 @@
+---
+title: "AutoBNN: Probabilistic time series forecasting with compositional bayesian neural networks"
+date: 2024-03-28
+author: 
+  - 'Colin Carrol'
+  - 'Thomas Colthurst'
+  - 'Urs Koster'
+  - 'Srinivas Vasudevan'
+links:
+  - name: Google Research
+    url: https://research.google/blog/autobnn-probabilistic-time-series-forecasting-with-compositional-bayesian-neural-networks/
+    icon: ai ai-google-scholar
+---

@@ -1,0 +1,12 @@
+---
+title: "FunMC: A function API for building Markov Chains"
+date: 2020-01-14
+author: 
+  - 'Pavel Sountsov'
+  - 'Alexy Radul'
+  - 'Srinivas Vasudevan'
+links:
+  - name: Arxiv
+    url: https://arxiv.org/abs/2001.05035
+    icon: ai ai-arxiv
+---

@@ -1,0 +1,21 @@
+---
+title: "The Vizier Gaussian Process Bandit Algorithm"
+date: 2024-08-21
+author: 
+  - 'Xingyou Song'
+  - 'Qiuyi Zhang'
+  - 'Chansoo Lee'
+  - 'Emily Fertig'
+  - 'Tzu-Kuo Huang'
+  - 'Lior Belinski'
+  - 'Greg Kochanski'
+  - 'Setareh Ariafar'
+  - 'Srinivas Vasudevan'
+  - 'Sagi Perel'
+  - 'Daniel Golovin'
+image: vizier.png
+links:
+  - name: Arxiv
+    url: https://arxiv.org/abs/2408.11527
+    icon: ai ai-arxiv
+---

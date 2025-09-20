@@ -1,0 +1,15 @@
+---
+title: "Neutra-lizing bad geometry in hamiltonian monte carlo using neural transport"
+date: 2019-03-09
+author: 
+  - 'Matthew Hoffman'
+  - 'Pavel Sountsov'
+  - 'Joshua V Dillon'
+  - 'Ian Langmore'
+  - 'Dustin Tran'
+  - 'Srinivas Vasudevan'
+links:
+  - name: Arxiv
+    url: https://arxiv.org/abs/1903.03704
+    icon: ai ai-arxiv
+---

@@ -1,0 +1,43 @@
+```{=html}
+<div class="research project-list">
+<ul class="list">
+    <% for (const item of items) { %>
+        <li class="project" <%=metadataAttrs(item) %>>
+            <div class="project-content listing-pub-info">
+                <div class="boardgame" style="display: flex; width: 100%; gap: 20px; flex-wrap: wrap">
+                  <div class="boardgame-info">
+                    <h1><b><%= item.title %></b></h1>
+                    <p>Designers: <%= item.author %></p>
+                    <p>Player Count: <%= item.player_count %></p>
+                  </div>
+                  <% if (item.image) { %>
+                  <img src="<%= item.image %>" height=200 style="margin-left: auto"></img>
+                  <% } %>
+                </div>
+            </div>
+            <% if(item.categories) { %>
+            <div class="project-categories">
+                <% for (const cat of item.categories) { %>
+                    <div class="project-category"><a href="#category=<%= cat %>">
+                            <%= cat %>
+                        </a></div>
+                    <% } %>
+            </div>
+            <% } %>
+
+            <div class="project-details-listing">
+                <ul class="project-links">
+                    <% if (item.link) { %>
+                    <li class="project-link details">
+                        <a href="<%- item.link %>">
+                            <img src="../images/bgg.svg" height=20></img> BGG
+                        </a>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+        </li>
+        <% } %>
+</ul>
+</div>
+```

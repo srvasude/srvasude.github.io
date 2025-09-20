@@ -1,0 +1,14 @@
+---
+title: "Fast Approximate Determinants Using Rational Functions"
+date: 2024-05-06
+author: 
+  - 'Thomas Colthurst'
+  - 'Srinivas Vasudevan'
+  - 'James Lottes'
+  - 'Brian Patton'
+url_source: 
+links:
+  - name: Arxiv
+    url: https://arxiv.org/abs/2405.03474
+    icon: ai ai-arxiv
+---

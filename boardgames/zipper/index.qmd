@@ -1,0 +1,10 @@
+---
+title: "Zipper"
+link: https://boardgamegeek.com/boardgame/427555/zipper
+description: "2P Domino Shedding with a changing hierarchy"
+author: 
+  - "David Karesh"
+  - "Srinivas Vasudevan"
+player_count: 2
+categories: ["domino", "climbing", "shedding"]
+---

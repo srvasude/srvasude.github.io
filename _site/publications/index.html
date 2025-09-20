@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Srinivas Vasudevan – Shores of Infinity</title>
+<title>Research – Shores of Infinity</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +23,28 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-4d31542ee010fd73a05ab2d3d4a307b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-f811d40776109a008afe755036561173.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-listing/list.min.js"></script>
+<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-4d31542ee010fd73a05ab2d3d4a307b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f811d40776109a008afe755036561173.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/academicons-1.9.4/size.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,23 +72,81 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-papers .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
 
-<link rel="stylesheet" href="styles.css">
+    const options = {
+      valueNames: ['listing-project','listing-preview','listing-resources','listing-website','listing-format','listing-language','listing-title','listing-date','listing-author','listing-links','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-url_source','listing-image',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      
+      searchColumns: ["listing-project","listing-preview","listing-resources","listing-website","listing-format","listing-language","listing-title","listing-date","listing-author","listing-links","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-url_source","listing-image"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-papers'] = new List('listing-papers', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./images/golden_dragon_fractal.png" alt="" class="navbar-logo light-content">
-    <img src="./images/golden_dragon_fractal.png" alt="" class="navbar-logo dark-content">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../images/golden_dragon_fractal.png" alt="" class="navbar-logo light-content">
+    <img src="../images/golden_dragon_fractal.png" alt="" class="navbar-logo dark-content">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Shores of Infinity</span>
     </a>
   </div>
@@ -95,25 +157,25 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./boardgames/index.html"> 
+    <a class="nav-link" href="../boardgames/index.html"> 
 <span class="menu-text">Board Games</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
+    <a class="nav-link" href="../blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./publications/index.html"> 
+    <a class="nav-link active" href="../publications/index.html" aria-current="page"> 
 <span class="menu-text">Research</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -125,21 +187,23 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Srinivas Vasudevan</h1>
+<h1 class="title">Research</h1>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page">
 
     
   
@@ -151,18 +215,244 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="section" class="level2" style="text-align: center;">
-<h2 style="text-align: center;" class="anchored" data-anchor-id="section"><a href="https://github.com/srvasude"><img src="images/github.svg" class="icon img-fluid"></a> <a href="https://scholar.google.com/citations?user=Bpj56uIAAAAJ"><img src="images/scholar.svg" class="icon img-fluid"></a> <a href="mailto:srvasude@gmail.com"><img src="images/gmail.svg" class="icon img-fluid"></a></h2>
-<p>Formerly at <a href="https://research.google.com">Google Research</a>.</p>
-<p>Below is my list of publications. See my <a href="./blog.html">Blog</a> for recent writing or <a href="./boardgames/index.html">Board Games</a> for boardgame design.</p>
-</section>
-<section id="packages" class="level2">
-<h2 class="anchored" data-anchor-id="packages">Packages</h2>
-<p>I’ve worked on libraries in the general ML infrastructure, with a focus on probability and scientific computing</p>
-<p><img src="images/eigen.png" class="icon img-fluid"> <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a>, <img src="images/jax.svg" class="icon img-fluid"> <a href="https://github.com/jax-ml/jax">JAX</a>, <img src="images/tensorflow.svg" class="icon img-fluid"> <a href="https://www.tensorflow.org/probability">TensorFlow Probability</a>, <img src="images/tensorflow.svg" class="icon img-fluid"> <a href="https://github.com/tensorflow/tensorflow">TensorFlow</a></p>
+<div id="listing-papers" class="quarto-listing quarto-listing-container-custom">
+<div class="research project-list">
+<ul class="list">
+    
+        <li class="project" data-index="0" data-listing-date-sort="1724223600000" data-listing-file-modified-sort="1758336688899" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+            <div class="project-content listing-pub-info">
+                <p>Xingyou Song, Qiuyi Zhang, Chansoo Lee, Emily Fertig, Tzu-Kuo Huang, Lior Belinski, Greg Kochanski, Setareh Ariafar, Srinivas Vasudevan, Sagi Perel, Daniel Golovin</p>
+                <p>Aug 21, 2024</p>
+                <p><b>The Vizier Gaussian Process Bandit Algorithm</b></p>
+                
+                <img src="../publications/vizier/vizier.png" height="200">
+                
+            </div>
+            
+
+            <div class="project-details-listing">
+                <ul class="project-links">
+                    
+                        
+                    <li class="project-link details">
+                        
+                        <a href="https://arxiv.org/abs/2408.11527">
+                        
+                             <!-- Figure out how to get rid of this to link Academicons -->
+                            <i class="ai ai-arxiv"></i> Arxiv
+                        </a>
+                    </li>
+                        
+                    
+                </ul>
+            </div>
+        </li>
+        
+        <li class="project" data-index="1" data-listing-date-sort="1714978800000" data-listing-file-modified-sort="1758336669160" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+            <div class="project-content listing-pub-info">
+                <p>Thomas Colthurst, Srinivas Vasudevan, James Lottes, Brian Patton</p>
+                <p>May 6, 2024</p>
+                <p><b>Fast Approximate Determinants Using Rational Functions</b></p>
+                
+            </div>
+            
+
+            <div class="project-details-listing">
+                <ul class="project-links">
+                    
+                        
+                    <li class="project-link details">
+                        
+                        <a href="https://arxiv.org/abs/2405.03474">
+                        
+                             <!-- Figure out how to get rid of this to link Academicons -->
+                            <i class="ai ai-arxiv"></i> Arxiv
+                        </a>
+                    </li>
+                        
+                    
+                </ul>
+            </div>
+        </li>
+        
+        <li class="project" data-index="2" data-listing-date-sort="1711609200000" data-listing-file-modified-sort="1758400676050" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+            <div class="project-content listing-pub-info">
+                <p>Colin Carrol, Thomas Colthurst, Urs Koster, Srinivas Vasudevan</p>
+                <p>Mar 28, 2024</p>
+                <p><b>AutoBNN: Probabilistic time series forecasting with compositional bayesian neural networks</b></p>
+                
+            </div>
+            
+
+            <div class="project-details-listing">
+                <ul class="project-links">
+                    
+                        
+                    <li class="project-link details">
+                        
+                        <a href="https://research.google/blog/autobnn-probabilistic-time-series-forecasting-with-compositional-bayesian-neural-networks/">
+                        
+                             <!-- Figure out how to get rid of this to link Academicons -->
+                            <i class="ai ai-google-scholar"></i> Google Research
+                        </a>
+                    </li>
+                        
+                    
+                </ul>
+            </div>
+        </li>
+        
+        <li class="project" data-index="3" data-listing-date-sort="1591945200000" data-listing-file-modified-sort="1758336642169" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+            <div class="project-content listing-pub-info">
+                <p>Erik Nijkamp, Ruiqi Gao, Pavel Sountsov, Srinivas Vasudevan, Bo Pang, Song-Chun Zhu, Ying Nian Wu</p>
+                <p>Jun 12, 2020</p>
+                <p><b>MCMC should mix: Learning energy-based model with neural transport latent space MCMC</b></p>
+                
+            </div>
+            
+
+            <div class="project-details-listing">
+                <ul class="project-links">
+                    
+                        
+                    <li class="project-link details">
+                        
+                        <a href="https://arxiv.org/abs/2006.06897">
+                        
+                             <!-- Figure out how to get rid of this to link Academicons -->
+                            <i class="ai ai-arxiv"></i> Arxiv
+                        </a>
+                    </li>
+                        
+                    
+                </ul>
+            </div>
+        </li>
+        
+        <li class="project" data-index="4" data-listing-date-sort="1578988800000" data-listing-file-modified-sort="1758336605705" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+            <div class="project-content listing-pub-info">
+                <p>Pavel Sountsov, Alexy Radul, Srinivas Vasudevan</p>
+                <p>Jan 14, 2020</p>
+                <p><b>FunMC: A function API for building Markov Chains</b></p>
+                
+            </div>
+            
+
+            <div class="project-details-listing">
+                <ul class="project-links">
+                    
+                        
+                    <li class="project-link details">
+                        
+                        <a href="https://arxiv.org/abs/2001.05035">
+                        
+                             <!-- Figure out how to get rid of this to link Academicons -->
+                            <i class="ai ai-arxiv"></i> Arxiv
+                        </a>
+                    </li>
+                        
+                    
+                </ul>
+            </div>
+        </li>
+        
+        <li class="project" data-index="5" data-listing-date-sort="1552118400000" data-listing-file-modified-sort="1758336636887" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+            <div class="project-content listing-pub-info">
+                <p>Matthew Hoffman, Pavel Sountsov, Joshua V Dillon, Ian Langmore, Dustin Tran, Srinivas Vasudevan</p>
+                <p>Mar 9, 2019</p>
+                <p><b>Neutra-lizing bad geometry in hamiltonian monte carlo using neural transport</b></p>
+                
+            </div>
+            
+
+            <div class="project-details-listing">
+                <ul class="project-links">
+                    
+                        
+                    <li class="project-link details">
+                        
+                        <a href="https://arxiv.org/abs/1903.03704">
+                        
+                             <!-- Figure out how to get rid of this to link Academicons -->
+                            <i class="ai ai-arxiv"></i> Arxiv
+                        </a>
+                    </li>
+                        
+                    
+                </ul>
+            </div>
+        </li>
+        
+        <li class="project" data-index="6" data-listing-date-sort="1541404800000" data-listing-file-modified-sort="1758336845035" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+            <div class="project-content listing-pub-info">
+                <p>Dustin Tran, Matthew W Hoffman, Dave Moore, Christopher Suter, Srinivas Vasudevan, Alexey Radul</p>
+                <p>Nov 5, 2018</p>
+                <p><b>Simple, distributed, and accelerated probabilitic programming</b></p>
+                
+            </div>
+            
+
+            <div class="project-details-listing">
+                <ul class="project-links">
+                    
+                        
+                    <li class="project-link details">
+                        
+                        <a href="https://arxiv.org/abs/1811.02091">
+                        
+                             <!-- Figure out how to get rid of this to link Academicons -->
+                            <i class="ai ai-arxiv"></i> Arxiv
+                        </a>
+                    </li>
+                        
+                    <li class="project-link details">
+                        
+                        <a href="https://papers.nips.cc/paper_files/paper/2018/hash/201e5bacd665709851b77148e225b332-Abstract.html">
+                        
+                             <!-- Figure out how to get rid of this to link Academicons -->
+                            <i class="ai ai-academia"></i> Neurips'18
+                        </a>
+                    </li>
+                        
+                    
+                </ul>
+            </div>
+        </li>
+        
+        <li class="project" data-index="7" data-listing-date-sort="1511856000000" data-listing-file-modified-sort="1758336683103" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+            <div class="project-content listing-pub-info">
+                <p>Joshua V. Dillon, Ian Langmore, Dustin Tran, Eugene Brevdo, Srinivas Vasudevan, Dave Moore, Brian Patton, Alex Alemi, Matt Hoffman, Rif A Sauros</p>
+                <p>Nov 28, 2017</p>
+                <p><b>Tensorflow distributions</b></p>
+                
+            </div>
+            
+
+            <div class="project-details-listing">
+                <ul class="project-links">
+                    
+                        
+                    <li class="project-link details">
+                        
+                        <a href="https://arxiv.org/abs/1711.10604">
+                        
+                             <!-- Figure out how to get rid of this to link Academicons -->
+                            <i class="ai ai-arxiv"></i> Arxiv
+                        </a>
+                    </li>
+                        
+                    
+                </ul>
+            </div>
+        </li>
+        
+</ul>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
 
 
-</section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

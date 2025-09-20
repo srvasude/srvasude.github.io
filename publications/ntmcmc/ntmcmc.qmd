@@ -1,0 +1,16 @@
+---
+title: "MCMC should mix: Learning energy-based model with neural transport latent space MCMC"
+date: 2020-06-12
+author: 
+  - 'Erik Nijkamp'
+  - 'Ruiqi Gao'
+  - 'Pavel Sountsov'
+  - 'Srinivas Vasudevan'
+  - 'Bo Pang'
+  - 'Song-Chun Zhu'
+  - 'Ying Nian Wu'
+links:
+  - name: Arxiv
+    url: https://arxiv.org/abs/2006.06897
+    icon: ai ai-arxiv
+---
