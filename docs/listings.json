@@ -1,0 +1,31 @@
+[
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/quad_mc.html"
+    ]
+  },
+  {
+    "listing": "/publications/index.html",
+    "items": [
+      "/publications/vizier/vizier.html",
+      "/publications/rational_det/rational_determinants.html",
+      "/publications/autobnn/autobnn.html",
+      "/publications/ntmcmc/ntmcmc.html",
+      "/publications/funmc/funmc.html",
+      "/publications/neutra/neutra.html",
+      "/publications/probprog/probprog.html",
+      "/publications/tensorflow_dist/tensorflow_distributions.html"
+    ]
+  },
+  {
+    "listing": "/boardgames/index.html",
+    "items": [
+      "/boardgames/bitesize/index.html",
+      "/boardgames/carvers_park/index.html",
+      "/boardgames/lepidoptery/index.html",
+      "/boardgames/pikel/index.html",
+      "/boardgames/zipper/index.html"
+    ]
+  }
+]
