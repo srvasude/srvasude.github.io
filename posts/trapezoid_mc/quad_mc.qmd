@@ -70,7 +70,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 np.random.seed(39372)
-plt.style.use('../assets/modified-tufte.mplstyle')
+plt.style.use('../../assets/modified-tufte.mplstyle')
 
 x = np.random.uniform(size=4)
 x = np.concatenate([[0.], np.sort(x), [1]])
@@ -263,7 +263,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 np.random.seed(2137)
-plt.style.use('../assets/modified-tufte.mplstyle')
+plt.style.use('../../assets/modified-tufte.mplstyle')
 
 x = np.random.uniform(size=5)
 x = np.concatenate([[0.], np.sort(x), [1]])

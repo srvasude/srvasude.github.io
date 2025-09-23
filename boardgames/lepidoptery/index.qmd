@@ -1,7 +1,7 @@
 ---
 title: "Lepidoptery"
 link: https://boardgamegeek.com/boardgame/422368/lepidoptery
-description: "Climbing-Shedding crossed with Connect 4"
+description: "A climbing-shedding game crossed with Connect 4."
 image: lepidoptery.webp
 author: 
   - "David Karesh"

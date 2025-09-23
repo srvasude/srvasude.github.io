@@ -1,7 +1,7 @@
 ---
 title: "Carvers Park"
 link: https://boardgamegeek.com/boardgame/437021/carvers-park
-description: "Climbing-Shedding Slalom"
+description: "A climbing-shedding game with speed limits and ranks reversing each trick."
 image: carvers_park.webp
 author: 
   - "DJ Kenel"

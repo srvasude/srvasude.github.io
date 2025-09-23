@@ -1,7 +1,7 @@
 ---
 title: "Bitesize"
 link: https://boardgamegeek.com/boardgame/422763/bitesize
-description: "2P Must-Not-Follow Domino Shedding"
+description: "A simple must-not-follow domino climbing-shedding game."
 author: 
   - "Srinivas Vasudevan"
 player_count: 2

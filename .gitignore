@@ -2,3 +2,7 @@
 .jekyll-cache
 .jekyll-metadata
 vendor
+_site
+
+/.quarto/
+**/*.quarto_ipynb

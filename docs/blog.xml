@@ -10,11 +10,222 @@
 <atom:link href="https://www.shoresofinfinity.net/blog.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.8.24</generator>
-<lastBuildDate>Fri, 19 Sep 2025 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 22 Sep 2025 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Games As Graphs I: Bridges of Shangri-La</title>
+  <dc:creator>Srinivas Vasudevan</dc:creator>
+  <link>https://www.shoresofinfinity.net/posts/games_as_graphs_i/games_as_graphs_i.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>This is a series on understanding various boardgames via graph representations, with this post focusing on the <a href="https://boardgamegeek.com/boardgame/8190/the-bridges-of-shangri-la">Bridges of Shangri-La</a> by Leo Colovini<sup>1</sup>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><div class="quarto-figure quarto-figure-center"><sup>1</sup>&nbsp;
+<figure class="figure">
+<p><img src="https://www.shoresofinfinity.net/posts/games_as_graphs_i/bridges_of_shangrila.webp" class="img-fluid figure-img"></p>
+<figcaption>Image from BGG courtesy of <span class="citation" data-cites="fungry">@fungry</span></figcaption>
+</figure>
+</div>
+</div></div><p>I’ve wanted to look at some games and write down mathematical descriptions for them. For me, this is a way to understand their design better, and also be a way to generate new ideas.</p>
+<p>Since this is the first of several posts, I’ll describe some fundamentals of Graph Theory.</p>
+<section id="graph-theory-primer" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="graph-theory-primer">Graph Theory Primer</h2>
+<p>A <em>graph</em> <img src="https://latex.codecogs.com/png.latex?G"> is a set of <em>vertices</em> <img src="https://latex.codecogs.com/png.latex?V"> and a set of <em>edges</em> <img src="https://latex.codecogs.com/png.latex?E%20%5Csubset%20V%20%5Ctimes%20V">. We can draw these graphs pretty easily Figure&nbsp;1 .<sup>2</sup><sup>3</sup></p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;To differentiate the undirected and directed graph, we’d have to distinguish between ordered and unordered tuples, but I’m being intentionally not rigorous since the meaning is clear with pictures.</p></div><div id="fn3"><p><sup>3</sup>&nbsp;Note that a graph drawing is unique. We can move the edges and vertices around.</p></div></div><div id="cell-fig-simple-graphs" class="cell page-columns page-full" data-fig-height="1" data-fig-width="1" data-message="false" data-execution_count="1">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output cell-output-display">
+<div id="fig-simple-graphs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-simple-graphs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="games_as_graphs_i_files/figure-html/fig-simple-graphs-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;1: Graphs on 4 vertices"><img src="https://www.shoresofinfinity.net/posts/games_as_graphs_i/games_as_graphs_i_files/figure-html/fig-simple-graphs-output-1.png" width="299" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simple-graphs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Graphs on 4 vertices
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>A graph where for all edges <img src="https://latex.codecogs.com/png.latex?(u,%20v)%20%5Cin%20E,%20u%20%5Cne%20v"> is called a simple graph (edges with the same start and end points are called <em>loops</em>).</p>
+<p>Graphs can come in an <em>undirected</em> or <em>directed</em> flavor. In a directed graphs, the edges have an orientation (Figure&nbsp;1).</p>
+<p>Edges and vertices may also have <em>weights</em> associated with them. These are typically used to assign costs. In general, different attributes can be assigned to an edge or vertex such as <em>color</em> (Figure&nbsp;2).</p>
+<div id="cell-fig-complicated-graph" class="cell page-columns page-full" data-fig-height="1" data-fig-width="1" data-message="false" data-execution_count="2">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output cell-output-display">
+<div id="fig-complicated-graph" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-complicated-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="games_as_graphs_i_files/figure-html/fig-complicated-graph-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;2: A more complicated graph on 10 vertices. Vertices are scaled by their edge weight w and are colored one of two colors."><img src="https://www.shoresofinfinity.net/posts/games_as_graphs_i/games_as_graphs_i_files/figure-html/fig-complicated-graph-output-1.png" width="299" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-complicated-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: A more complicated graph on 10 vertices. Vertices are scaled by their edge weight <img src="https://latex.codecogs.com/png.latex?w"> and are colored one of two colors.
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>What does a graph represent? As much as limited by the imagination:</p>
+<ul>
+<li>The vertices <img src="https://latex.codecogs.com/png.latex?V"> could represent locations, and edges <img src="https://latex.codecogs.com/png.latex?E"> represent whether two locations are reachable from each other. This includes maps, road networks, but even things like chess positions for something like a <a href="https://en.wikipedia.org/wiki/Knight%27s_tour">Knight’s Tour</a>.</li>
+<li>The vertices <img src="https://latex.codecogs.com/png.latex?V"> are individuals, and the edges <img src="https://latex.codecogs.com/png.latex?E"> represent contact. This could be used for something like a social network, but also disease modelling.</li>
+<li>For a directed graph <img src="https://latex.codecogs.com/png.latex?G"> The vertices <img src="https://latex.codecogs.com/png.latex?V"> are tasks, and the edges <img src="https://latex.codecogs.com/png.latex?E"> represent which task has to be done before the next. This includes things like supply chain management.</li>
+</ul>
+<p>After representing something as a graph, there are a variety of algorithms to deduce things about the graph. Some common problems include finding the shortest path, determining if there is a cycle, graph coloring, etc.</p>
+<p>We won’t be needing these but may encounter these in future discussions.</p>
+</section>
+<section id="bridges-of-shangri-la" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="bridges-of-shangri-la">Bridges of Shangri-La</h2>
+<p>Bridges of Shangri-La is a game by Leo Colovini for 3-4 players. It takes place on a map representing monasteries in Tibet.</p>
+<p>Your goal is to have the most number of masters out on the board after all the bridges have collapsed. Each master is worth 1 point.</p>
+<p>Before I give a rough summary of the rules, I’ll depict the board as a map for simplicity of discussion <sup>4</sup>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;This is the 4P map. The top right corner is excluded for the 3P game.</p></div></div><div id="cell-fig-bos" class="cell" data-fig-height="1" data-fig-width="1" data-message="false" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div id="fig-bos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="games_as_graphs_i_files/figure-html/fig-bos-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;3: Bridges of Shangri-La map as a graph."><img src="https://www.shoresofinfinity.net/posts/games_as_graphs_i/games_as_graphs_i_files/figure-html/fig-bos-output-1.png" width="299" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Bridges of Shangri-La map as a graph.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Each vertex represents a village, and each edge represents a bridge. Each village also has 7 spots for the 7 different types of masters <sup>5</sup>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><div class="quarto-figure quarto-figure-center"><sup>5</sup>&nbsp;
+<figure class="figure">
+<p><a href="village.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Example of placing masters"><img src="https://www.shoresofinfinity.net/posts/games_as_graphs_i/village.png" class="img-fluid figure-img" alt="Example of placing masters"></a></p>
+<figcaption>Example of placing masters</figcaption>
+</figure>
+</div>
+</div></div><p>At the very beginning of the game, each player will place one of each type of master (in their player color) into villages of their choice. That will be 7 placements for each player. Each spot is exclusive.</p>
+<p>On a players’ turn they have one of three actions:</p>
+<ol type="1">
+<li><p>Place a master: You can only do this in a village where you have a master of your color and if there is an unoccupied space.</p></li>
+<li><p>Recruit students: You can place up to 2 students. You place a master tile on a master you already have, with the top tile called a student. Each master can only have one student.</p></li>
+<li><p>The Journey of the Students: Choose two connected villages, and one of them being the one travelled from (“attacker”) and the other the (“defender”). The village that has the most tiles is considered stronger (with the village with the most masters and then “defender” breaking ties).</p>
+<ul>
+<li>If the “attacker” is stronger, than all students in the “attacking” village move over to the “defender”, occupying their corresponding space (removing opponents tiles if they are occupied).</li>
+<li>If the “defender” is stronger, than students only move over to empty spots, and otherwise get discarded.</li>
+<li>Afterwards, the bridge between the two villages gets destroyed.</li>
+</ul></li>
+</ol>
+<p>Once all bridges are destroyed the game ends, with the player with the most masters on the board winning.</p>
+<section id="graph-representation" class="level3">
+<h3 class="anchored" data-anchor-id="graph-representation">Graph Representation</h3>
+<p>As seen in Figure&nbsp;3, we can represent the game board as a graph. I’ll look at a simplified version of the game where there are only two types of masters (so that there are two slots in each village). For each type of master, we can have a copy of the graph as in Figure&nbsp;4.</p>
+<p>To show the placement of a master, color the node the player color and set the weight to 1. Increasing the weight of a vertex to 2 will represent showing that there is a student.</p>
+<div id="cell-fig-bos-copies" class="cell" data-fig-height="1" data-fig-width="1" data-message="false" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div id="fig-bos-copies" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bos-copies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="games_as_graphs_i_files/figure-html/fig-bos-copies-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;4: In our simplified version we have two types of masters. Player placements of these masters is depicted by two separate graphs, one for each type of master."><img src="https://www.shoresofinfinity.net/posts/games_as_graphs_i/games_as_graphs_i_files/figure-html/fig-bos-copies-output-1.png" width="587" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bos-copies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: In our simplified version we have two types of masters. Player placements of these masters is depicted by two separate graphs, one for each type of master.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>For the actions have:</p>
+<ol type="1">
+<li><p>Place a master: Choose one of graph copies, and then choose a vertex with weight <img src="https://latex.codecogs.com/png.latex?0">, such that the same vertex already has a master of the player’s color in a different graph. Then color it your player color and change it’s weight to 1 (as seen in Figure&nbsp;5 (a))</p></li>
+<li><p>Recruit students: Choose two vertices that have your color and are weight <img src="https://latex.codecogs.com/png.latex?1"> among the copies. Then increment their weight to <img src="https://latex.codecogs.com/png.latex?2"> (as seen in Figure&nbsp;5 (b))</p></li>
+<li><p>The Journey of the Students: Essentially following the previous rules, with vertices of weight <img src="https://latex.codecogs.com/png.latex?2"> interacting and representing the movement of the students. To get the strength of a village, sum the weights of the nodes in all copies of that vertex (the effect is seen in Figure&nbsp;5 (c)).</p></li>
+</ol>
+<div class="cell" data-fig-height="1" data-fig-width="1" data-layout-nrows="3" data-message="false" data-execution_count="5">
+<div id="fig-bos-actions" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="5" data-fig-height="1" data-layout-nrows="3" data-message="false" data-fig-width="1">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bos-actions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div id="fig-bos-actions-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-bos-actions-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="games_as_graphs_i_files/figure-html/fig-bos-actions-output-1.png" class="lightbox" data-gallery="fig-bos-actions" title="Figure&nbsp;5&nbsp;(a): Orange placing a master of the first type."><img src="https://www.shoresofinfinity.net/posts/games_as_graphs_i/games_as_graphs_i_files/figure-html/fig-bos-actions-output-1.png" data-ref-parent="fig-bos-actions" width="587" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bos-actions-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Orange placing a master of the first type.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-bos-actions-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-bos-actions-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="games_as_graphs_i_files/figure-html/fig-bos-actions-output-2.png" class="lightbox" data-gallery="fig-bos-actions" title="Figure&nbsp;5&nbsp;(b): Blue adding a student to each of their masters."><img src="https://www.shoresofinfinity.net/posts/games_as_graphs_i/games_as_graphs_i_files/figure-html/fig-bos-actions-output-2.png" data-ref-parent="fig-bos-actions" width="587" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bos-actions-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Blue adding a student to each of their masters.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-bos-actions-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-bos-actions-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="games_as_graphs_i_files/figure-html/fig-bos-actions-output-3.png" class="lightbox" data-gallery="fig-bos-actions" title="Figure&nbsp;5&nbsp;(c): Any player initiating a journey of students."><img src="https://www.shoresofinfinity.net/posts/games_as_graphs_i/games_as_graphs_i_files/figure-html/fig-bos-actions-output-3.png" data-ref-parent="fig-bos-actions" width="587" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bos-actions-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Any player initiating a journey of students.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bos-actions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Showing Bridges of Shangri-La actions in graph form.
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="game-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="game-analysis">Game Analysis</h2>
+<p>First for the map, we have each vertex has at most 4 edges. That is the <em>degree</em> of a vertex is atmost 4, and in fact <img src="https://latex.codecogs.com/png.latex?3%20%5Cle%20deg(v)%20%5Cle%204,%5C,%20%20%5Cforall%20v%20%5Cin%20V">.</p>
+<ul>
+<li>The fact the number of edges varies a little bit breaks some symmetry, with the right / top-right of the board having smaller degree vertices, and so makes the initial placement a little more meaningful.</li>
+</ul>
+<p>Note also that when a spot is filled with a master, it will always be filled. This is because it either gains a master or gets displaced. This is also clear from looking at the weights of a vertex. If a vertex is positive, it will continue to be positive for the rest of the game.</p>
+<ul>
+<li>This means that the game starts to narrow as there are fewer places to a master.</li>
+</ul>
+<p>For almost all the discussion above, we haven’t needed graph theory, which begs the question why do any of this? For myself, I think it strips out ancillary (yet important details such as theme, etc.) details and gives a mathematical representation that can be manipulated. Viewing a game through the right lense could be suggestive of some design principals.</p>
+<p>For instance, in the above representation I chose to have the game board be represented as multiple copies, with each copy representing a specific type of master / and it’s corresponding slots.</p>
+<p>This is interesting because it is suggestive of a game design principle: create independent simple games, and then correlate them / make them interact through a few different actions to add complexity and shared incentives.</p>
+<p>Indeed, you can think of the 7 copies as separate games. The master placement rule requires some colocality of changing a vertex (you can only change a weight 0 vertex to weight 1, if it is at least weight 1 and your color in some copy). And the journey of the students requires evaluating the strength of a village. But after that, the student movements/placements can be treated independently.</p>
+<p>I think this does several different things:</p>
+<ul>
+<li>With the game being similar to 7 independent subgames, some of the reasoning gets simplified (since different types of masters don’t directly interact).</li>
+<li>Master placement colocality means predicting what an opponent can do is easier. This constraint is useful for making the game more strategic (and also intuitive rules-wise).</li>
+<li>Evaluating the strength of a village directly correlates different types of masters. This allows for shared incentives to emerge with different players.</li>
+</ul>
+<p>Another thing is the game can be viewed very coarsely as a series of edge deletions. This then brings up questions for design, by looking at ablations of mathematical properties:</p>
+<ul>
+<li>How does this game feel if some edges are directed?</li>
+<li>What if edge deletion was replaced by other graph operations? For example edge contraction combines two vertices (while removing the edge between them), and retains all the edges coming to/from those vertices. We can mix and match different graph operations and think about how that would influence game play.</li>
+<li>What if edges get deleted / removed for different types of masters? Specifically the journey of the students would delete an edge for some subset of the 7 copies of the graph (rather than all of them), so that certain students can still travel.</li>
+</ul>
+<p>Overall, by writing a mathematical representation we can get quite a few ideas on how to modify / get inspired to make games that retain some of the feeling of this one.</p>
+
+
+</section>
+
+
+ ]]></description>
+  <category>board-game</category>
+  <category>graph-theory</category>
+  <guid>https://www.shoresofinfinity.net/posts/games_as_graphs_i/games_as_graphs_i.html</guid>
+  <pubDate>Mon, 22 Sep 2025 07:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Trapezoid Rule Monte Carlo</title>
   <dc:creator>Srinivas Vasudevan</dc:creator>
-  <link>https://www.shoresofinfinity.net/posts/quad_mc.html</link>
+  <link>https://www.shoresofinfinity.net/posts/trapezoid_mc/quad_mc.html</link>
   <description><![CDATA[ 
 
 
@@ -68,7 +279,7 @@ Masry, Elias, and Stamatis Cambanis. 1990. <span>“Trapezoidal Monte Carlo Inte
 <div id="fig-trap-margin" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trap-margin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="quad_mc_files/figure-html/fig-trap-margin-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Randomized Trapezoid Rule for \sin(\frac{\pi}{2} x)"><img src="https://www.shoresofinfinity.net/posts/quad_mc_files/figure-html/fig-trap-margin-output-1.png" width="299" height="299" class="figure-img"></a>
+<a href="quad_mc_files/figure-html/fig-trap-margin-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Randomized Trapezoid Rule for \sin(\frac{\pi}{2} x)"><img src="https://www.shoresofinfinity.net/posts/trapezoid_mc/quad_mc_files/figure-html/fig-trap-margin-output-1.png" width="299" height="299" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trap-margin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Randomized Trapezoid Rule for <img src="https://latex.codecogs.com/png.latex?%5Csin(%5Cfrac%7B%5Cpi%7D%7B2%7D%20x)">
@@ -123,45 +334,45 @@ Table&nbsp;1: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_80831" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_3ba45" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_80831_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_80831_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_80831_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_80831_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_80831_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_80831_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_80831_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_3ba45_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_3ba45_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_3ba45_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_3ba45_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_3ba45_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_3ba45_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_3ba45_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_80831_row0_col0" class="data row0 col0" style="text-align: left;">0.785398</td>
-<td id="T_80831_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_80831_row0_col2" class="data row0 col2" style="text-align: left;">0.026491</td>
-<td id="T_80831_row0_col3" class="data row0 col3" style="text-align: left;">0.019358</td>
-<td id="T_80831_row0_col4" class="data row0 col4" style="text-align: left;">0.008144</td>
-<td id="T_80831_row0_col5" class="data row0 col5" style="text-align: left;">0.002608</td>
-<td id="T_80831_row0_col6" class="data row0 col6" style="text-align: left;">0.001540</td>
+<td id="T_3ba45_row0_col0" class="data row0 col0" style="text-align: left;">0.785398</td>
+<td id="T_3ba45_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_3ba45_row0_col2" class="data row0 col2" style="text-align: left;">0.026491</td>
+<td id="T_3ba45_row0_col3" class="data row0 col3" style="text-align: left;">0.019358</td>
+<td id="T_3ba45_row0_col4" class="data row0 col4" style="text-align: left;">0.008144</td>
+<td id="T_3ba45_row0_col5" class="data row0 col5" style="text-align: left;">0.002608</td>
+<td id="T_3ba45_row0_col6" class="data row0 col6" style="text-align: left;">0.001540</td>
 </tr>
 <tr class="even">
-<td id="T_80831_row1_col0" class="data row1 col0" style="text-align: left;">0.785398</td>
-<td id="T_80831_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_80831_row1_col2" class="data row1 col2" style="text-align: left;">0.000393</td>
-<td id="T_80831_row1_col3" class="data row1 col3" style="text-align: left;">0.000010</td>
-<td id="T_80831_row1_col4" class="data row1 col4" style="text-align: left;">0.000038</td>
-<td id="T_80831_row1_col5" class="data row1 col5" style="text-align: left;">0.000009</td>
-<td id="T_80831_row1_col6" class="data row1 col6" style="text-align: left;">0.000000</td>
+<td id="T_3ba45_row1_col0" class="data row1 col0" style="text-align: left;">0.785398</td>
+<td id="T_3ba45_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_3ba45_row1_col2" class="data row1 col2" style="text-align: left;">0.000393</td>
+<td id="T_3ba45_row1_col3" class="data row1 col3" style="text-align: left;">0.000010</td>
+<td id="T_3ba45_row1_col4" class="data row1 col4" style="text-align: left;">0.000038</td>
+<td id="T_3ba45_row1_col5" class="data row1 col5" style="text-align: left;">0.000009</td>
+<td id="T_3ba45_row1_col6" class="data row1 col6" style="text-align: left;">0.000000</td>
 </tr>
 <tr class="odd">
-<td id="T_80831_row2_col0" class="data row2 col0" style="text-align: left;">0.785398</td>
-<td id="T_80831_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_80831_row2_col2" class="data row2 col2" style="text-align: left;">0.000002</td>
-<td id="T_80831_row2_col3" class="data row2 col3" style="text-align: left;">0.000010</td>
-<td id="T_80831_row2_col4" class="data row2 col4" style="text-align: left;">0.000001</td>
-<td id="T_80831_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
-<td id="T_80831_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
+<td id="T_3ba45_row2_col0" class="data row2 col0" style="text-align: left;">0.785398</td>
+<td id="T_3ba45_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_3ba45_row2_col2" class="data row2 col2" style="text-align: left;">0.000002</td>
+<td id="T_3ba45_row2_col3" class="data row2 col3" style="text-align: left;">0.000010</td>
+<td id="T_3ba45_row2_col4" class="data row2 col4" style="text-align: left;">0.000001</td>
+<td id="T_3ba45_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
+<td id="T_3ba45_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
 </tr>
 </tbody>
 </table>
@@ -170,45 +381,45 @@ Table&nbsp;1: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_06620" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_c1887" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_06620_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_06620_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_06620_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_06620_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_06620_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_06620_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_06620_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_c1887_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_c1887_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_c1887_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_c1887_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_c1887_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_c1887_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_c1887_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_06620_row0_col0" class="data row0 col0" style="text-align: left;">0.488364</td>
-<td id="T_06620_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_06620_row0_col2" class="data row0 col2" style="text-align: left;">0.146778</td>
-<td id="T_06620_row0_col3" class="data row0 col3" style="text-align: left;">0.003383</td>
-<td id="T_06620_row0_col4" class="data row0 col4" style="text-align: left;">0.026795</td>
-<td id="T_06620_row0_col5" class="data row0 col5" style="text-align: left;">0.034787</td>
-<td id="T_06620_row0_col6" class="data row0 col6" style="text-align: left;">0.009164</td>
+<td id="T_c1887_row0_col0" class="data row0 col0" style="text-align: left;">0.488364</td>
+<td id="T_c1887_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_c1887_row0_col2" class="data row0 col2" style="text-align: left;">0.146778</td>
+<td id="T_c1887_row0_col3" class="data row0 col3" style="text-align: left;">0.003383</td>
+<td id="T_c1887_row0_col4" class="data row0 col4" style="text-align: left;">0.026795</td>
+<td id="T_c1887_row0_col5" class="data row0 col5" style="text-align: left;">0.034787</td>
+<td id="T_c1887_row0_col6" class="data row0 col6" style="text-align: left;">0.009164</td>
 </tr>
 <tr class="even">
-<td id="T_06620_row1_col0" class="data row1 col0" style="text-align: left;">0.488364</td>
-<td id="T_06620_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_06620_row1_col2" class="data row1 col2" style="text-align: left;">0.005188</td>
-<td id="T_06620_row1_col3" class="data row1 col3" style="text-align: left;">0.000636</td>
-<td id="T_06620_row1_col4" class="data row1 col4" style="text-align: left;">0.000118</td>
-<td id="T_06620_row1_col5" class="data row1 col5" style="text-align: left;">0.000022</td>
-<td id="T_06620_row1_col6" class="data row1 col6" style="text-align: left;">0.000001</td>
+<td id="T_c1887_row1_col0" class="data row1 col0" style="text-align: left;">0.488364</td>
+<td id="T_c1887_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_c1887_row1_col2" class="data row1 col2" style="text-align: left;">0.005188</td>
+<td id="T_c1887_row1_col3" class="data row1 col3" style="text-align: left;">0.000636</td>
+<td id="T_c1887_row1_col4" class="data row1 col4" style="text-align: left;">0.000118</td>
+<td id="T_c1887_row1_col5" class="data row1 col5" style="text-align: left;">0.000022</td>
+<td id="T_c1887_row1_col6" class="data row1 col6" style="text-align: left;">0.000001</td>
 </tr>
 <tr class="odd">
-<td id="T_06620_row2_col0" class="data row2 col0" style="text-align: left;">0.488364</td>
-<td id="T_06620_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_06620_row2_col2" class="data row2 col2" style="text-align: left;">0.000131</td>
-<td id="T_06620_row2_col3" class="data row2 col3" style="text-align: left;">0.000002</td>
-<td id="T_06620_row2_col4" class="data row2 col4" style="text-align: left;">0.000000</td>
-<td id="T_06620_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
-<td id="T_06620_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
+<td id="T_c1887_row2_col0" class="data row2 col0" style="text-align: left;">0.488364</td>
+<td id="T_c1887_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_c1887_row2_col2" class="data row2 col2" style="text-align: left;">0.000131</td>
+<td id="T_c1887_row2_col3" class="data row2 col3" style="text-align: left;">0.000002</td>
+<td id="T_c1887_row2_col4" class="data row2 col4" style="text-align: left;">0.000000</td>
+<td id="T_c1887_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
+<td id="T_c1887_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
 </tr>
 </tbody>
 </table>
@@ -217,45 +428,45 @@ Table&nbsp;1: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_05917" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_cd5eb" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_05917_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_05917_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_05917_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_05917_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_05917_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_05917_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_05917_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_cd5eb_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_cd5eb_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_cd5eb_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_cd5eb_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_cd5eb_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_cd5eb_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_cd5eb_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_05917_row0_col0" class="data row0 col0" style="text-align: left;">0.083333</td>
-<td id="T_05917_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_05917_row0_col2" class="data row0 col2" style="text-align: left;">0.178741</td>
-<td id="T_05917_row0_col3" class="data row0 col3" style="text-align: left;">0.057350</td>
-<td id="T_05917_row0_col4" class="data row0 col4" style="text-align: left;">0.007101</td>
-<td id="T_05917_row0_col5" class="data row0 col5" style="text-align: left;">0.011000</td>
-<td id="T_05917_row0_col6" class="data row0 col6" style="text-align: left;">0.000868</td>
+<td id="T_cd5eb_row0_col0" class="data row0 col0" style="text-align: left;">0.083333</td>
+<td id="T_cd5eb_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_cd5eb_row0_col2" class="data row0 col2" style="text-align: left;">0.178741</td>
+<td id="T_cd5eb_row0_col3" class="data row0 col3" style="text-align: left;">0.057350</td>
+<td id="T_cd5eb_row0_col4" class="data row0 col4" style="text-align: left;">0.007101</td>
+<td id="T_cd5eb_row0_col5" class="data row0 col5" style="text-align: left;">0.011000</td>
+<td id="T_cd5eb_row0_col6" class="data row0 col6" style="text-align: left;">0.000868</td>
 </tr>
 <tr class="even">
-<td id="T_05917_row1_col0" class="data row1 col0" style="text-align: left;">0.083333</td>
-<td id="T_05917_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_05917_row1_col2" class="data row1 col2" style="text-align: left;">0.011265</td>
-<td id="T_05917_row1_col3" class="data row1 col3" style="text-align: left;">0.001467</td>
-<td id="T_05917_row1_col4" class="data row1 col4" style="text-align: left;">0.000173</td>
-<td id="T_05917_row1_col5" class="data row1 col5" style="text-align: left;">0.000051</td>
-<td id="T_05917_row1_col6" class="data row1 col6" style="text-align: left;">0.000002</td>
+<td id="T_cd5eb_row1_col0" class="data row1 col0" style="text-align: left;">0.083333</td>
+<td id="T_cd5eb_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_cd5eb_row1_col2" class="data row1 col2" style="text-align: left;">0.011265</td>
+<td id="T_cd5eb_row1_col3" class="data row1 col3" style="text-align: left;">0.001467</td>
+<td id="T_cd5eb_row1_col4" class="data row1 col4" style="text-align: left;">0.000173</td>
+<td id="T_cd5eb_row1_col5" class="data row1 col5" style="text-align: left;">0.000051</td>
+<td id="T_cd5eb_row1_col6" class="data row1 col6" style="text-align: left;">0.000002</td>
 </tr>
 <tr class="odd">
-<td id="T_05917_row2_col0" class="data row2 col0" style="text-align: left;">0.083333</td>
-<td id="T_05917_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_05917_row2_col2" class="data row2 col2" style="text-align: left;">0.004317</td>
-<td id="T_05917_row2_col3" class="data row2 col3" style="text-align: left;">0.000017</td>
-<td id="T_05917_row2_col4" class="data row2 col4" style="text-align: left;">0.000001</td>
-<td id="T_05917_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
-<td id="T_05917_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
+<td id="T_cd5eb_row2_col0" class="data row2 col0" style="text-align: left;">0.083333</td>
+<td id="T_cd5eb_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_cd5eb_row2_col2" class="data row2 col2" style="text-align: left;">0.004317</td>
+<td id="T_cd5eb_row2_col3" class="data row2 col3" style="text-align: left;">0.000017</td>
+<td id="T_cd5eb_row2_col4" class="data row2 col4" style="text-align: left;">0.000001</td>
+<td id="T_cd5eb_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
+<td id="T_cd5eb_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
 </tr>
 </tbody>
 </table>
@@ -278,7 +489,7 @@ Table&nbsp;1: Absolute Error in estimating the integral of <img src="https://lat
 <div id="fig-simpson-margin" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-simpson-margin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="quad_mc_files/figure-html/fig-simpson-margin-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Randomized Simpson Rule for \sin(2 \pi x)"><img src="https://www.shoresofinfinity.net/posts/quad_mc_files/figure-html/fig-simpson-margin-output-1.png" width="299" height="299" class="figure-img"></a>
+<a href="quad_mc_files/figure-html/fig-simpson-margin-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Randomized Simpson Rule for \sin(2 \pi x)"><img src="https://www.shoresofinfinity.net/posts/trapezoid_mc/quad_mc_files/figure-html/fig-simpson-margin-output-1.png" width="299" height="299" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simpson-margin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Randomized Simpson Rule for <img src="https://latex.codecogs.com/png.latex?%5Csin(2%20%5Cpi%20x)">
@@ -318,45 +529,45 @@ Table&nbsp;2: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_05a87" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_cb585" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_05a87_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_05a87_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_05a87_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_05a87_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_05a87_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_05a87_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_05a87_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_cb585_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_cb585_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_cb585_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_cb585_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_cb585_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_cb585_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_cb585_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_05a87_row0_col0" class="data row0 col0" style="text-align: left;">0.849556</td>
-<td id="T_05a87_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_05a87_row0_col2" class="data row0 col2" style="text-align: left;">0.022431</td>
-<td id="T_05a87_row0_col3" class="data row0 col3" style="text-align: left;">0.015612</td>
-<td id="T_05a87_row0_col4" class="data row0 col4" style="text-align: left;">0.006972</td>
-<td id="T_05a87_row0_col5" class="data row0 col5" style="text-align: left;">0.006267</td>
-<td id="T_05a87_row0_col6" class="data row0 col6" style="text-align: left;">0.003704</td>
+<td id="T_cb585_row0_col0" class="data row0 col0" style="text-align: left;">0.849556</td>
+<td id="T_cb585_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_cb585_row0_col2" class="data row0 col2" style="text-align: left;">0.022431</td>
+<td id="T_cb585_row0_col3" class="data row0 col3" style="text-align: left;">0.015612</td>
+<td id="T_cb585_row0_col4" class="data row0 col4" style="text-align: left;">0.006972</td>
+<td id="T_cb585_row0_col5" class="data row0 col5" style="text-align: left;">0.006267</td>
+<td id="T_cb585_row0_col6" class="data row0 col6" style="text-align: left;">0.003704</td>
 </tr>
 <tr class="even">
-<td id="T_05a87_row1_col0" class="data row1 col0" style="text-align: left;">0.849556</td>
-<td id="T_05a87_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_05a87_row1_col2" class="data row1 col2" style="text-align: left;">0.071244</td>
-<td id="T_05a87_row1_col3" class="data row1 col3" style="text-align: left;">0.004386</td>
-<td id="T_05a87_row1_col4" class="data row1 col4" style="text-align: left;">0.001175</td>
-<td id="T_05a87_row1_col5" class="data row1 col5" style="text-align: left;">0.003429</td>
-<td id="T_05a87_row1_col6" class="data row1 col6" style="text-align: left;">0.000172</td>
+<td id="T_cb585_row1_col0" class="data row1 col0" style="text-align: left;">0.849556</td>
+<td id="T_cb585_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_cb585_row1_col2" class="data row1 col2" style="text-align: left;">0.071244</td>
+<td id="T_cb585_row1_col3" class="data row1 col3" style="text-align: left;">0.004386</td>
+<td id="T_cb585_row1_col4" class="data row1 col4" style="text-align: left;">0.001175</td>
+<td id="T_cb585_row1_col5" class="data row1 col5" style="text-align: left;">0.003429</td>
+<td id="T_cb585_row1_col6" class="data row1 col6" style="text-align: left;">0.000172</td>
 </tr>
 <tr class="odd">
-<td id="T_05a87_row2_col0" class="data row2 col0" style="text-align: left;">0.849556</td>
-<td id="T_05a87_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_05a87_row2_col2" class="data row2 col2" style="text-align: left;">0.021684</td>
-<td id="T_05a87_row2_col3" class="data row2 col3" style="text-align: left;">0.000002</td>
-<td id="T_05a87_row2_col4" class="data row2 col4" style="text-align: left;">0.000070</td>
-<td id="T_05a87_row2_col5" class="data row2 col5" style="text-align: left;">0.000004</td>
-<td id="T_05a87_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
+<td id="T_cb585_row2_col0" class="data row2 col0" style="text-align: left;">0.849556</td>
+<td id="T_cb585_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_cb585_row2_col2" class="data row2 col2" style="text-align: left;">0.021684</td>
+<td id="T_cb585_row2_col3" class="data row2 col3" style="text-align: left;">0.000002</td>
+<td id="T_cb585_row2_col4" class="data row2 col4" style="text-align: left;">0.000070</td>
+<td id="T_cb585_row2_col5" class="data row2 col5" style="text-align: left;">0.000004</td>
+<td id="T_cb585_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
 </tr>
 </tbody>
 </table>
@@ -365,45 +576,45 @@ Table&nbsp;2: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_2afd5" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_43f94" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_2afd5_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_2afd5_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_2afd5_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_2afd5_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_2afd5_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_2afd5_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_2afd5_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_43f94_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_43f94_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_43f94_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_43f94_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_43f94_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_43f94_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_43f94_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_2afd5_row0_col0" class="data row0 col0" style="text-align: left;">0.331193</td>
-<td id="T_2afd5_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_2afd5_row0_col2" class="data row0 col2" style="text-align: left;">0.047922</td>
-<td id="T_2afd5_row0_col3" class="data row0 col3" style="text-align: left;">0.032177</td>
-<td id="T_2afd5_row0_col4" class="data row0 col4" style="text-align: left;">0.012697</td>
-<td id="T_2afd5_row0_col5" class="data row0 col5" style="text-align: left;">0.005025</td>
-<td id="T_2afd5_row0_col6" class="data row0 col6" style="text-align: left;">0.003999</td>
+<td id="T_43f94_row0_col0" class="data row0 col0" style="text-align: left;">0.331193</td>
+<td id="T_43f94_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_43f94_row0_col2" class="data row0 col2" style="text-align: left;">0.047922</td>
+<td id="T_43f94_row0_col3" class="data row0 col3" style="text-align: left;">0.032177</td>
+<td id="T_43f94_row0_col4" class="data row0 col4" style="text-align: left;">0.012697</td>
+<td id="T_43f94_row0_col5" class="data row0 col5" style="text-align: left;">0.005025</td>
+<td id="T_43f94_row0_col6" class="data row0 col6" style="text-align: left;">0.003999</td>
 </tr>
 <tr class="even">
-<td id="T_2afd5_row1_col0" class="data row1 col0" style="text-align: left;">0.331193</td>
-<td id="T_2afd5_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_2afd5_row1_col2" class="data row1 col2" style="text-align: left;">0.000814</td>
-<td id="T_2afd5_row1_col3" class="data row1 col3" style="text-align: left;">0.001131</td>
-<td id="T_2afd5_row1_col4" class="data row1 col4" style="text-align: left;">0.005256</td>
-<td id="T_2afd5_row1_col5" class="data row1 col5" style="text-align: left;">0.001520</td>
-<td id="T_2afd5_row1_col6" class="data row1 col6" style="text-align: left;">0.000146</td>
+<td id="T_43f94_row1_col0" class="data row1 col0" style="text-align: left;">0.331193</td>
+<td id="T_43f94_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_43f94_row1_col2" class="data row1 col2" style="text-align: left;">0.000814</td>
+<td id="T_43f94_row1_col3" class="data row1 col3" style="text-align: left;">0.001131</td>
+<td id="T_43f94_row1_col4" class="data row1 col4" style="text-align: left;">0.005256</td>
+<td id="T_43f94_row1_col5" class="data row1 col5" style="text-align: left;">0.001520</td>
+<td id="T_43f94_row1_col6" class="data row1 col6" style="text-align: left;">0.000146</td>
 </tr>
 <tr class="odd">
-<td id="T_2afd5_row2_col0" class="data row2 col0" style="text-align: left;">0.331193</td>
-<td id="T_2afd5_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_2afd5_row2_col2" class="data row2 col2" style="text-align: left;">0.011204</td>
-<td id="T_2afd5_row2_col3" class="data row2 col3" style="text-align: left;">0.000972</td>
-<td id="T_2afd5_row2_col4" class="data row2 col4" style="text-align: left;">0.001880</td>
-<td id="T_2afd5_row2_col5" class="data row2 col5" style="text-align: left;">0.001769</td>
-<td id="T_2afd5_row2_col6" class="data row2 col6" style="text-align: left;">0.000013</td>
+<td id="T_43f94_row2_col0" class="data row2 col0" style="text-align: left;">0.331193</td>
+<td id="T_43f94_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_43f94_row2_col2" class="data row2 col2" style="text-align: left;">0.011204</td>
+<td id="T_43f94_row2_col3" class="data row2 col3" style="text-align: left;">0.000972</td>
+<td id="T_43f94_row2_col4" class="data row2 col4" style="text-align: left;">0.001880</td>
+<td id="T_43f94_row2_col5" class="data row2 col5" style="text-align: left;">0.001769</td>
+<td id="T_43f94_row2_col6" class="data row2 col6" style="text-align: left;">0.000013</td>
 </tr>
 </tbody>
 </table>
@@ -412,45 +623,45 @@ Table&nbsp;2: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_28c34" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_fb595" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_28c34_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_28c34_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_28c34_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_28c34_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_28c34_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_28c34_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_28c34_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_fb595_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_fb595_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_fb595_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_fb595_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_fb595_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_fb595_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_fb595_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_28c34_row0_col0" class="data row0 col0" style="text-align: left;">-0.085714</td>
-<td id="T_28c34_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_28c34_row0_col2" class="data row0 col2" style="text-align: left;">0.061996</td>
-<td id="T_28c34_row0_col3" class="data row0 col3" style="text-align: left;">0.014922</td>
-<td id="T_28c34_row0_col4" class="data row0 col4" style="text-align: left;">0.000664</td>
-<td id="T_28c34_row0_col5" class="data row0 col5" style="text-align: left;">0.006580</td>
-<td id="T_28c34_row0_col6" class="data row0 col6" style="text-align: left;">0.001264</td>
+<td id="T_fb595_row0_col0" class="data row0 col0" style="text-align: left;">-0.085714</td>
+<td id="T_fb595_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_fb595_row0_col2" class="data row0 col2" style="text-align: left;">0.061996</td>
+<td id="T_fb595_row0_col3" class="data row0 col3" style="text-align: left;">0.014922</td>
+<td id="T_fb595_row0_col4" class="data row0 col4" style="text-align: left;">0.000664</td>
+<td id="T_fb595_row0_col5" class="data row0 col5" style="text-align: left;">0.006580</td>
+<td id="T_fb595_row0_col6" class="data row0 col6" style="text-align: left;">0.001264</td>
 </tr>
 <tr class="even">
-<td id="T_28c34_row1_col0" class="data row1 col0" style="text-align: left;">-0.085714</td>
-<td id="T_28c34_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_28c34_row1_col2" class="data row1 col2" style="text-align: left;">0.009933</td>
-<td id="T_28c34_row1_col3" class="data row1 col3" style="text-align: left;">0.001845</td>
-<td id="T_28c34_row1_col4" class="data row1 col4" style="text-align: left;">0.000278</td>
-<td id="T_28c34_row1_col5" class="data row1 col5" style="text-align: left;">0.000761</td>
-<td id="T_28c34_row1_col6" class="data row1 col6" style="text-align: left;">0.000123</td>
+<td id="T_fb595_row1_col0" class="data row1 col0" style="text-align: left;">-0.085714</td>
+<td id="T_fb595_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_fb595_row1_col2" class="data row1 col2" style="text-align: left;">0.009933</td>
+<td id="T_fb595_row1_col3" class="data row1 col3" style="text-align: left;">0.001845</td>
+<td id="T_fb595_row1_col4" class="data row1 col4" style="text-align: left;">0.000278</td>
+<td id="T_fb595_row1_col5" class="data row1 col5" style="text-align: left;">0.000761</td>
+<td id="T_fb595_row1_col6" class="data row1 col6" style="text-align: left;">0.000123</td>
 </tr>
 <tr class="odd">
-<td id="T_28c34_row2_col0" class="data row2 col0" style="text-align: left;">-0.085714</td>
-<td id="T_28c34_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_28c34_row2_col2" class="data row2 col2" style="text-align: left;">0.015353</td>
-<td id="T_28c34_row2_col3" class="data row2 col3" style="text-align: left;">0.000206</td>
-<td id="T_28c34_row2_col4" class="data row2 col4" style="text-align: left;">0.001751</td>
-<td id="T_28c34_row2_col5" class="data row2 col5" style="text-align: left;">0.001618</td>
-<td id="T_28c34_row2_col6" class="data row2 col6" style="text-align: left;">0.000059</td>
+<td id="T_fb595_row2_col0" class="data row2 col0" style="text-align: left;">-0.085714</td>
+<td id="T_fb595_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_fb595_row2_col2" class="data row2 col2" style="text-align: left;">0.015353</td>
+<td id="T_fb595_row2_col3" class="data row2 col3" style="text-align: left;">0.000206</td>
+<td id="T_fb595_row2_col4" class="data row2 col4" style="text-align: left;">0.001751</td>
+<td id="T_fb595_row2_col5" class="data row2 col5" style="text-align: left;">0.001618</td>
+<td id="T_fb595_row2_col6" class="data row2 col6" style="text-align: left;">0.000059</td>
 </tr>
 </tbody>
 </table>
@@ -480,7 +691,7 @@ Phillipe, Anne. 1997. <span>“Importance Sampling and Riemann Sums.”</span> <
  ]]></description>
   <category>monte-carlo</category>
   <category>quadrature</category>
-  <guid>https://www.shoresofinfinity.net/posts/quad_mc.html</guid>
+  <guid>https://www.shoresofinfinity.net/posts/trapezoid_mc/quad_mc.html</guid>
   <pubDate>Fri, 19 Sep 2025 07:00:00 GMT</pubDate>
 </item>
 </channel>

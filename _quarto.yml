@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 preview: 
   port: 7777
@@ -23,7 +24,7 @@ website:
       - publications/index.qmd
     right:
       - icon: rss
-        href: index.xml
+        href: blog.xml
 
 format:
   html:

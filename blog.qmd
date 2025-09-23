@@ -2,7 +2,7 @@
 title: "Blog"
 
 listing:
-  contents: posts
+  contents: posts/**/*.qmd
   sort: "date desc"
   type: grid
   categories: true

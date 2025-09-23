@@ -1,0 +1,424 @@
+---
+title: "Games As Graphs I: Bridges of Shangri-La"
+description: "Understanding Board Game Design via Graph Representations"
+author: "Srinivas Vasudevan"
+date: "09/22/2025"
+categories:
+  - board-game
+  - graph-theory
+format:
+  html:
+    grid:
+      margin-width: 350px
+reference-location: margin
+citation-location: margin
+---
+
+This is a series on understanding various boardgames via graph representations, with this post focusing on the [Bridges of Shangri-La](https://boardgamegeek.com/boardgame/8190/the-bridges-of-shangri-la) by Leo Colovini[^bos].
+
+[^bos]: [![Image from BGG courtesy of @fungry](bridges_of_shangrila.webp)](https://boardgamegeek.com/image/79224/the-bridges-of-shangri-la)
+
+I've wanted to look at some games and write down mathematical descriptions for them. For me, this is a way to understand their design better,
+and also be a way to generate new ideas.
+
+Since this is the first of several posts, I'll describe some fundamentals of Graph Theory.
+
+## Graph Theory Primer
+
+A *graph* $G$ is a set of *vertices* $V$ and a set of *edges* $E \subset V \times V$. We can draw these graphs pretty easily @fig-simple-graphs .[^1][^2]
+
+```{python}
+#| label: fig-simple-graphs
+#| fig-cap: Graphs on 4 vertices
+#| fig-width: 1
+#| fig-height: 1
+#| echo: false
+#| column: margin
+#| message: false
+
+import networkx as nx
+import numpy as np
+import matplotlib.pyplot as plt
+import random
+
+plt.style.use('../../assets/modified-tufte.mplstyle')
+random.seed(257)
+np.random.seed(112137)
+
+G = nx.Graph()
+H = nx.DiGraph()
+G.add_nodes_from(i for i in range(4))
+H.add_nodes_from(i for i in range(4))
+
+G.add_edges_from((i, (i + 1) % 4) for i in range(4))
+G.add_edge(1, 3)
+H.add_edges_from([(0, 1), (0, 2), (3, 0), (1, 2), (3, 2)])
+
+
+fig, ax = plt.subplots(figsize=(3, 3), nrows=2)
+fig.patch.set_alpha(0.)
+nx.draw_networkx(G, ax=ax[0], node_color='#DC7027', edge_color='#14BDEB')
+nx.draw_networkx(H, ax=ax[1], node_color='#DC7027', edge_color='#14BDEB')
+
+for a in ax:
+  a.set_facecolor((0, 0, 0, 0))
+  a.set_axis_on()
+  a.tick_params(which='both',
+                bottom=False,
+                top=False,
+                left=False,
+                right=False,
+                labelbottom=False,
+                labelleft=False)
+```
+
+
+[^1]: To differentiate the undirected and directed graph, we'd have to distinguish between ordered and unordered tuples, but I'm being intentionally not rigorous since the meaning is clear with pictures.
+[^2]: Note that a graph drawing is unique. We can move the edges and vertices around.
+
+A graph where for all edges $(u, v) \in E, u \ne v$ is called a simple graph (edges with the same start and end points are called *loops*).
+
+Graphs can come in an *undirected* or *directed* flavor. In a directed graphs, the edges have an orientation (@fig-simple-graphs).
+
+Edges and vertices may also have *weights* associated with them. These are typically used to assign costs. In general, different attributes
+can be assigned to an edge or vertex such as *color* (@fig-complicated-graph).
+
+```{python}
+#| label: fig-complicated-graph
+#| fig-cap: A more complicated graph on 10 vertices. Vertices are scaled by their edge weight $w$ and are colored one of two colors.
+#| fig-width: 1
+#| fig-height: 1
+#| echo: false
+#| column: margin
+#| message: false
+
+import networkx as nx
+import numpy as np
+import matplotlib.pyplot as plt
+import random
+
+plt.style.use('../../assets/modified-tufte.mplstyle')
+random.seed(257)
+np.random.seed(118887)
+
+H = nx.gn_graph(10)
+edge_weights = np.random.uniform(0., 10, size=(H.number_of_edges()))
+
+for v in H.nodes:
+  H.nodes[v]['weight'] = np.random.uniform(200., 500)
+  H.nodes[v]['color'] = '#DC7027' if np.random.rand() > 0.5 else '#A0A1A7'
+
+fig, ax = plt.subplots(figsize=(3, 3))
+fig.patch.set_alpha(0.)
+ax.set_alpha(0.)
+ax.set_facecolor((0, 0, 0, 0))
+nx.draw_networkx(
+  H,
+  ax=ax,
+  node_color=[n[1] for n in H.nodes(data='color')],
+  node_size=[n[1] for n in H.nodes(data='weight')],
+  edge_color='#14BDEB')
+```
+
+What does a graph represent? As much as limited by the imagination:
+
+* The vertices $V$ could represent locations, and edges $E$ represent whether two locations are reachable from each other. This includes maps, road networks, but
+  even things like chess positions for something like a [Knight's Tour](https://en.wikipedia.org/wiki/Knight%27s_tour).
+* The vertices $V$ are individuals, and the edges $E$ represent contact. This could be used
+  for something like a social network, but also disease modelling.
+* For a directed graph $G$ The vertices $V$ are tasks, and the edges $E$ represent which task has to be done before the next. This includes things like supply chain
+  management.
+
+After representing something as a graph, there are a variety of algorithms to deduce things about the graph. Some common problems include
+finding the shortest path, determining if there is a cycle, graph coloring, etc.
+
+We won't be needing these but may encounter these in future discussions.
+
+
+## Bridges of Shangri-La
+
+Bridges of Shangri-La is a game by Leo Colovini for 3-4 players. It takes place on a map representing monasteries in Tibet.
+
+Your goal is to have the most number of masters out on the board after all the bridges have collapsed. Each master is worth 1 point.
+
+Before I give a rough summary of the rules, I'll depict the board as a map for simplicity of discussion [^map].
+
+[^map]: This is the 4P map. The top right corner is excluded for the 3P game.
+
+```{python}
+#| label: fig-bos
+#| fig-cap: Bridges of Shangri-La map as a graph.
+#| fig-width: 1
+#| fig-height: 1
+#| echo: false
+#| message: false
+
+import bos
+import networkx as nx
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.style.use('../../assets/modified-tufte.mplstyle')
+np.random.seed(118887)
+
+H = bos.create_bos_graph()
+
+fig, ax = plt.subplots(figsize=(3, 3))
+fig.patch.set_alpha(0.)
+ax.set_alpha(0.)
+ax.set_facecolor((0, 0, 0, 0))
+nx.draw_networkx(
+  H,
+  pos={n[0] : n[1] for n in H.nodes(data='position')},
+  ax=ax,
+  node_color=[n[1] for n in H.nodes(data='color')],
+  edge_color='#14BDEB')
+```
+
+Each vertex represents a village, and each edge represents a bridge. Each village also has 7 spots for the 7 different types of masters [^spots].
+
+At the very beginning of the game, each player will place one of each type of master (in their player color) into villages of their choice. That
+will be 7 placements for each player. Each spot is exclusive.
+
+[^spots]: ![Example of placing masters](village.png)
+
+On a players' turn they have one of three actions:
+
+1) Place a master: You can only do this in a village where you have a master of your color and if there is an unoccupied space.
+
+2) Recruit students: You can place up to 2 students. You place a master tile on a master you already have, with the top tile called a student. Each master can only have one student.
+
+3) The Journey of the Students: Choose two connected villages, and one of them being the one travelled from ("attacker") and the other the ("defender"). The
+village that has the most tiles is considered stronger (with the village with the most masters and then "defender" breaking ties).
+    * If the "attacker" is stronger, than all students in the "attacking" village move over to the "defender", occupying their corresponding space (removing opponents tiles if they are occupied).
+    * If the "defender" is stronger, than students only move over to empty spots, and otherwise get discarded.
+    * Afterwards, the bridge between the two villages gets destroyed.
+
+Once all bridges are destroyed the game ends, with the player with the most masters on the board winning.
+
+### Graph Representation
+
+As seen in @fig-bos, we can represent the game board as a graph. I'll look at a simplified version of the game where there are only two types of masters
+(so that there are two slots in each village). For each type of master, we can have a copy of the graph as in @fig-bos-copies.
+
+To show the placement of a master, color the node the player color and set the weight to 1. Increasing the weight of a vertex to 2 will represent
+showing that there is a student.
+
+```{python}
+#| label: fig-bos-copies
+#| fig-cap: In our simplified version we have two types of masters. Player placements of these masters is depicted by two separate graphs, one for each type of master.
+#| fig-width: 1
+#| fig-height: 1
+#| echo: false
+#| message: false
+
+import bos
+import networkx as nx
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.style.use('../../assets/modified-tufte.mplstyle')
+np.random.seed(118987)
+
+player_colors = ['#DC7027', '#0000FF', '#36454F', '#A020F0']
+
+# Do initial placement. We are assuming two masters per player,
+# so each player will have one node colored in each graph.
+H = bos.create_bos_graph(node_color='#808080')
+start_nodes = [11, 4, 1, 8]
+for i, s in enumerate(start_nodes):
+  H.nodes[s]['color'] = player_colors[i]
+  H.nodes[s]['weight'] = 1
+
+H2 = bos.create_bos_graph(node_color='#808080')
+start_nodes2 = [6, 9, 3, 10]
+for i, s in enumerate(start_nodes2):
+  H2.nodes[s]['color'] = player_colors[i]
+  H2.nodes[s]['weight'] = 1
+
+graphs = [H, H2]
+
+fig, ax = plt.subplots(figsize=(6, 3), ncols=2)
+fig.patch.set_alpha(0.)
+for a, G in zip(ax, graphs):
+  a.set_alpha(0.)
+  a.set_facecolor((0, 0, 0, 0))
+  positions = {n[0] : n[1] for n in G.nodes(data='position')}
+  nx.draw_networkx(
+    G,
+    with_labels=False,
+    pos=positions,
+    ax=a,
+    node_color=[n[1] for n in G.nodes(data='color')],
+    edge_color='#14BDEB')
+  nx.draw_networkx_labels(
+    G,
+    pos=positions,
+    ax=a,
+    labels={n[0] : n[1] for n in G.nodes(data='weight')},
+    font_size=12,
+    font_color="whitesmoke")
+```
+
+For the actions have:
+
+1) Place a master: Choose one of graph copies, and then choose a vertex with weight $0$, such that the same vertex already has a master of the player's
+color in a different graph. Then color it your player color and change it's weight to 1 (as seen in @fig-bos-actions-1)
+
+2) Recruit students: Choose two vertices that have your color and are weight $1$ among the copies. Then increment their weight to $2$ (as seen in @fig-bos-actions-2)
+
+3) The Journey of the Students: Essentially following the previous rules, with vertices of weight $2$ interacting and representing the movement
+  of the students. To get the strength of a village, sum the weights of the nodes in all copies of that vertex (the effect is seen in @fig-bos-actions-3).
+
+```{python}
+#| label: fig-bos-actions
+#| fig-cap: Showing Bridges of Shangri-La actions in graph form.
+#| fig-subcap:
+#|    - Orange placing a master of the first type.
+#|    - Blue adding a student to each of their masters.
+#|    - Any player initiating a journey of students.
+#|
+#| fig-width: 1
+#| fig-height: 1
+#| echo: false
+#| layout-nrows: 3
+#| message: false
+
+import bos
+import networkx as nx
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.style.use('../../assets/modified-tufte.mplstyle')
+np.random.seed(118987)
+
+player_colors = ['#DC7027', '#0000FF', '#36454F', '#A020F0']
+# Do initial placement. We are assuming two masters per player,
+# so each player will have one node colored in each graph.
+H = bos.create_bos_graph(node_color='#808080')
+start_nodes = [11, 4, 1, 8]
+for i, s in enumerate(start_nodes):
+  H.nodes[s]['color'] = player_colors[i]
+  H.nodes[s]['weight'] = 1
+
+H2 = bos.create_bos_graph(node_color='#808080')
+start_nodes2 = [6, 9, 3, 10]
+for i, s in enumerate(start_nodes2):
+  H2.nodes[s]['color'] = player_colors[i]
+  H2.nodes[s]['weight'] = 1
+
+graphs = [H, H2]
+
+def plot_in_row(axes, graphs, border_colors=None, border_widths=None):
+  for a, G in zip(axes, graphs):
+    a.set_alpha(0.)
+    a.set_facecolor((0, 0, 0, 0))
+    positions = {n[0] : n[1] for n in G.nodes(data='position')}
+    nx.draw_networkx_nodes(
+      G,
+      ax=a,
+      pos=positions,
+      edgecolors=border_colors,
+      linewidths=border_widths,
+      node_color=[n[1] for n in G.nodes(data='color')]
+    )
+    nx.draw_networkx_edges(G, ax=a, pos=positions, edge_color='#14BDEB')
+    nx.draw_networkx_labels(
+      G,
+      pos=positions,
+      ax=a,
+      labels={n[0] : n[1] for n in G.nodes(data='weight')},
+      font_size=12,
+      font_color="whitesmoke")
+
+# First, player 0 places a master.
+H.nodes[6]['color'] = player_colors[0]
+H.nodes[6]['weight'] = 1
+border_colors = ['black'] * 13
+border_colors[6] = 'red'
+border_widths = [1.0] * 13
+border_widths[6] = 3.
+
+fig, ax = plt.subplots(figsize=(6, 3), ncols=2)
+fig.patch.set_alpha(0.)
+plot_in_row(ax, graphs, border_colors=border_colors, border_widths=border_widths)
+
+# Next player 1 will place 2 students.
+H.nodes[4]['weight'] = 2
+H2.nodes[9]['weight'] = 2
+
+border_colors = ['black'] * 13
+border_colors[4] = 'red'
+border_colors[9] = 'red'
+
+border_widths = [1.0] * 13
+border_widths[4] = 3.
+border_widths[9] = 3.
+
+fig, ax = plt.subplots(figsize=(6, 3), ncols=2)
+fig.patch.set_alpha(0.)
+plot_in_row(ax, graphs, border_colors=border_colors, border_widths=border_widths)
+
+# Finally player 2 initiates a journey of students from 9->7
+H2.nodes[9]['weight'] = 1
+H2.nodes[7]['weight'] = 1
+H2.nodes[7]['color'] = player_colors[1]
+
+border_colors = ['black'] * 13
+border_colors[7] = 'red'
+border_colors[9] = 'red'
+
+border_widths = [1.0] * 13
+border_widths[7] = 3.
+border_widths[9] = 3.
+H.remove_edge(7, 9)
+H2.remove_edge(7, 9)
+
+fig, ax = plt.subplots(figsize=(6, 3), ncols=2)
+fig.patch.set_alpha(0.)
+plot_in_row(ax, graphs, border_colors=border_colors, border_widths=border_widths)
+
+```
+
+## Game Analysis
+
+First for the map, we have each vertex has at most 4 edges. That is the *degree* of a vertex is atmost 4, and in fact $3 \le deg(v) \le 4,\,  \forall v \in V$.
+
+   * The fact the number of edges varies a little bit breaks some symmetry, with the right / top-right of the board having smaller degree vertices, and so makes the
+     initial placement a little more meaningful.
+
+Note also that when a spot is filled with a master, it will always be filled. This is because it either gains a master or gets displaced.
+This is also clear from looking at the weights of a vertex. If a vertex is positive, it will continue to be positive for the rest of the game.
+
+  * This means that the game starts to narrow as there are fewer places to a master.
+
+For almost all the discussion above, we haven't needed graph theory, which begs the question why do any of this?
+For myself, I think it strips out ancillary (yet important details such as theme, etc.) details and gives a mathematical representation
+that can be manipulated. Viewing a game through the right lense could be suggestive of some design principals.
+
+For instance, in the above representation I chose to have the game board be represented as multiple copies, with each copy representing a specific
+type of master / and it's corresponding slots.
+
+This is interesting because it is suggestive of a game design principle: create independent simple games, and then correlate them /
+make them interact through a few different actions to add complexity and shared incentives.
+
+Indeed, you can think of the 7 copies as separate games. The master placement rule requires some colocality of changing a vertex
+(you can only change a weight 0 vertex to weight 1, if it is at least weight 1 and your color in some copy). And the journey of the students
+requires evaluating the strength of a village. But after that, the student movements/placements can be treated independently.
+
+I think this does several different things:
+
+  * With the game being similar to 7 independent subgames, some of the reasoning gets simplified (since different types of masters don't directly interact).
+  * Master placement colocality means predicting what an opponent can do is easier. This constraint is useful for making the game more strategic (and also intuitive rules-wise).
+  * Evaluating the strength of a village directly correlates different types of masters. This allows for shared incentives to emerge with different players.
+
+Another thing is the game can be viewed very coarsely as a series of edge deletions. This then brings up questions for design, by looking at ablations of mathematical properties:
+
+* How does this game feel if some edges are directed?
+* What if edge deletion was replaced by other graph operations? For example edge contraction combines two vertices (while removing the edge between them), and retains all
+  the edges coming to/from those vertices. We can mix and match different graph operations and think about how that would influence game play.
+* What if edges get deleted / removed for different types of masters? Specifically the journey of the students would delete an edge for some subset
+  of the 7 copies of the graph (rather than all of them), so that certain students can still travel.
+
+Overall, by writing a mathematical representation we can get quite a few ideas on how to modify / get inspired to make games that retain
+some of the feeling of this one.
