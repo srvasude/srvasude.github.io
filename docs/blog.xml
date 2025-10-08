@@ -10,7 +10,168 @@
 <atom:link href="https://www.shoresofinfinity.net/blog.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.8.24</generator>
-<lastBuildDate>Mon, 22 Sep 2025 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 07 Oct 2025 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Counting the number of abelian groups</title>
+  <dc:creator>Srinivas Vasudevan</dc:creator>
+  <link>https://www.shoresofinfinity.net/posts/counting_abelian_groups/counting_abelian_groups.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>As an undergraduate, I got exposed to group theory and notably the classification of finite abelian groups <sup>1</sup>. I have recently thought about how to count asymptotically the number of these groups up to isomorphism. It turns out this problem was originally solved by Erdos and Szekeres<sup>2</sup>, and we’’ll try to summarize their argument here.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;And more generally the classification of finitely generated abelian groups.</p></div><div id="fn2"><p><sup>2</sup>&nbsp;See <a href="https://www.renyi.hu/~p_erdos/1934-05.pdf">here</a> for their solution.</p></div></div><section id="review-whirlwind-group-theory" class="level2">
+<h2 class="anchored" data-anchor-id="review-whirlwind-group-theory">Review: Whirlwind Group Theory</h2>
+<p>First, recall a group <img src="https://latex.codecogs.com/png.latex?G"> is a set equipped with an operation <img src="https://latex.codecogs.com/png.latex?*">, satisfying the following axioms:</p>
+<ol type="1">
+<li>Closure: <img src="https://latex.codecogs.com/png.latex?a%20*%20b%20%5Cin%20G,%5C,%20%5Cforall%20a,%20b%20%5Cin%20G"></li>
+<li>Associativity: <img src="https://latex.codecogs.com/png.latex?(a%20*%20b)%20*%20c%20=%20a%20*%20(b%20*%20c),%5C,%20%5Cforall%20a,%20b,%20c%20%5Cin%20G"></li>
+<li>Identity: <img src="https://latex.codecogs.com/png.latex?%5Cexists%20e%20%5Cin%20G,%5C,%20%5Ctext%7Bs.t.%7D%5C,%20%5Cforall%20a%20%5Cin%20G,%5C,%20e%20*%20a%20=%20a%20*%20e%20=%20a"></li>
+<li>Inverse: <img src="https://latex.codecogs.com/png.latex?%5Cforall%20a%20%5Cin%20G,%5C,%20%5Cexists%20a%5E%7B-1%7D%20%5Cin%20G,%5C,%20%5Ctext%7Bs.t.%7D%20%5C,a%5E%7B-1%7D%20*%20a%20=%20a%20*%20a%5E%7B-1%7D%20=%20e"></li>
+</ol>
+<p>A commutative group satisfies the following additional axiom</p>
+<ol start="5" type="1">
+<li>Commutativity: <img src="https://latex.codecogs.com/png.latex?a%20*%20b%20=%20b%20*%20a,%5C,%20%5Cforall%20a,%20b%20%5Cin%20G">.</li>
+</ol>
+<p>Since a group is a set <img src="https://latex.codecogs.com/png.latex?G">, we can look at the cardinality of the set <img src="https://latex.codecogs.com/png.latex?%7CG%7C">. A finite group is one where <img src="https://latex.codecogs.com/png.latex?%7CG%7C%20%3C%20%5Cinfty"> and the order of a group is simply this number <img src="https://latex.codecogs.com/png.latex?ord(G)%20=%20%7CG%7C">.</p>
+<p>What we are interested in is how many finite abelian groups up to <em>isomorphism</em> have order <img src="https://latex.codecogs.com/png.latex?n">. We’ll call this <img src="https://latex.codecogs.com/png.latex?a(n)">. Figure&nbsp;1 plots <img src="https://latex.codecogs.com/png.latex?a(n)"> for orders 1 to 10000.</p>
+<p>We can see that the number varies a lot, and unclear if it even grows. In particular if <img src="https://latex.codecogs.com/png.latex?ord(G)%20=%20p"> for a prime <img src="https://latex.codecogs.com/png.latex?p">, there is only one group of that order, <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BZ%7D/p%5Cmathbb%7BZ%7D"> the cyclic group of order <img src="https://latex.codecogs.com/png.latex?p">. That is, <img src="https://latex.codecogs.com/png.latex?a(p)%20=%201"> for all primes <img src="https://latex.codecogs.com/png.latex?p">, so it dips to 1 infinitely often.</p>
+<p>What we might care about instead is a smoothed version of this <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20a(n)">, which represents the average value of <img src="https://latex.codecogs.com/png.latex?a(n)">. Figure&nbsp;1 shows that this seems to be grow but asymptote around a little over <img src="https://latex.codecogs.com/png.latex?2">. In fact as proven by Erdos and Szekeres we’ll have</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bn%20%5Cle%20x%7D%20a(n)%20%5Csim%20%5Cprod_%7Bk=2%7D%5E%5Cinfty%20%5Czeta(k)%20x"></p>
+<p>Where <img src="https://latex.codecogs.com/png.latex?%5Czeta"> is the Riemann Zeta function. This constant in front is roughly <img src="https://latex.codecogs.com/png.latex?2.29">, and is represented by the blue line in the plot.</p>
+<div id="cell-fig-abelian-groups-n" class="cell" data-fig-height="1" data-fig-width="1" data-layout-ncols="2" data-message="false" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div id="fig-abelian-groups-n" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-abelian-groups-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_abelian_groups_files/figure-html/fig-abelian-groups-n-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Number of abelian groups of order N."><img src="https://www.shoresofinfinity.net/posts/counting_abelian_groups/counting_abelian_groups_files/figure-html/fig-abelian-groups-n-output-1.png" width="731" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-abelian-groups-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Number of abelian groups of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Number of Abelian Groups of order N</p>
+</div>
+</section>
+<section id="structure-of-an." class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="structure-of-an.">Structure of <img src="https://latex.codecogs.com/png.latex?a(n)">.</h2>
+<p>The fundamental theorem of finite abelian groups says that every finite abelian group can be written in the form <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BZ%7D/p_1%5E%7Bk_1%7D%5Cmathbb%7BZ%7D%20%5Ctimes%20%5Cmathbb%7BZ%7D/p_2%5E%7Bk_2%7D%5Cmathbb%7BZ%7D%20%5Ctimes%20%5Cmathbb%7BZ%7D/p_3%5E%7Bk_3%7D%5Cmathbb%7BZ%7D%20%5Cldots%20%5Cmathbb%7BZ%7D/p_n%5E%7Bk_n%7D%5Cmathbb%7BZ%7D"> where <img src="https://latex.codecogs.com/png.latex?p_i"> are primes, not necessarily distinct, and <img src="https://latex.codecogs.com/png.latex?k_i%20%5Cin%20%5Cmathbb%7BN%7D">. <sup>3</sup></p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;In fact each <img src="https://latex.codecogs.com/png.latex?p_i"> must appear in the prime factorization of <img src="https://latex.codecogs.com/png.latex?ord(G)">.</p></div></div><p>Recall that a finite <img src="https://latex.codecogs.com/png.latex?p">-group is which has prime power order <img src="https://latex.codecogs.com/png.latex?ord(G)%20=%20p%5Ek"> for some prime <img src="https://latex.codecogs.com/png.latex?p">, and natural number <img src="https://latex.codecogs.com/png.latex?k">.</p>
+<p>We can group the factors into <img src="https://latex.codecogs.com/png.latex?P_1,%20%5Cldots%20P_m">, where <img src="https://latex.codecogs.com/png.latex?P_i"> is a product of factors containing the same prime. That is, every finite abelian group can be written as <img src="https://latex.codecogs.com/png.latex?P_1%20%5Ctimes%20P_2%20%5Ctimes%20%5Cldots%20P_m">, where <img src="https://latex.codecogs.com/png.latex?P_i"> are abelian <img src="https://latex.codecogs.com/png.latex?q_i">-groups, with the <img src="https://latex.codecogs.com/png.latex?q_i"> distinct. The order of such a group <img src="https://latex.codecogs.com/png.latex?G"> is <img src="https://latex.codecogs.com/png.latex?ord(G)%20=%20ord(P_1)ord(P_2)%5Cldots%20ord(P_m)">.</p>
+<p>This is suggestive that if we are looking at <img src="https://latex.codecogs.com/png.latex?a(n)">, we should look at the prime factorization of <img src="https://latex.codecogs.com/png.latex?n%20=%20p_1%5E%7Bk_1%7Dp_2%5E%7Bk_2%7D%5Cldots%20p_m%5E%7Bk_m%7D">. For any abelian group of order <img src="https://latex.codecogs.com/png.latex?n"> it will have factors <img src="https://latex.codecogs.com/png.latex?P_1%20%5Ctimes%20P_2%20%5Cldots%20%5Ctimes%20P_m">, where <img src="https://latex.codecogs.com/png.latex?P_i"> is a <img src="https://latex.codecogs.com/png.latex?p_i">-group of order <img src="https://latex.codecogs.com/png.latex?p_i%5E%7Bk_i%7D">. Then, we will have <img src="https://latex.codecogs.com/png.latex?a(n)%20=%20a(p_1%5E%7Bk_1%7D)a(p_2%5E%7Bk_2%7D)%5Cldots%20a(p_m%5E%7Bk_m%7D)">. In other words <img src="https://latex.codecogs.com/png.latex?a(n)"> is a multiplicative function!</p>
+<section id="apk" class="level3">
+<h3 class="anchored" data-anchor-id="apk"><img src="https://latex.codecogs.com/png.latex?a(p%5Ek)"></h3>
+<p>Now, given a prime <img src="https://latex.codecogs.com/png.latex?p">, we want to count the number of abelian groups of order <img src="https://latex.codecogs.com/png.latex?p%5Ek">, for some <img src="https://latex.codecogs.com/png.latex?k%20%5Cin%20%5Cmathbb%7BN%7D">. We can enumerate a few cases to see a pattern.</p>
+<p>For <img src="https://latex.codecogs.com/png.latex?k%20=%201">, we have only one group, since <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BZ%7D/p%5Cmathbb%7BZ%7D"> is simple. <img src="https://latex.codecogs.com/png.latex?a(p)%20=%201"></p>
+<p>For <img src="https://latex.codecogs.com/png.latex?k%20=%202"> we have two groups: <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BZ%7D/p%5E2%5Cmathbb%7BZ%7D"> and <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BZ%7D/p%5Cmathbb%7BZ%7D%20%5Ctimes%20%5Cmathbb%7BZ%7D%20/%20p%5Cmathbb%7BZ%7D">. <img src="https://latex.codecogs.com/png.latex?a(p%5E2)%20=%202"></p>
+<p>For <img src="https://latex.codecogs.com/png.latex?k%20=%203"> we have three groups: <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BZ%7D/p%5E3%5Cmathbb%7BZ%7D">, <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BZ%7D/p%5E2%5Cmathbb%7BZ%7D%20%5Ctimes%20%5Cmathbb%7BZ%7D/p%5Cmathbb%7BZ%7D"> and <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BZ%7D/p%5Cmathbb%7BZ%7D%20%5Ctimes%20%5Cmathbb%7BZ%7D/p%5Cmathbb%7BZ%7D%20%5Ctimes%20%5Cmathbb%7BZ%7D/p%5Cmathbb%7BZ%7D">. <img src="https://latex.codecogs.com/png.latex?a(p%5E3)%20=%203"></p>
+<p>What we’ve done above is take <img src="https://latex.codecogs.com/png.latex?p%5Ek"> and look at ways to partition <img src="https://latex.codecogs.com/png.latex?k">.</p>
+<p>For instance, the 11 partitions of <img src="https://latex.codecogs.com/png.latex?6"> are:</p>
+<p>1 + 1 + 1 + 1 + 1 + 1</p>
+<p>2 + 1 + 1 + 1 + 1</p>
+<p>2 + 2 + 1 + 1</p>
+<p>3 + 1 + 1 + 1</p>
+<p>2 + 2 + 2</p>
+<p>3 + 2 + 1</p>
+<p>4 + 1 + 1</p>
+<p>3 + 3</p>
+<p>4 + 2</p>
+<p>5 + 1</p>
+<p>6</p>
+<p>We can then arrange factors based of that partition. If we take <img src="https://latex.codecogs.com/png.latex?%5B3,%202,%201%5D">, then we have <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BZ%7D/p%5E3%5Cmathbb%7BZ%7D%20%5Ctimes%20%5Cmathbb%7BZ%7D/p%5E2%5Cmathbb%7BZ%7D%20%5Ctimes%20%5Cmathbb%7BZ%7D/p%5Cmathbb%7BZ%7D">.</p>
+<p>Likewise, given any factorization of the <img src="https://latex.codecogs.com/png.latex?p">-group, we can order the factors in descending order and show that forms a partition of <img src="https://latex.codecogs.com/png.latex?6">. Thus, <img src="https://latex.codecogs.com/png.latex?a(p%5E6)%20=%2011">, and more generally <img src="https://latex.codecogs.com/png.latex?a(p%5Ek)%20=%20p(k)"> where <img src="https://latex.codecogs.com/png.latex?p(k)"> is the number of partitions of <img src="https://latex.codecogs.com/png.latex?k">.</p>
+</section>
+</section>
+<section id="dirichlet-generating-function" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="dirichlet-generating-function">Dirichlet Generating Function</h2>
+<p>Given that <img src="https://latex.codecogs.com/png.latex?a(n)"> is a multiplicative function, it’s suggestive to look at <img src="https://latex.codecogs.com/png.latex?f(s)%20=%20%5Csum_%7Bi=1%7D%5E%5Cinfty%20%5Cfrac%7Ba(n)%7D%7Bn%5Es%7D">, at least formally. Since <img src="https://latex.codecogs.com/png.latex?a(n)"> is multiplicative, it has an Euler product expansion <img src="https://latex.codecogs.com/png.latex?f(s)%20=%20%5Cprod_p%20%5Csum_%7Bk=0%7D%5E%5Cinfty%20%5Cfrac%7Ba(p%5Ek)%7D%7Bp%5E%7Bsk%7D%7D%20=%20%5Cprod_p%20%5Csum_%7Bk=0%7D%5E%5Cinfty%20%5Cfrac%7Bp(k)%7D%7Bp%5E%7Bsk%7D%7D">. It can be shown that the products converge for <img src="https://latex.codecogs.com/png.latex?%5CRe(s)%20%3E%201">, due to the asymptotics of partition numbers <img src="https://latex.codecogs.com/png.latex?p(k)"> (which we will skip here).</p>
+<p>Now each inner sum is of the form <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=0%7D%5E%5Cinfty%20%5Cfrac%7Ba(p%5Ek)%7D%7Bp%5E%7Bsk%7D%7D%20=%20%5Csum_%7Bk=0%7D%5E%5Cinfty%20%5Cfrac%7Bp(k)%7D%7Bp%5E%7Bsk%7D%7D">. Let <img src="https://latex.codecogs.com/png.latex?x%20=%20%5Cfrac%7B1%7D%7Bp%7D">. Then we have the sum <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=0%7D%5E%5Cinfty%20p(k)x%5E%7Bsk%7D">.</p>
+<p>This is the ordinary generating function for the partition function, which also can be written as <img src="https://latex.codecogs.com/png.latex?%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Cfrac%7B1%7D%7B1%20-%20x%5E%7Bsk%7D%7D">. This is valid since <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bp%7D%20%3C%201">.</p>
+<p>Thus we can rewrite <img src="https://latex.codecogs.com/png.latex?f(n)%20=%20%5Cprod_p%20%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Cfrac%7B1%7D%7B1%20-%20(%5Cfrac%7B1%7D%7Bp%7D)%5E%7Bsk%7D%7D">. Applying the Fubini-Tonelli theorem<sup>4</sup> lets us rearrange the product to get <img src="https://latex.codecogs.com/png.latex?%5Cprod_p%20%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Cfrac%7B1%7D%7B1%20-%20(%5Cfrac%7B1%7D%7Bp%7D)%5E%7Bsk%7D%7D%20=%20%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Cprod_p%20%5Cfrac%7B1%7D%7B1%20-%20(%5Cfrac%7B1%7D%7Bp%7D)%5E%7Bsk%7D%7D%20=%20%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Czeta(ks)">.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;See <a href="https://en.wikipedia.org/wiki/Fubini%27s_theorem">here</a> for a summary. In general, this will let us change the order of summation / multiplication.</p></div><div id="fn5"><p><sup>5</sup>&nbsp;We omit the proof of this here, but roughly the terms <img src="https://latex.codecogs.com/png.latex?%5Czeta(ks)%20%5Crightarrow%201"> as <img src="https://latex.codecogs.com/png.latex?k%20%5Crightarrow%20%5Cinfty">, and in fact this convergence is geometric in nature. We can then show that if we ignore the first few terms, in the strip <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bn+1%7D%20%3C%20%5CRe(s)%20%3C%20%5Cfrac%7B1%7D%7Bn%7D">, the product converges, and will gives us a meromorphic continuation of the function.</p></div></div><p>Thus the Dirichlet generating function for <img src="https://latex.codecogs.com/png.latex?a(n)"> is <img src="https://latex.codecogs.com/png.latex?%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Czeta(ks)">, which converges when <img src="https://latex.codecogs.com/png.latex?%5CRe(s)%20%3E%201">. In fact we can meromorphically expand this to <img src="https://latex.codecogs.com/png.latex?%5CRe(s)%20%3E%200">, by noting that there are poles at <img src="https://latex.codecogs.com/png.latex?1,%20%5Cfrac%7B1%7D%7B2%7D,%20%5Cfrac%7B1%7D%7B3%7D%20%5Cldots%20%5Cfrac%7B1%7D%7Bn%7D%20%5Cldots">, but the product still converges outside of those areas. <sup>5</sup></p>
+</section>
+<section id="counting-the-number-of-abelian-groups" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="counting-the-number-of-abelian-groups">Counting the number of abelian groups</h2>
+<p>We’ve buried the lede so far on how we are going to estimate <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bn%5Cle%20x%7D%20a(n)">. In particular, Perron’s Formula says that if <img src="https://latex.codecogs.com/png.latex?f(s)"> is the Dirichlet generating function for <img src="https://latex.codecogs.com/png.latex?a(n)">, then we have that if <img src="https://latex.codecogs.com/png.latex?f(s)"> is uniformly convergent for <img src="https://latex.codecogs.com/png.latex?%5CRe(s)%20%3E%20%5Csigma"> for some fixed <img src="https://latex.codecogs.com/png.latex?%5Csigma">, and <img src="https://latex.codecogs.com/png.latex?c%20%3E%20%5Csigma">, then<sup>6</sup></p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;For <img src="https://latex.codecogs.com/png.latex?x"> an integer, we need to modify the sum so that the last term <img src="https://latex.codecogs.com/png.latex?a(x)"> is multiplied by <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B2%7D">. Otherwise the left-hand side is an ordinary sum.</p></div></div><p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bn%5Cle%20x%7D%20a(n)%20+%20O(%5Csum_%7Bn=1%7D%5E%5Cinfty(%5Cfrac%7Bx%7D%7Bn%7D)%5Ec%20%5Cfrac%7Ba(n)%7D%7BT%7C%5Clog%20%5Cfrac%7Bx%7D%7Bn%7D%7C%7D)%20=%20%5Cfrac%7B1%7D%7B2%5Cpi%20i%7D%20%5Cint_%7Bc-iT%7D%5E%7Bc+iT%7D%20f(s)%5Cfrac%7Bx%5Es%7D%7Bs%7Dds"></p>
+<p>That is, if we we compute the line integral of the function <img src="https://latex.codecogs.com/png.latex?A(s)%20=%20f(s)%5Cfrac%7Bx%5Es%7D%7Bs%7D"> over the truncated line <img src="https://latex.codecogs.com/png.latex?%5CRe(s)%20=%20c">, that should give us what we want plus an error term. Figure&nbsp;2 shows the contour for <img src="https://latex.codecogs.com/png.latex?%5CRe(s)%20=%202">.</p>
+<div id="cell-fig-contour" class="cell page-columns page-full" data-fig-height="1" data-fig-width="1" data-message="false" data-execution_count="2">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output cell-output-display">
+<div id="fig-contour" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-contour-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_abelian_groups_files/figure-html/fig-contour-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Contour for Perron’s Formula"><img src="https://www.shoresofinfinity.net/posts/counting_abelian_groups/counting_abelian_groups_files/figure-html/fig-contour-output-1.png" width="304" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-contour-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Contour for Perron’s Formula
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>Let’s bound the error term.</p>
+<p>When <img src="https://latex.codecogs.com/png.latex?n%20%3C%200.9x"> or <img src="https://latex.codecogs.com/png.latex?n%20%3E%201.1x"> we have that</p>
+<p><img src="https://latex.codecogs.com/png.latex?O(%5Csum%20(%5Cfrac%7Bx%7D%7Bn%7D)%5Ec%20%5Cfrac%7Ba(n)%7D%7BT%7C%5Clog%20%5Cfrac%7Bx%7D%7Bn%7D%7C%7D)%20=%20O(%5Cfrac%7Bx%5Ec%7D%7BT%7D%5Csum%20%5Cfrac%7Ba(n)%7D%7Bn%5Ec%7D)%20=%20O(%5Cfrac%7Bx%5Ec%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Czeta(kc)%7D%7BT%7D)%20=%20O(%5Cfrac%7Bx%5Clog%20x%7D%7BT%7D)">.</p>
+<p>The latter equality is a combination of three steps. We first fix <img src="https://latex.codecogs.com/png.latex?c%20=%201%20+%20%5Cfrac%7B1%7D%7B%5Clog%20x%7D"> which gives us the linear power in <img src="https://latex.codecogs.com/png.latex?x">. Also, noting that <img src="https://latex.codecogs.com/png.latex?%5Cprod_%7Bk=2%7D%5E%5Cinfty%20%5Czeta(kc)"> is bounded, we only need to consider the <img src="https://latex.codecogs.com/png.latex?%5Czeta(c)"> term. As <img src="https://latex.codecogs.com/png.latex?%5Czeta(c)%20=%20O(%5Cfrac%7B1%7D%7B%7Cc%20-%201%7C%7D)">, for <img src="https://latex.codecogs.com/png.latex?c"> approaching 1, the rest follows.</p>
+<p>For <img src="https://latex.codecogs.com/png.latex?0.9x%20%5Cle%20n%20%5Cle%201.1x">, <img src="https://latex.codecogs.com/png.latex?O(%5Csum_%7B0.9x%20%5Cle%20n%20%5Cle%201.1x%7D%20(%5Cfrac%7Bx%7D%7Bn%7D)%5Ec%20%5Cfrac%7Ba(n)%7D%7BT%7C%5Clog%20%5Cfrac%7Bx%7D%7Bn%7D%7C%7D)%20=%20O(%5Csum_%7B0.9x%20%5Cle%20n%20%5Cle%201.1x%7D%20%5Cfrac%7Ba(n)%7D%7BT%7C%5Clog%20%5Cfrac%7Bx%7D%7Bn%7D%7C%7D)">.</p>
+<p>We’ll assume now that <img src="https://latex.codecogs.com/png.latex?x%20=%20%5Clfloor%20x%20%5Crfloor%20+%20%5Cfrac%7B1%7D%7B2%7D">. That is, <img src="https://latex.codecogs.com/png.latex?x"> is a half integer. Then, <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B%7C%5Clog%20%5Cfrac%7Bx%7D%7Bn%7D%7C%7D%20=%20O(%7C%5Cfrac%7Bx%7D%7Bn%20-%20x%20-%20%5Cfrac%7B1%7D%7B2%7D%7D%7C)">, since <img src="https://latex.codecogs.com/png.latex?n"> is close to <img src="https://latex.codecogs.com/png.latex?x">.</p>
+<p>If <img src="https://latex.codecogs.com/png.latex?k%20=%20n%20-%20x">, we have our error bounded by <img src="https://latex.codecogs.com/png.latex?O(%5Cfrac%7Bx%7D%7BT%7D%5Csum_%7B%7Ck%7C%20%5Cle%200.1%20x%7D%20%5Cfrac%7B1%7D%7B%7Ck%20-%20%5Cfrac%7B1%7D%7B2%7D%7C%7D)%20=%20O(%5Cfrac%7Bx%5Clog%20x%7D%7BT%7D)"> <sup>7</sup></p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;The latter inequality comes from the fact that the Harmonic numbers grow like <img src="https://latex.codecogs.com/png.latex?%5Clog%20x">.</p></div></div><section id="modified-integral" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="modified-integral">Modified Integral</h3>
+<p>We’ll modify the main integral by relating it to a shifted integral on the left hand size of the pole at 1.</p>
+<p>Let <img src="https://latex.codecogs.com/png.latex?c%20=%201%20+%20%5Cfrac%7B1%7D%7B%5Clog%20x%7D,%20%5Cfrac%7B1%7D%7B2%7D%20%3C%20%5Cdelta%20%3C%201">. Let <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cprod_%7Bk=2%7D%5E%5Cinfty%20%5Czeta(k)">, and consider the contour in Figure&nbsp;3, where we are integrating over it in the counterclockwise direction.</p>
+<div id="cell-fig-contour-modified" class="cell page-columns page-full" data-fig-height="1" data-fig-width="1" data-message="false" data-execution_count="3">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output cell-output-display">
+<div id="fig-contour-modified" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-contour-modified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_abelian_groups_files/figure-html/fig-contour-modified-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Modified Contour"><img src="https://www.shoresofinfinity.net/posts/counting_abelian_groups/counting_abelian_groups_files/figure-html/fig-contour-modified-output-1.png" width="299" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-contour-modified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Modified Contour
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>This contour <img src="https://latex.codecogs.com/png.latex?B"> is now a box around the pole <img src="https://latex.codecogs.com/png.latex?1">. <img src="https://latex.codecogs.com/png.latex?C_1"> corresponds to our original contour (of length <img src="https://latex.codecogs.com/png.latex?2T">) while <img src="https://latex.codecogs.com/png.latex?C_3">, is a shifted version.</p>
+<p>We have the sides of the box parameterized as:</p>
+<p><img src="https://latex.codecogs.com/png.latex?C_1%20=%20%5C%7Bs%20%7C%20%5CRe(s)%20=%20c,%20-T%20%5Cle%20%5CIm(s)%20%5Cle%20T%5C%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?C_2%20=%20%5C%7Bs%20%7C%20%5CIm(s)%20=%20-T,%20%5Cdelta%20%5Cle%20%5CRe(s)%20%5Cle%20c%5C%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?C_3%20=%20%5C%7Bs%20%7C%20%5CRe(s)%20=%20%5Cdelta,%20-T%20%5Cle%20%5CIm(s)%20%5Cle%20T%5C%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?C_4%20=%20%5C%7Bs%20%7C%20%5CIm(s)%20=%20T,%20%5Cdelta%20%5Cle%20%5CRe(s)%20%5Cle%20c%5C%7D"></p>
+<p>Since <img src="https://latex.codecogs.com/png.latex?%5Cdelta%20%3E%20%5Cfrac%7B1%7D%7B2%7D">, the box does not have any poles on its path, and only contains one pole inside. We have by the residue theorem, the value of this new contour is <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B2%5Cpi%20i%7D%5Cint_B%20f(s)%5Cfrac%7Bx%5Es%7D%7Bs%7D%20ds%20=%20Res_%7Bs=1%7D%20f(s)%5Cfrac%7Bx%5Es%7D%7Bs%7D%20=%20%5Cprod_%7Bk=2%7D%5E%5Cinfty%20%5Czeta(k)%20x%20=%20Ax"></p>
+<p>Thus, breaking apart <img src="https://latex.codecogs.com/png.latex?B"> into its constituent integrals, we get that <img src="https://latex.codecogs.com/png.latex?Ax%20=%20%5Csum_%7Bn%5Cle%20x%7Da(n)%20+%20O(%5Cfrac%7Bx%5Clog%20x%7D%7BT%7D)%20+%20%5Cint_%7BC_2%20%5Ccup%20C_3%20%5Ccup%20C_4%7D%20f(s)%5Cfrac%7Bx%5Es%7D%7Bs%7D%20ds">.</p>
+<p>We will now bound the contours <img src="https://latex.codecogs.com/png.latex?C_2,%20C_3,%20C_4">.</p>
+<p>For <img src="https://latex.codecogs.com/png.latex?C_2">, we can bound <img src="https://latex.codecogs.com/png.latex?%7Cf(s)%7C"> by <img src="https://latex.codecogs.com/png.latex?B%7C%5Czeta(s)%7C"> where <img src="https://latex.codecogs.com/png.latex?B%20=%20%5Cprod_%7Bk=2%7D%5E%5Cinfty%20%5Czeta(k%5Cdelta)">. This is due to the monotonicity of <img src="https://latex.codecogs.com/png.latex?%5Czeta(s)"> for <img src="https://latex.codecogs.com/png.latex?s%20%3E%201">, and that since <img src="https://latex.codecogs.com/png.latex?%5Cdelta%20%3E%20%5Cfrac%7B1%7D%7B2%7D">, <img src="https://latex.codecogs.com/png.latex?k%5Cdelta%20%3E%201,%20%5C,%20%5Cforall%20k%20%5Cge%202">.</p>
+<p>It is also known that <img src="https://latex.codecogs.com/png.latex?%7C%5Czeta(s)%7C%20=%20O((1%20+%20%7C%5CIm(s)%7C)%5E%7B1%20-%20%5CRe(s)%7D%5Clog(1%20+%20%5CIm(s))">, for <img src="https://latex.codecogs.com/png.latex?%5CIm(s)%20%3E%202,%20%5CRe(s)%20%3E%200">.</p>
+<p>Thus, for <img src="https://latex.codecogs.com/png.latex?C_2"> we have the bound <img src="https://latex.codecogs.com/png.latex?%7C%5Cint_%7BC_2%7D%20f(s)%5Cfrac%7Bx%5Es%7D%7Bs%7D%20ds%7C%20=%20O(%5Cint_%5Cdelta%5Ec%20%7C%5Czeta(s%20+%20iT)%7C%7C%5Cfrac%7Bx%5E%7Bs%20+%20iT%7D%7D%7Bs%20+%20iT%7D%7C%20ds)%20=%20O(%5Cint_%5Cdelta%5Ec%20%5Cfrac%7Bx%5Es(1%20+%20T)%5E%7B1%20-%20s%7D%20%5Clog%20T%7D%7BT%7D%20%20ds)%20=%20O(%5Cfrac%7Bx%5Clog%20x%7D%7BT%7D%20+%20%5Cfrac%7Bx%5E%5Cdelta%20T%5E%7B1-%5Cdelta%7D%5Clog%20T%7D%7BT%7D)"> This same bound holds for <img src="https://latex.codecogs.com/png.latex?C_4"> by a similar argument.</p>
+<p>For <img src="https://latex.codecogs.com/png.latex?C_3"> we have <img src="https://latex.codecogs.com/png.latex?%7C%5Cint_%7BC_3%7D%20f(s)%5Cfrac%7Bx%5Es%7D%7Bs%7D%20ds%7C%20=%20O(%5Cint_%7B-T%7D%5ET%7C%5Czeta(%5Cdelta%20+%20iT)%5Cfrac%7Bx%5E%7B%5Cdelta%7D%7D%7B%5Cdelta%20+%20it%7D%7C%20dt)%20=%20O(%5Cint_%7B-T%7D%5ET(1%20+%20%7Ct%7C)%5E%7B1%20-%20%5Cdelta%7D%5Cfrac%7Bx%5E%5Cdelta%7D%7B1%20+%20%7Ct%7C%7D%5Clog%20T%20dt)%20=%20O(x%5E%5Cdelta%20T%5E%7B1%20-%20%5Cdelta%7D%5Clog%20T)"></p>
+<p>Thus we have <img src="https://latex.codecogs.com/png.latex?Ax%20=%20%5Csum_%7Bn%20%5Cle%20x%7D%20a(n)%20+%20O(%5Cfrac%7Bx%5Clog%20x%7D%7BT%7D)%20+%20O(%5Cfrac%7Bx%5Clog%20x%7D%7BT%7D%20+%20%5Cfrac%7Bx%5E%5Cdelta%20T%5E%7B1-%5Cdelta%7D%5Clog%20T%7D%7BT%7D)%20+%20O(x%5E%5Cdelta%20T%5E%7B1%20-%20%5Cdelta%7D%5Clog%20T)"></p>
+<p>Let <img src="https://latex.codecogs.com/png.latex?%5Cdelta%20=%20%5Cfrac%7B1%7D%7B2%7D%20+%20%5Cepsilon">, for <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%20%3E%200">. Let <img src="https://latex.codecogs.com/png.latex?T%20=%20%5Csqrt%7Bx%7D">. Then we have the errors are of the form</p>
+<p><img src="https://latex.codecogs.com/png.latex?O(%5Csqrt%7Bx%7D%5Clog%20x)%20+%20O(%5Csqrt%7Bx%7D%20%5Clog%20x%20+%20x%5E%7B%5Cfrac%7B1%7D%7B4%7D%20-%20%5Cepsilon%7D%5Clog%20x)%20+%20O(x%5E%7B%5Cfrac%7B1%7D%7B2%7D%20+%20%5Cepsilon%7D%20x%5E%7B%5Cfrac%7B1%7D%7B4%7D%20-%20%5Cfrac%7B%5Cepsilon%7D%7B2%7D%7D%5Clog%20x)%20=%20O(x%5E%7B%5Cfrac%7B3%7D%7B4%7D%20+%20%5Cepsilon%7D)">.</p>
+<p>The error is sublinear, and we are done.</p>
+<p>More careful treatment can reduce this error down to <img src="https://latex.codecogs.com/png.latex?O(%5Csqrt%7Bx%7D)">. In fact<sup>8</sup> we have</p>
+<div class="no-row-height column-margin column-container"><div id="fn8"><p><sup>8</sup>&nbsp;See <a href="http://matwbn.icm.edu.pl/ksiazki/aa/aa59/aa5935.pdf">here</a> for a summmary of asymptotics for this problem.</p></div></div><p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bn%5Cle%20x%7D%20a(n)%20%5Csim%20Ax%20+%20B%5Csqrt%7Bx%7D%20+%20Cx%5E%7B%5Cfrac%7B1%7D%7B3%7D%7D%20+%20O(x%5E%7B%5Cfrac%7B3%7D%7B10%7D%7D(%5Clog%20x)%5E%7B%5Cfrac%7B9%7D%7B10%7D%7D)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cprod_%7Bk=1,%20k%20%5Cne%201%7D%5E%5Cinfty%20%5Czeta(k)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?B%20=%20%5Cprod_%7Bk=1,%20k%20%5Cne%202%7D%5E%5Cinfty%20%5Czeta(%5Cfrac%7Bk%7D%7B2%7D)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?C%20=%20%5Cprod_%7Bk=1,%20k%20%5Cne%203%7D%5E%5Cinfty%20%5Czeta(%5Cfrac%7Bk%7D%7B3%7D)"></p>
+
+
+</section>
+</section>
+
+
+ ]]></description>
+  <category>group-theory</category>
+  <category>zeta-function</category>
+  <category>asymptotics</category>
+  <guid>https://www.shoresofinfinity.net/posts/counting_abelian_groups/counting_abelian_groups.html</guid>
+  <pubDate>Tue, 07 Oct 2025 07:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Games As Graphs I: Bridges of Shangri-La</title>
   <dc:creator>Srinivas Vasudevan</dc:creator>

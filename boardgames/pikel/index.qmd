@@ -1,8 +1,8 @@
 ---
 title: "Pikel"
 link: https://boardgamegeek.com/boardgame/447094/pikel
-description: "A may-follow domino climbing-shedding game, where you can't rearrange your hand."
-
+description: "A may-follow domino climbing-shedding game with a fixed hand."
+image: pikel.svg
 author: 
   - "Srinivas Vasudevan"
 player_count: 2

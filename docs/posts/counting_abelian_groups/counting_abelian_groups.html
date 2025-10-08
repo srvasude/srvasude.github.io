@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Srinivas Vasudevan">
+<meta name="dcterms.date" content="2025-10-07">
+<meta name="description" content="An asymptotic formula for the number of abelian groups">
+
+<title>Counting the number of abelian groups – Shores of Infinity</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-4d31542ee010fd73a05ab2d3d4a307b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-bbd5469ccfebc2df91f82586bccf3d39.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/golden_dragon_fractal.png" alt="" class="navbar-logo light-content">
+    <img src="../../images/golden_dragon_fractal.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Shores of Infinity</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../boardgames/index.html"> 
+<span class="menu-text">Board Games</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications/index.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../blog.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#review-whirlwind-group-theory" id="toc-review-whirlwind-group-theory" class="nav-link active" data-scroll-target="#review-whirlwind-group-theory">Review: Whirlwind Group Theory</a></li>
+  <li><a href="#structure-of-an." id="toc-structure-of-an." class="nav-link" data-scroll-target="#structure-of-an.">Structure of <span class="math inline">\(a(n)\)</span>.</a>
+  <ul class="collapse">
+  <li><a href="#apk" id="toc-apk" class="nav-link" data-scroll-target="#apk"><span class="math inline">\(a(p^k)\)</span></a></li>
+  </ul></li>
+  <li><a href="#dirichlet-generating-function" id="toc-dirichlet-generating-function" class="nav-link" data-scroll-target="#dirichlet-generating-function">Dirichlet Generating Function</a></li>
+  <li><a href="#counting-the-number-of-abelian-groups" id="toc-counting-the-number-of-abelian-groups" class="nav-link" data-scroll-target="#counting-the-number-of-abelian-groups">Counting the number of abelian groups</a>
+  <ul class="collapse">
+  <li><a href="#modified-integral" id="toc-modified-integral" class="nav-link" data-scroll-target="#modified-integral">Modified Integral</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Counting the number of abelian groups</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">group-theory</div>
+    <div class="quarto-category">zeta-function</div>
+    <div class="quarto-category">asymptotics</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    An asymptotic formula for the number of abelian groups
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Srinivas Vasudevan </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 7, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>As an undergraduate, I got exposed to group theory and notably the classification of finite abelian groups <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. I have recently thought about how to count asymptotically the number of these groups up to isomorphism. It turns out this problem was originally solved by Erdos and Szekeres<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, and we’’ll try to summarize their argument here.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;And more generally the classification of finitely generated abelian groups.</p></div><div id="fn2"><p><sup>2</sup>&nbsp;See <a href="https://www.renyi.hu/~p_erdos/1934-05.pdf">here</a> for their solution.</p></div></div><section id="review-whirlwind-group-theory" class="level2">
+<h2 class="anchored" data-anchor-id="review-whirlwind-group-theory">Review: Whirlwind Group Theory</h2>
+<p>First, recall a group <span class="math inline">\(G\)</span> is a set equipped with an operation <span class="math inline">\(*\)</span>, satisfying the following axioms:</p>
+<ol type="1">
+<li>Closure: <span class="math inline">\(a * b \in G,\, \forall a, b \in G\)</span></li>
+<li>Associativity: <span class="math inline">\((a * b) * c = a * (b * c),\, \forall a, b, c \in G\)</span></li>
+<li>Identity: <span class="math inline">\(\exists e \in G,\, \text{s.t.}\, \forall a \in G,\, e * a = a * e = a\)</span></li>
+<li>Inverse: <span class="math inline">\(\forall a \in G,\, \exists a^{-1} \in G,\, \text{s.t.} \,a^{-1} * a = a * a^{-1} = e\)</span></li>
+</ol>
+<p>A commutative group satisfies the following additional axiom</p>
+<ol start="5" type="1">
+<li>Commutativity: <span class="math inline">\(a * b = b * a,\, \forall a, b \in G\)</span>.</li>
+</ol>
+<p>Since a group is a set <span class="math inline">\(G\)</span>, we can look at the cardinality of the set <span class="math inline">\(|G|\)</span>. A finite group is one where <span class="math inline">\(|G| &lt; \infty\)</span> and the order of a group is simply this number <span class="math inline">\(ord(G) = |G|\)</span>.</p>
+<p>What we are interested in is how many finite abelian groups up to <em>isomorphism</em> have order <span class="math inline">\(n\)</span>. We’ll call this <span class="math inline">\(a(n)\)</span>. <a href="#fig-abelian-groups-n" class="quarto-xref">Figure&nbsp;1</a> plots <span class="math inline">\(a(n)\)</span> for orders 1 to 10000.</p>
+<p>We can see that the number varies a lot, and unclear if it even grows. In particular if <span class="math inline">\(ord(G) = p\)</span> for a prime <span class="math inline">\(p\)</span>, there is only one group of that order, <span class="math inline">\(\mathbb{Z}/p\mathbb{Z}\)</span> the cyclic group of order <span class="math inline">\(p\)</span>. That is, <span class="math inline">\(a(p) = 1\)</span> for all primes <span class="math inline">\(p\)</span>, so it dips to 1 infinitely often.</p>
+<p>What we might care about instead is a smoothed version of this <span class="math inline">\(\frac{1}{x}\sum_{n \le x} a(n)\)</span>, which represents the average value of <span class="math inline">\(a(n)\)</span>. <a href="#fig-abelian-groups-n" class="quarto-xref">Figure&nbsp;1</a> shows that this seems to be grow but asymptote around a little over <span class="math inline">\(2\)</span>. In fact as proven by Erdos and Szekeres we’ll have</p>
+<p><span class="math display">\[\sum_{n \le x} a(n) \sim \prod_{k=2}^\infty \zeta(k) x\]</span></p>
+<p>Where <span class="math inline">\(\zeta\)</span> is the Riemann Zeta function. This constant in front is roughly <span class="math inline">\(2.29\)</span>, and is represented by the blue line in the plot.</p>
+<div id="cell-fig-abelian-groups-n" class="cell" data-fig-height="1" data-fig-width="1" data-layout-ncols="2" data-message="false" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div id="fig-abelian-groups-n" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-abelian-groups-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_abelian_groups_files/figure-html/fig-abelian-groups-n-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Number of abelian groups of order N."><img src="counting_abelian_groups_files/figure-html/fig-abelian-groups-n-output-1.png" width="731" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-abelian-groups-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Number of abelian groups of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Number of Abelian Groups of order N</p>
+</div>
+</section>
+<section id="structure-of-an." class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="structure-of-an.">Structure of <span class="math inline">\(a(n)\)</span>.</h2>
+<p>The fundamental theorem of finite abelian groups says that every finite abelian group can be written in the form <span class="math inline">\(\mathbb{Z}/p_1^{k_1}\mathbb{Z} \times \mathbb{Z}/p_2^{k_2}\mathbb{Z} \times \mathbb{Z}/p_3^{k_3}\mathbb{Z} \ldots \mathbb{Z}/p_n^{k_n}\mathbb{Z}\)</span> where <span class="math inline">\(p_i\)</span> are primes, not necessarily distinct, and <span class="math inline">\(k_i \in \mathbb{N}\)</span>. <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;In fact each <span class="math inline">\(p_i\)</span> must appear in the prime factorization of <span class="math inline">\(ord(G)\)</span>.</p></div></div><p>Recall that a finite <span class="math inline">\(p\)</span>-group is which has prime power order <span class="math inline">\(ord(G) = p^k\)</span> for some prime <span class="math inline">\(p\)</span>, and natural number <span class="math inline">\(k\)</span>.</p>
+<p>We can group the factors into <span class="math inline">\(P_1, \ldots P_m\)</span>, where <span class="math inline">\(P_i\)</span> is a product of factors containing the same prime. That is, every finite abelian group can be written as <span class="math inline">\(P_1 \times P_2 \times \ldots P_m\)</span>, where <span class="math inline">\(P_i\)</span> are abelian <span class="math inline">\(q_i\)</span>-groups, with the <span class="math inline">\(q_i\)</span> distinct. The order of such a group <span class="math inline">\(G\)</span> is <span class="math inline">\(ord(G) = ord(P_1)ord(P_2)\ldots ord(P_m)\)</span>.</p>
+<p>This is suggestive that if we are looking at <span class="math inline">\(a(n)\)</span>, we should look at the prime factorization of <span class="math inline">\(n = p_1^{k_1}p_2^{k_2}\ldots p_m^{k_m}\)</span>. For any abelian group of order <span class="math inline">\(n\)</span> it will have factors <span class="math inline">\(P_1 \times P_2 \ldots \times P_m\)</span>, where <span class="math inline">\(P_i\)</span> is a <span class="math inline">\(p_i\)</span>-group of order <span class="math inline">\(p_i^{k_i}\)</span>. Then, we will have <span class="math inline">\(a(n) = a(p_1^{k_1})a(p_2^{k_2})\ldots a(p_m^{k_m})\)</span>. In other words <span class="math inline">\(a(n)\)</span> is a multiplicative function!</p>
+<section id="apk" class="level3">
+<h3 class="anchored" data-anchor-id="apk"><span class="math inline">\(a(p^k)\)</span></h3>
+<p>Now, given a prime <span class="math inline">\(p\)</span>, we want to count the number of abelian groups of order <span class="math inline">\(p^k\)</span>, for some <span class="math inline">\(k \in \mathbb{N}\)</span>. We can enumerate a few cases to see a pattern.</p>
+<p>For <span class="math inline">\(k = 1\)</span>, we have only one group, since <span class="math inline">\(\mathbb{Z}/p\mathbb{Z}\)</span> is simple. <span class="math inline">\(a(p) = 1\)</span></p>
+<p>For <span class="math inline">\(k = 2\)</span> we have two groups: <span class="math inline">\(\mathbb{Z}/p^2\mathbb{Z}\)</span> and <span class="math inline">\(\mathbb{Z}/p\mathbb{Z} \times \mathbb{Z} / p\mathbb{Z}\)</span>. <span class="math inline">\(a(p^2) = 2\)</span></p>
+<p>For <span class="math inline">\(k = 3\)</span> we have three groups: <span class="math inline">\(\mathbb{Z}/p^3\mathbb{Z}\)</span>, <span class="math inline">\(\mathbb{Z}/p^2\mathbb{Z} \times \mathbb{Z}/p\mathbb{Z}\)</span> and <span class="math inline">\(\mathbb{Z}/p\mathbb{Z} \times \mathbb{Z}/p\mathbb{Z} \times \mathbb{Z}/p\mathbb{Z}\)</span>. <span class="math inline">\(a(p^3) = 3\)</span></p>
+<p>What we’ve done above is take <span class="math inline">\(p^k\)</span> and look at ways to partition <span class="math inline">\(k\)</span>.</p>
+<p>For instance, the 11 partitions of <span class="math inline">\(6\)</span> are:</p>
+<p>1 + 1 + 1 + 1 + 1 + 1</p>
+<p>2 + 1 + 1 + 1 + 1</p>
+<p>2 + 2 + 1 + 1</p>
+<p>3 + 1 + 1 + 1</p>
+<p>2 + 2 + 2</p>
+<p>3 + 2 + 1</p>
+<p>4 + 1 + 1</p>
+<p>3 + 3</p>
+<p>4 + 2</p>
+<p>5 + 1</p>
+<p>6</p>
+<p>We can then arrange factors based of that partition. If we take <span class="math inline">\([3, 2, 1]\)</span>, then we have <span class="math inline">\(\mathbb{Z}/p^3\mathbb{Z} \times \mathbb{Z}/p^2\mathbb{Z} \times \mathbb{Z}/p\mathbb{Z}\)</span>.</p>
+<p>Likewise, given any factorization of the <span class="math inline">\(p\)</span>-group, we can order the factors in descending order and show that forms a partition of <span class="math inline">\(6\)</span>. Thus, <span class="math inline">\(a(p^6) = 11\)</span>, and more generally <span class="math inline">\(a(p^k) = p(k)\)</span> where <span class="math inline">\(p(k)\)</span> is the number of partitions of <span class="math inline">\(k\)</span>.</p>
+</section>
+</section>
+<section id="dirichlet-generating-function" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="dirichlet-generating-function">Dirichlet Generating Function</h2>
+<p>Given that <span class="math inline">\(a(n)\)</span> is a multiplicative function, it’s suggestive to look at <span class="math inline">\(f(s) = \sum_{i=1}^\infty \frac{a(n)}{n^s}\)</span>, at least formally. Since <span class="math inline">\(a(n)\)</span> is multiplicative, it has an Euler product expansion <span class="math inline">\(f(s) = \prod_p \sum_{k=0}^\infty \frac{a(p^k)}{p^{sk}} = \prod_p \sum_{k=0}^\infty \frac{p(k)}{p^{sk}}\)</span>. It can be shown that the products converge for <span class="math inline">\(\Re(s) &gt; 1\)</span>, due to the asymptotics of partition numbers <span class="math inline">\(p(k)\)</span> (which we will skip here).</p>
+<p>Now each inner sum is of the form <span class="math inline">\(\sum_{k=0}^\infty \frac{a(p^k)}{p^{sk}} = \sum_{k=0}^\infty \frac{p(k)}{p^{sk}}\)</span>. Let <span class="math inline">\(x = \frac{1}{p}\)</span>. Then we have the sum <span class="math inline">\(\sum_{k=0}^\infty p(k)x^{sk}\)</span>.</p>
+<p>This is the ordinary generating function for the partition function, which also can be written as <span class="math inline">\(\prod_{k=1}^\infty \frac{1}{1 - x^{sk}}\)</span>. This is valid since <span class="math inline">\(\frac{1}{p} &lt; 1\)</span>.</p>
+<p>Thus we can rewrite <span class="math inline">\(f(n) = \prod_p \prod_{k=1}^\infty \frac{1}{1 - (\frac{1}{p})^{sk}}\)</span>. Applying the Fubini-Tonelli theorem<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> lets us rearrange the product to get <span class="math inline">\(\prod_p \prod_{k=1}^\infty \frac{1}{1 - (\frac{1}{p})^{sk}} = \prod_{k=1}^\infty \prod_p \frac{1}{1 - (\frac{1}{p})^{sk}} = \prod_{k=1}^\infty \zeta(ks)\)</span>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;See <a href="https://en.wikipedia.org/wiki/Fubini%27s_theorem">here</a> for a summary. In general, this will let us change the order of summation / multiplication.</p></div><div id="fn5"><p><sup>5</sup>&nbsp;We omit the proof of this here, but roughly the terms <span class="math inline">\(\zeta(ks) \rightarrow 1\)</span> as <span class="math inline">\(k \rightarrow \infty\)</span>, and in fact this convergence is geometric in nature. We can then show that if we ignore the first few terms, in the strip <span class="math inline">\(\frac{1}{n+1} &lt; \Re(s) &lt; \frac{1}{n}\)</span>, the product converges, and will gives us a meromorphic continuation of the function.</p></div></div><p>Thus the Dirichlet generating function for <span class="math inline">\(a(n)\)</span> is <span class="math inline">\(\prod_{k=1}^\infty \zeta(ks)\)</span>, which converges when <span class="math inline">\(\Re(s) &gt; 1\)</span>. In fact we can meromorphically expand this to <span class="math inline">\(\Re(s) &gt; 0\)</span>, by noting that there are poles at <span class="math inline">\(1, \frac{1}{2}, \frac{1}{3} \ldots \frac{1}{n} \ldots\)</span>, but the product still converges outside of those areas. <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+</section>
+<section id="counting-the-number-of-abelian-groups" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="counting-the-number-of-abelian-groups">Counting the number of abelian groups</h2>
+<p>We’ve buried the lede so far on how we are going to estimate <span class="math inline">\(\sum_{n\le x} a(n)\)</span>. In particular, Perron’s Formula says that if <span class="math inline">\(f(s)\)</span> is the Dirichlet generating function for <span class="math inline">\(a(n)\)</span>, then we have that if <span class="math inline">\(f(s)\)</span> is uniformly convergent for <span class="math inline">\(\Re(s) &gt; \sigma\)</span> for some fixed <span class="math inline">\(\sigma\)</span>, and <span class="math inline">\(c &gt; \sigma\)</span>, then<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;For <span class="math inline">\(x\)</span> an integer, we need to modify the sum so that the last term <span class="math inline">\(a(x)\)</span> is multiplied by <span class="math inline">\(\frac{1}{2}\)</span>. Otherwise the left-hand side is an ordinary sum.</p></div></div><p><span class="math display">\[\sum_{n\le x} a(n) + O(\sum_{n=1}^\infty(\frac{x}{n})^c \frac{a(n)}{T|\log \frac{x}{n}|}) = \frac{1}{2\pi i} \int_{c-iT}^{c+iT} f(s)\frac{x^s}{s}ds\]</span></p>
+<p>That is, if we we compute the line integral of the function <span class="math inline">\(A(s) = f(s)\frac{x^s}{s}\)</span> over the truncated line <span class="math inline">\(\Re(s) = c\)</span>, that should give us what we want plus an error term. <a href="#fig-contour" class="quarto-xref">Figure&nbsp;2</a> shows the contour for <span class="math inline">\(\Re(s) = 2\)</span>.</p>
+<div id="cell-fig-contour" class="cell page-columns page-full" data-fig-height="1" data-fig-width="1" data-message="false" data-execution_count="2">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output cell-output-display">
+<div id="fig-contour" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-contour-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_abelian_groups_files/figure-html/fig-contour-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Contour for Perron’s Formula"><img src="counting_abelian_groups_files/figure-html/fig-contour-output-1.png" width="304" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-contour-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Contour for Perron’s Formula
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>Let’s bound the error term.</p>
+<p>When <span class="math inline">\(n &lt; 0.9x\)</span> or <span class="math inline">\(n &gt; 1.1x\)</span> we have that</p>
+<p><span class="math inline">\(O(\sum (\frac{x}{n})^c \frac{a(n)}{T|\log \frac{x}{n}|}) = O(\frac{x^c}{T}\sum \frac{a(n)}{n^c}) = O(\frac{x^c\prod_{k=1}^\infty \zeta(kc)}{T}) = O(\frac{x\log x}{T})\)</span>.</p>
+<p>The latter equality is a combination of three steps. We first fix <span class="math inline">\(c = 1 + \frac{1}{\log x}\)</span> which gives us the linear power in <span class="math inline">\(x\)</span>. Also, noting that <span class="math inline">\(\prod_{k=2}^\infty \zeta(kc)\)</span> is bounded, we only need to consider the <span class="math inline">\(\zeta(c)\)</span> term. As <span class="math inline">\(\zeta(c) = O(\frac{1}{|c - 1|})\)</span>, for <span class="math inline">\(c\)</span> approaching 1, the rest follows.</p>
+<p>For <span class="math inline">\(0.9x \le n \le 1.1x\)</span>, <span class="math inline">\(O(\sum_{0.9x \le n \le 1.1x} (\frac{x}{n})^c \frac{a(n)}{T|\log \frac{x}{n}|}) = O(\sum_{0.9x \le n \le 1.1x} \frac{a(n)}{T|\log \frac{x}{n}|})\)</span>.</p>
+<p>We’ll assume now that <span class="math inline">\(x = \lfloor x \rfloor + \frac{1}{2}\)</span>. That is, <span class="math inline">\(x\)</span> is a half integer. Then, <span class="math inline">\(\frac{1}{|\log \frac{x}{n}|} = O(|\frac{x}{n - x - \frac{1}{2}}|)\)</span>, since <span class="math inline">\(n\)</span> is close to <span class="math inline">\(x\)</span>.</p>
+<p>If <span class="math inline">\(k = n - x\)</span>, we have our error bounded by <span class="math inline">\(O(\frac{x}{T}\sum_{|k| \le 0.1 x} \frac{1}{|k - \frac{1}{2}|}) = O(\frac{x\log x}{T})\)</span> <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;The latter inequality comes from the fact that the Harmonic numbers grow like <span class="math inline">\(\log x\)</span>.</p></div></div><section id="modified-integral" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="modified-integral">Modified Integral</h3>
+<p>We’ll modify the main integral by relating it to a shifted integral on the left hand size of the pole at 1.</p>
+<p>Let <span class="math inline">\(c = 1 + \frac{1}{\log x}, \frac{1}{2} &lt; \delta &lt; 1\)</span>. Let <span class="math inline">\(A = \prod_{k=2}^\infty \zeta(k)\)</span>, and consider the contour in <a href="#fig-contour-modified" class="quarto-xref">Figure&nbsp;3</a>, where we are integrating over it in the counterclockwise direction.</p>
+<div id="cell-fig-contour-modified" class="cell page-columns page-full" data-fig-height="1" data-fig-width="1" data-message="false" data-execution_count="3">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output cell-output-display">
+<div id="fig-contour-modified" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-contour-modified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_abelian_groups_files/figure-html/fig-contour-modified-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Modified Contour"><img src="counting_abelian_groups_files/figure-html/fig-contour-modified-output-1.png" width="299" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-contour-modified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Modified Contour
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>This contour <span class="math inline">\(B\)</span> is now a box around the pole <span class="math inline">\(1\)</span>. <span class="math inline">\(C_1\)</span> corresponds to our original contour (of length <span class="math inline">\(2T\)</span>) while <span class="math inline">\(C_3\)</span>, is a shifted version.</p>
+<p>We have the sides of the box parameterized as:</p>
+<p><span class="math inline">\(C_1 = \{s | \Re(s) = c, -T \le \Im(s) \le T\}\)</span></p>
+<p><span class="math inline">\(C_2 = \{s | \Im(s) = -T, \delta \le \Re(s) \le c\}\)</span></p>
+<p><span class="math inline">\(C_3 = \{s | \Re(s) = \delta, -T \le \Im(s) \le T\}\)</span></p>
+<p><span class="math inline">\(C_4 = \{s | \Im(s) = T, \delta \le \Re(s) \le c\}\)</span></p>
+<p>Since <span class="math inline">\(\delta &gt; \frac{1}{2}\)</span>, the box does not have any poles on its path, and only contains one pole inside. We have by the residue theorem, the value of this new contour is <span class="math inline">\(\frac{1}{2\pi i}\int_B f(s)\frac{x^s}{s} ds = Res_{s=1} f(s)\frac{x^s}{s} = \prod_{k=2}^\infty \zeta(k) x = Ax\)</span></p>
+<p>Thus, breaking apart <span class="math inline">\(B\)</span> into its constituent integrals, we get that <span class="math inline">\(Ax = \sum_{n\le x}a(n) + O(\frac{x\log x}{T}) + \int_{C_2 \cup C_3 \cup C_4} f(s)\frac{x^s}{s} ds\)</span>.</p>
+<p>We will now bound the contours <span class="math inline">\(C_2, C_3, C_4\)</span>.</p>
+<p>For <span class="math inline">\(C_2\)</span>, we can bound <span class="math inline">\(|f(s)|\)</span> by <span class="math inline">\(B|\zeta(s)|\)</span> where <span class="math inline">\(B = \prod_{k=2}^\infty \zeta(k\delta)\)</span>. This is due to the monotonicity of <span class="math inline">\(\zeta(s)\)</span> for <span class="math inline">\(s &gt; 1\)</span>, and that since <span class="math inline">\(\delta &gt; \frac{1}{2}\)</span>, <span class="math inline">\(k\delta &gt; 1, \, \forall k \ge 2\)</span>.</p>
+<p>It is also known that <span class="math inline">\(|\zeta(s)| = O((1 + |\Im(s)|)^{1 - \Re(s)}\log(1 + \Im(s))\)</span>, for <span class="math inline">\(\Im(s) &gt; 2, \Re(s) &gt; 0\)</span>.</p>
+<p>Thus, for <span class="math inline">\(C_2\)</span> we have the bound <span class="math inline">\(|\int_{C_2} f(s)\frac{x^s}{s} ds| = O(\int_\delta^c |\zeta(s + iT)||\frac{x^{s + iT}}{s + iT}| ds) = O(\int_\delta^c \frac{x^s(1 + T)^{1 - s} \log T}{T}  ds) = O(\frac{x\log x}{T} + \frac{x^\delta T^{1-\delta}\log T}{T})\)</span> This same bound holds for <span class="math inline">\(C_4\)</span> by a similar argument.</p>
+<p>For <span class="math inline">\(C_3\)</span> we have <span class="math inline">\(|\int_{C_3} f(s)\frac{x^s}{s} ds| = O(\int_{-T}^T|\zeta(\delta + iT)\frac{x^{\delta}}{\delta + it}| dt) = O(\int_{-T}^T(1 + |t|)^{1 - \delta}\frac{x^\delta}{1 + |t|}\log T dt) = O(x^\delta T^{1 - \delta}\log T)\)</span></p>
+<p>Thus we have <span class="math inline">\(Ax = \sum_{n \le x} a(n) + O(\frac{x\log x}{T}) + O(\frac{x\log x}{T} + \frac{x^\delta T^{1-\delta}\log T}{T}) + O(x^\delta T^{1 - \delta}\log T)\)</span></p>
+<p>Let <span class="math inline">\(\delta = \frac{1}{2} + \epsilon\)</span>, for <span class="math inline">\(\epsilon &gt; 0\)</span>. Let <span class="math inline">\(T = \sqrt{x}\)</span>. Then we have the errors are of the form</p>
+<p><span class="math inline">\(O(\sqrt{x}\log x) + O(\sqrt{x} \log x + x^{\frac{1}{4} - \epsilon}\log x) + O(x^{\frac{1}{2} + \epsilon} x^{\frac{1}{4} - \frac{\epsilon}{2}}\log x) = O(x^{\frac{3}{4} + \epsilon})\)</span>.</p>
+<p>The error is sublinear, and we are done.</p>
+<p>More careful treatment can reduce this error down to <span class="math inline">\(O(\sqrt{x})\)</span>. In fact<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> we have</p>
+<div class="no-row-height column-margin column-container"><div id="fn8"><p><sup>8</sup>&nbsp;See <a href="http://matwbn.icm.edu.pl/ksiazki/aa/aa59/aa5935.pdf">here</a> for a summmary of asymptotics for this problem.</p></div></div><p><span class="math display">\[\sum_{n\le x} a(n) \sim Ax + B\sqrt{x} + Cx^{\frac{1}{3}} + O(x^{\frac{3}{10}}(\log x)^{\frac{9}{10}})\]</span></p>
+<p><span class="math inline">\(A = \prod_{k=1, k \ne 1}^\infty \zeta(k)\)</span></p>
+<p><span class="math inline">\(B = \prod_{k=1, k \ne 2}^\infty \zeta(\frac{k}{2})\)</span></p>
+<p><span class="math inline">\(C = \prod_{k=1, k \ne 3}^\infty \zeta(\frac{k}{3})\)</span></p>
+
+
+</section>
+</section>
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.shoresofinfinity\.net");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

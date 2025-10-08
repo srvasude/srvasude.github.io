@@ -1,0 +1,10 @@
+---
+title: "Syzygy"
+description: "A domino climbing-shedding with stateful must-not-follow."
+image: syzygy.svg
+author: 
+  - "David Karesh"
+  - "Srinivas Vasudevan"
+player_count: 2
+categories: ["climbing", "shedding"]
+---
