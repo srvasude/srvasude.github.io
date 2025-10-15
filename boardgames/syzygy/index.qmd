@@ -1,5 +1,6 @@
 ---
 title: "Syzygy"
+link: https://boardgamegeek.com/boardgame/455436/syzygy
 description: "A domino climbing-shedding with stateful must-not-follow."
 image: syzygy.svg
 author: 

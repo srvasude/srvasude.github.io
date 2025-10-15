@@ -1,10 +1,13 @@
 [
   {
-    "listing": "/blog.html",
+    "listing": "/boardgames/index.html",
     "items": [
-      "/posts/counting_abelian_groups/counting_abelian_groups.html",
-      "/posts/games_as_graphs_i/games_as_graphs_i.html",
-      "/posts/trapezoid_mc/quad_mc.html"
+      "/boardgames/bitesize/index.html",
+      "/boardgames/carvers_park/index.html",
+      "/boardgames/lepidoptery/index.html",
+      "/boardgames/pikel/index.html",
+      "/boardgames/syzygy/index.html",
+      "/boardgames/zipper/index.html"
     ]
   },
   {
@@ -21,14 +24,12 @@
     ]
   },
   {
-    "listing": "/boardgames/index.html",
+    "listing": "/blog.html",
     "items": [
-      "/boardgames/bitesize/index.html",
-      "/boardgames/carvers_park/index.html",
-      "/boardgames/lepidoptery/index.html",
-      "/boardgames/pikel/index.html",
-      "/boardgames/syzygy/index.html",
-      "/boardgames/zipper/index.html"
+      "/posts/counting_rings/counting_rings.html",
+      "/posts/counting_abelian_groups/counting_abelian_groups.html",
+      "/posts/games_as_graphs_i/games_as_graphs_i.html",
+      "/posts/trapezoid_mc/quad_mc.html"
     ]
   }
 ]

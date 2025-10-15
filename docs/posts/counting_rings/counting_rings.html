@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Srinivas Vasudevan">
+<meta name="dcterms.date" content="2025-10-12">
+<meta name="description" content="Several different counting formulas for different kind of rings including semisimple rings">
+
+<title>Counting the number of finite rings – Shores of Infinity</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-4d31542ee010fd73a05ab2d3d4a307b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-bbd5469ccfebc2df91f82586bccf3d39.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/golden_dragon_fractal.png" alt="" class="navbar-logo light-content">
+    <img src="../../images/golden_dragon_fractal.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Shores of Infinity</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../boardgames/index.html"> 
+<span class="menu-text">Board Games</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications/index.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../blog.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#counting-rings" id="toc-counting-rings" class="nav-link" data-scroll-target="#counting-rings">Counting Rings</a>
+  <ul class="collapse">
+  <li><a href="#frac1xsum_n-le-x-fn" id="toc-frac1xsum_n-le-x-fn" class="nav-link" data-scroll-target="#frac1xsum_n-le-x-fn"><span class="math inline">\(\frac{1}{x}\sum_{n \le x} f(n)\)</span></a></li>
+  <li><a href="#frac1xsum_n-le-x-log-fn" id="toc-frac1xsum_n-le-x-log-fn" class="nav-link" data-scroll-target="#frac1xsum_n-le-x-log-fn"><span class="math inline">\(\frac{1}{x}\sum_{n \le x} \log f(n)\)</span></a></li>
+  </ul></li>
+  <li><a href="#counting-semisimple-rings" id="toc-counting-semisimple-rings" class="nav-link" data-scroll-target="#counting-semisimple-rings">Counting semisimple rings</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Counting the number of finite rings</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">ring-theory</div>
+    <div class="quarto-category">zeta-function</div>
+    <div class="quarto-category">asymptotics</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Several different counting formulas for different kind of rings including semisimple rings
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Srinivas Vasudevan </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 12, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Inspired by the attempt at <a href="../../posts/counting_abelian_groups/counting_abelian_groups.html">counting abelian groups</a>, we can attempt to look at counting other algebraic structures, this time for rings.</p>
+<p>Our recipe was:</p>
+<ol type="1">
+<li>Write down a multiplicative function for our counting problem.</li>
+<li>Write down and simplify the Dirichlet generating function for said function.</li>
+<li>Use the tools of complex analysis to get asymptotics.</li>
+</ol>
+<p>In general, our counting problems won’t <strong>follow</strong> some of the constraints here, and we’ll have to adapt accordingly.</p>
+<p>For instance, it is nice if a function is multiplicative or completely multiplicative, but not necessary for the Dirichlet generating function. It just could make it easier to find a nice form for the function.</p>
+<p>For 2), we need our counting function <span class="math inline">\(f(n)\)</span> to grow at most polynomially in <span class="math inline">\(n\)</span>. Otherwise, our Dirichlet generating function will not converge anywhere in the complex plane, meaning we can’t use any of our tools. We will have to resort to other counting methods.</p>
+<p>We will look at a few problems on asymptotics on counting rings <span class="math inline">\(R\)</span>, showing how we may have to use other tools for estimation. And then we will look at a problem that is very similar to our abelian group counting problem, using the same tools as before.</p>
+</section>
+<section id="counting-rings" class="level1 page-columns page-full">
+<h1>Counting Rings</h1>
+<p>A ring <span class="math inline">\(R\)</span> is a set <span class="math inline">\(R\)</span> with two operations <span class="math inline">\(\times\)</span> and <span class="math inline">\(+\)</span>, satisfying the following axioms:</p>
+<ul>
+<li><span class="math inline">\(R\)</span> is an abelian group under <span class="math inline">\(+\)</span></li>
+<li><span class="math inline">\(R\)</span> is closed under <span class="math inline">\(\times\)</span>, and <span class="math inline">\(\times\)</span> is associative.</li>
+<li><span class="math inline">\(R\)</span> satisfies left and right distributivity:
+<ul>
+<li><span class="math inline">\(a \times (b + c) = (a \times b) + (b \times c), \, \forall a, b, c \in R\)</span></li>
+<li><span class="math inline">\((b + c) \times a = (b \times a) + (c \times a), \, \forall a, b, c \in R\)</span></li>
+</ul></li>
+</ul>
+<p>If <span class="math inline">\(R\)</span> contains a multiplicative identity <span class="math inline">\(1\)</span>, then this is a ring with unity. Likewise, if <span class="math inline">\(\times\)</span> is commutative, then this is a commutative ring.</p>
+<p>Let <span class="math inline">\(r(n)\)</span> be the number of rings (not necessarily with identity) with <span class="math inline">\(n\)</span> elements. Let <span class="math inline">\(n = st\)</span> where <span class="math inline">\((s, t) = 1\)</span>, and <span class="math inline">\(R_m = \{x \in R | mx = 0\}\)</span>, where <span class="math inline">\(m\)</span> is a natural numbers. Then <span class="math inline">\(R_m\)</span> is an ideal of our original ring <span class="math inline">\(R\)</span>, and in particular <span class="math inline">\(R_s\)</span> and <span class="math inline">\(R_t\)</span> are both ideals of <span class="math inline">\(R\)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;These are double-sided ideals.</p></div></div><p>Now if <span class="math inline">\(z \in R_s \cap R_t\)</span>, then <span class="math inline">\(sz = tz = 0\)</span>. As <span class="math inline">\((s, t) = 1\)</span>, by Bezout’s theorem we have <span class="math inline">\(as + bt = 1\)</span>, for some <span class="math inline">\(a, b \in \mathbb{Z}\)</span>. Thus <span class="math inline">\(z = 1z = asz + btz = 0\)</span>, so <span class="math inline">\(R_s \cap R_t = \{0\}\)</span>. Finally, if <span class="math inline">\(x \in R\)</span>, <span class="math inline">\(x = (1)x = asx + btx, \, asx \in R_t\)</span> and <span class="math inline">\(btx \in R_s\)</span> (since <span class="math inline">\(n = st\)</span>), so that makes <span class="math inline">\(R = R_s \times R_t\)</span>. Thus, for <span class="math inline">\(n = \prod_{i=1}^m p_i^{k_i}\)</span> we have <span class="math inline">\(R = \prod_{i=1}^m R_{p_i^{k_i}}\)</span>, <span class="math inline">\(|R_{p_i^{k_i}}| = p_i^{k_i}\)</span>.</p>
+<p>If we constrain our ring to be commutative, than <span class="math inline">\(R_s, R_t\)</span> will also inherit commutativity, and so we get an analagous decomposition.</p>
+<p>If our ring has a multiplicative identity <span class="math inline">\(1\)</span>, then <span class="math inline">\(1 = as1 + bt1\)</span>. Note <span class="math inline">\(1^2 = (as1 + bt1)^2 = (as1)^2 + (bt1)^2 = 1\)</span>. Hence <span class="math inline">\((as1)^2 = as1, \, (bt1)^2 = bt1\)</span>. We have then found idempotents <span class="math inline">\(e_1 \in R_s\)</span> and <span class="math inline">\(e_2 \in R_t\)</span> such that <span class="math inline">\(e_i^2 = e_i,\, e_1 e_2 = e_2 e_1 = 0, e_1 + e_2 = 1\)</span>.</p>
+<p>Thus if <span class="math inline">\(z \in R_s, z = z(1) = z(e_1 + e_2) = z(e_1)\)</span>, so <span class="math inline">\(e_1\)</span> acts like a right identity in <span class="math inline">\(R_s\)</span>. Likewise, <span class="math inline">\(e_1\)</span> acts like a left identity and <span class="math inline">\(e_2\)</span> is a multiplicative identity in <span class="math inline">\(R_t\)</span>. Thus our factorization reduces down to rings with identity.</p>
+<p>Let <span class="math inline">\(r^*(n)\)</span> be the number of rings with identity, <span class="math inline">\(c(n)\)</span> the number of commutative rings and <span class="math inline">\(c^*(n)\)</span> number of commutative rings with identity.</p>
+<p>Then we have just shown <span class="math inline">\(r, r^*, c, c^*\)</span> are all multiplicative, and so we will need to study <span class="math inline">\(f(p^k)\)</span>.</p>
+<p>In fact we have the following<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;This is due to a result by Blackburn and McLean See <a href="https://arxiv.org/abs/2107.13215">here</a> for details.</p></div></div><table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Asymptotics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(r(p^k)\)</span></td>
+<td><span class="math inline">\(p^{\frac{4}{27}k^3 + O(k^{2.5})}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(r^*(p^k)\)</span></td>
+<td><span class="math inline">\(p^{\frac{4}{27}k^3 + O(k^{2.5})}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c(p^k)\)</span></td>
+<td><span class="math inline">\(p^{\frac{2}{27}k^3 + O(k^{2.5})}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(c^*(p^k)\)</span></td>
+<td><span class="math inline">\(p^{\frac{2}{27}k^3 + O(k^{2.5})}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>We can see some plots for these functions in <a href="#fig-rings-n" class="quarto-xref">Figure&nbsp;1</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;<span class="math inline">\(r(32) &gt; 18500\)</span>, but the actual value isn’t known. The value is listed in the plot, mostly to show how dramatically this function increases at powers of 2.</p></div></div><div id="fig-rings-n" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rings-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-n-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-n-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-n-output-1.png" class="lightbox" data-gallery="fig-rings-n" title="Figure&nbsp;1&nbsp;(a): Number of rings of order N."><img src="counting_rings_files/figure-html/fig-rings-n-output-1.png" data-ref-parent="fig-rings-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-n-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Number of rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-n-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-n-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-n-output-2.png" class="lightbox" data-gallery="fig-rings-n" title="Figure&nbsp;1&nbsp;(b): Number of rings with identity of order N."><img src="counting_rings_files/figure-html/fig-rings-n-output-2.png" data-ref-parent="fig-rings-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-n-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Number of rings with identity of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-n-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-n-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-n-output-3.png" class="lightbox" data-gallery="fig-rings-n" title="Figure&nbsp;1&nbsp;(c): Number of commutative rings of order N."><img src="counting_rings_files/figure-html/fig-rings-n-output-3.png" data-ref-parent="fig-rings-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-n-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Number of commutative rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-n-4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-n-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-n-output-4.png" class="lightbox" data-gallery="fig-rings-n" title="Figure&nbsp;1&nbsp;(d): Number of commutative rings with identity of order N."><img src="counting_rings_files/figure-html/fig-rings-n-output-4.png" data-ref-parent="fig-rings-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-n-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) Number of commutative rings with identity of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rings-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Number of Rings <span class="math inline">\(r(n), r^*(n), c(n), c^*(n)\)</span> plotted
+</figcaption>
+</figure>
+</div>
+<p>One would expect that the number of (commutative) rings (with identity) would grow super-polynomially based on this. Because of this, we can’t analyze the growth rate directly with Dirichlet generating functions since they wouldn’t converge anywhere.</p>
+<p>For simplification, we will look at a multiplicative function <span class="math inline">\(f(p^k) = p^{c k^3}\)</span>, for some <span class="math inline">\(c &gt; 0\)</span>. Understanding the asymptotics of this, will give some understanding of the asymptotics for all these functions.</p>
+<p>We’ll investigate both <span class="math inline">\(\frac{1}{x}\sum_{n \le x} f(n)\)</span> and <span class="math inline">\(\frac{1}{x}\sum_{n \le x} \log f(n)\)</span>.</p>
+<section id="frac1xsum_n-le-x-fn" class="level2">
+<h2 class="anchored" data-anchor-id="frac1xsum_n-le-x-fn"><span class="math inline">\(\frac{1}{x}\sum_{n \le x} f(n)\)</span></h2>
+<p>Looking at <span class="math inline">\(\frac{1}{x}\sum_{n \le x} f(n)\)</span>, we can investigate the size of the largest term. If <span class="math inline">\(n = 2^{\lfloor \log_2 x \rfloor}\)</span>, then <span class="math inline">\(f(n) = 2^{c(\lfloor \log_2 x \rfloor)^3} \le e^{c(\log 2)^{-2}(\log x)^3}\)</span>. For <span class="math inline">\(x\)</span> large enough this should be the largest term.</p>
+<p>This is because if we look at <span class="math inline">\(m^{c(\lfloor \log_m x \rfloor)^3}\)</span>, it can be shown that this is a decreasing function so will be maximized over primes at <span class="math inline">\(m=2\)</span>. We can then show that once we look at composite numbers, for <span class="math inline">\(x\)</span> large enough, as well this function is maximized at a power of <span class="math inline">\(2\)</span> (which is left for the reader).</p>
+<p>This then gives a rough bound for <span class="math inline">\(e^{c(\lfloor \log_2 x \rfloor)^3 - \log x} \le \frac{1}{x}\sum_{n \le x} f(n) \le e^{c(\log 2)^{-2}(\log x)^3}\)</span>, and thus we should have <span class="math inline">\(e^{a(\log x)^3} \le \frac{1}{x}\sum_{n \le x} f(n) \le e^{b(\log x)^3}\)</span>, for some constants <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, showing the super-polynomial / sub-exponential growth.</p>
+</section>
+<section id="frac1xsum_n-le-x-log-fn" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="frac1xsum_n-le-x-log-fn"><span class="math inline">\(\frac{1}{x}\sum_{n \le x} \log f(n)\)</span></h2>
+<div id="fig-rings-log-n" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rings-log-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-log-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-log-n-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-log-n-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-log-n-output-1.png" class="lightbox" data-gallery="fig-rings-log-n" title="Figure&nbsp;2&nbsp;(a): Average of log number of rings of order N."><img src="counting_rings_files/figure-html/fig-rings-log-n-output-1.png" data-ref-parent="fig-rings-log-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-log-n-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Average of log number of rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-log-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-log-n-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-log-n-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-log-n-output-2.png" class="lightbox" data-gallery="fig-rings-log-n" title="Figure&nbsp;2&nbsp;(b): Average of log number of rings with identity of order N."><img src="counting_rings_files/figure-html/fig-rings-log-n-output-2.png" data-ref-parent="fig-rings-log-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-log-n-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Average of log number of rings with identity of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-log-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-log-n-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-log-n-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-log-n-output-3.png" class="lightbox" data-gallery="fig-rings-log-n" title="Figure&nbsp;2&nbsp;(c): Average of log number of commutative rings of order N."><img src="counting_rings_files/figure-html/fig-rings-log-n-output-3.png" data-ref-parent="fig-rings-log-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-log-n-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Average of log number of commutative rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-log-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-log-n-4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-log-n-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-log-n-output-4.png" class="lightbox" data-gallery="fig-rings-log-n" title="Figure&nbsp;2&nbsp;(d): Average of log number of commutative rings with identity of order N."><img src="counting_rings_files/figure-html/fig-rings-log-n-output-4.png" data-ref-parent="fig-rings-log-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-log-n-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) Average of log number of commutative rings with identity of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rings-log-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Average of <span class="math inline">\(\log r(n), \log r^*(n), \log c(n), \log c^*(n)\)</span>
+</figcaption>
+</figure>
+</div>
+<p>We can look at the average of <span class="math inline">\(\log f(n)\)</span>. Because <span class="math inline">\(f(n)\)</span> is so fast growing, most of the terms in the average do not matter, so looking at <span class="math inline">\(\log f(n)\)</span> might give some additional insight. This also means that <span class="math inline">\(f(n)\)</span> acts like a polynomial so we could apply Dirichlet generating functions to this problem. We’ll do this implicitly, by invoking other results in analytic number theory. <a href="#fig-rings-log-n" class="quarto-xref">Figure&nbsp;2</a> shows <span class="math inline">\(\frac{1}{x}\sum_{n \le x} \log f(n)\)</span> computed for our ring counting functions.</p>
+<p>For simplicity, let <span class="math inline">\(c = 1\)</span> (this is a multiplicative constant that we can add in front later). In our case <span class="math inline">\(\log f(p^k) = k^3\log p\)</span>, and so <span class="math inline">\(\sum_{n \le x} \log f(n) = \sum_{n \le x} \sum_{i=1}^m k_i^3 \log p_i\)</span>. We can rearrange the sum by grouping prime powers: <span class="math inline">\(\sum_{p^k \le x} k^3 \log p |\{n \le x |\, p^k || n\}|\)</span> The latter set’s cardinality is equal to <span class="math inline">\(\lfloor \frac{x}{p^k} \rfloor - \lfloor \frac{x}{p^{k+1}} \rfloor\)</span>, which is <span class="math inline">\(x (\frac{1}{p^k} - \frac{1}{p^{k+1}}) + O(1)\)</span>.</p>
+<p>This lets us have <span class="math inline">\(\sum_{p^k \le x} k^3 \log p (x(\frac{1}{p^k} - \frac{1}{p^{k+1}}) + O(1)) = x\sum_{p^k \le x}k^3 \log p \frac{p - 1}{p^{k+1}} + O(\sum_{p^k \le x} k^3 \log p)\)</span></p>
+<p>If we look at the latter sum inside the big-O, we can divide this into:</p>
+<p><span class="math inline">\(\sum_{p \le x} \log p + 2^3\sum_{p^2 \le x} \log p + 3^3 \sum_{p^3 \le x} \log p \ldots\)</span>. The first term is the second chebyshev function <span class="math inline">\(\psi(x)\)</span>. In fact we can write this series as</p>
+<p><span class="math inline">\(\sum_{k=1}^{\lfloor \log_2 x \rfloor} k^3 \psi(x^{\frac{1}{k}})\)</span>. As we have <span class="math inline">\(\psi(x) \sim x\)</span> by the Prime Number Theorem, this series is asympotically <span class="math inline">\(x + O(\sqrt{x}(\log x)^4)\)</span>.</p>
+<p>For the first term we have <span class="math inline">\(x\sum_{p^k \le x} k^3 \log p \frac{p-1}{p^{k+1}}\)</span>.</p>
+<p>We can bound the latter term by an infinite sum <span class="math inline">\(\sum_p \sum_{k=1}^\infty k^3 \log p \frac{p-1}{p^{k+1}} = \sum_p \frac{p-1}{p}\log p\sum_{k=1}^\infty \frac{k^4}{p^{k}}\)</span>.</p>
+<p>One can see that the inner sum is <span class="math inline">\(O(\frac{1}{p^2})\)</span>, and so the total sum will be bounded for some constant <span class="math inline">\(C\)</span> by <span class="math inline">\(C\sum_p \frac{\log p}{p^2}\)</span>, which converges.</p>
+<p>Thus we have <span class="math inline">\(\sum_{n \le x}\log f(n) = Mx + O(x) + O(\sqrt{x}(\log x)^4)\)</span>, so <span class="math inline">\(\frac{1}{x}\sum_{n\le x}\log f(n) = C + O(\frac{(\log x)^4}{\sqrt{x}})\)</span>, for some constant <span class="math inline">\(C\)</span>. In particular, for all our functions we have that <span class="math inline">\(\frac{1}{x}\sum_{n \le x} \log f(n)\)</span> is bounded by some constant<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;This is the best we can do since each of these functions <span class="math inline">\(\log f(n)\)</span> has a <span class="math inline">\(O(k^{2.5}\log p)\)</span> term that we have ignored. As this term can vary, and does contribute linearly in a similar way to the cubic term, we could theoretically produce two constants <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span>, for which the average fluctuates between.</p></div></div></section>
+</section>
+<section id="counting-semisimple-rings" class="level1 page-columns page-full">
+<h1>Counting semisimple rings</h1>
+<p>A semisimple ring <span class="math inline">\(R\)</span> is one which is simple as a left <span class="math inline">\(R\)</span>-module over itself. Let’s call the number of semisimple rings of order <span class="math inline">\(n\)</span>, <span class="math inline">\(r_*(n)\)</span>. <a href="#fig-semisimple-rings" class="quarto-xref">Figure&nbsp;3</a> plots <span class="math inline">\(r_*(n)\)</span> and it’s average.</p>
+<p>Semisimple rings are characterized by the Wedderburn-Artin theorem<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, which says that a semisimple ring is one that is product of matrix algebras over skew fields.</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;See <a href="https://en.wikipedia.org/wiki/Wedderburn%E2%80%93Artin_theorem">here</a> for details.</p></div></div><div id="fig-semisimple-rings" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-semisimple-rings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-semisimple-rings" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-semisimple-rings-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-semisimple-rings-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-semisimple-rings-output-1.png" class="lightbox" data-gallery="fig-semisimple-rings" title="Figure&nbsp;3&nbsp;(a): Number of semisimple rings of order N."><img src="counting_rings_files/figure-html/fig-semisimple-rings-output-1.png" data-ref-parent="fig-semisimple-rings" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-semisimple-rings-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Number of semisimple rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-semisimple-rings" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-semisimple-rings-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-semisimple-rings-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-semisimple-rings-output-2.png" class="lightbox" data-gallery="fig-semisimple-rings" title="Figure&nbsp;3&nbsp;(b): Average number of semisimple rings of order N."><img src="counting_rings_files/figure-html/fig-semisimple-rings-output-2.png" data-ref-parent="fig-semisimple-rings" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-semisimple-rings-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Average number of semisimple rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-semisimple-rings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Semisimple rings of order N.
+</figcaption>
+</figure>
+</div>
+<p>In other words <span class="math inline">\(R = \prod_{i=1}^m M_{n_i \times n_i}(F_i)\)</span>. Because we are dealing with a finite ring <span class="math inline">\(R\)</span>, due to Wedderburn’s Little Theorem<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, we have that <span class="math inline">\(F_i\)</span> are actually all fields, and thus are order <span class="math inline">\(p_i^{r_i}\)</span>. The matrix algebra <span class="math inline">\(M_{n_i \times n_i}(F_i)\)</span> then has the order <span class="math inline">\(p_i^{r_i^2}\)</span>. Let <span class="math inline">\(N_i\)</span> bye the product of all <span class="math inline">\(M_{n_i \times n_i}(F_i)\)</span> that are over fields of the same characteristic <span class="math inline">\(p\)</span>. Thus each factor <span class="math inline">\(N_i\)</span> is a product over matrix rings over fields of different characteristics.</p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;Wedderburn’s Little Theorem states that all finite skew-fields are fields. See <a href="https://en.wikipedia.org/wiki/Wedderburn%27s_little_theorem">here</a> for details.</p></div></div><p>We’ll skip the details here, but this can be leveraged in a very similar way to the abelian group case to show that <span class="math inline">\(r_*(n)\)</span> multiplicative.</p>
+<p>Let’s look at <span class="math inline">\(r_*(p^k)\)</span>. Now <span class="math inline">\(R = \prod_{i=1}^m M_{n_i \times n_i}(F_i)\)</span>. Now all the <span class="math inline">\(F_i\)</span> have to be fields of some prime order <span class="math inline">\(p^{k_i}\)</span>. This gives <span class="math inline">\(|M_{n_i \times n_i}(F_i)| = p^{k_i (n_i)^2}\)</span>, so that <span class="math inline">\(k = \sum_{i=1}^m k_i (n_i)^2\)</span>.</p>
+<p>Again, we can leverage this like the abelian group case to get that <span class="math inline">\(r_*(p^k) = s(k)\)</span>, where <span class="math inline">\(s(k)\)</span> is the number of ways to write <span class="math inline">\(k\)</span> as a sum of ‘weighted’ squares <span class="math inline">\(k_i (n_i)^2\)</span>. For instance, <span class="math inline">\(r_*(p^4) = 5\)</span> because <span class="math inline">\(4\)</span> can be written as</p>
+<p><span class="math inline">\(1^2 + 1^2 + 1^2 + 1^2 \rightarrow M_{1\times 1}(\mathbb{F_p})^4\)</span></p>
+<p><span class="math inline">\((2)1^2 + 1^2 + 1^2 \rightarrow M_{1\times 1}(\mathbb{F_{p^2}}) \times M_{1 \times 1}(\mathbb{F_{p}})^2\)</span></p>
+<p><span class="math inline">\((2)1^2 + (2)1^2 \rightarrow M_{1   \times 1}(\mathbb{F_{p^2}})^2\)</span></p>
+<p><span class="math inline">\((3)1^2 + 1^2 \rightarrow M_{1  \times 1}(\mathbb{F_{p^3}}) \times M_{1 \times 1}(\mathbb{F_{p}})\)</span></p>
+<p><span class="math inline">\((4)1^2 \rightarrow M_{1    \times 1}(\mathbb{F_{p^4}})\)</span></p>
+<p><span class="math inline">\(2^2 \rightarrow M_{2\times 2}(\mathbb{F_{p}})\)</span></p>
+<p>Forming the Dirichlet generating function <span class="math inline">\(f(s) = \sum_{n=1}^\infty \frac{r_*(n)}{n^s}\)</span>, we have the formal Euler product factorization into</p>
+<p><span class="math inline">\(f(s) = \prod_p \sum_{k=1}^\infty \frac{s(k)}{p^{ks}}\)</span>.</p>
+<p>Let <span class="math inline">\(x = \frac{1}{p^s}\)</span>. Then <span class="math inline">\(\sum_{k=1}^\infty s(k)x^k\)</span> is the generating function for <span class="math inline">\(s(k)\)</span>. Now the factor for a square is <span class="math inline">\((1 + x^{k^2} + x^{2k^2} + x^{3k^2} + \ldots x^{nk^2} \ldots) = \frac{1}{1 - x^{k^2}}\)</span>. This means the factor for a weighted square should be <span class="math inline">\(\frac{1}{1 - x^{lk^2}}\)</span>, where <span class="math inline">\(l \ge 1\)</span>.</p>
+<p>Thus we get <span class="math inline">\(\sum_{k=1}^\infty s(k)x^k = \prod_{l=1}^\infty \prod_{k=1}^\infty \frac{1}{1 - x^{lk^2}}\)</span> and so</p>
+<p><span class="math inline">\(f(s) = \prod_p \prod_{l=1}^\infty \prod_{k=1}^\infty \frac{1}{1 - (\frac{1}{p})^{lk^2s}} =\prod_{l=1}^\infty \prod_{k=1}^\infty \prod_p \frac{1}{1 - (\frac{1}{p})^{lk^2s}} = \prod_{l=1}^\infty\prod_{k=1}^\infty \zeta(lk^2s)\)</span><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;We still have to prove absolute convergence, but it can be proven similar to the abelian group case to get convergence for <span class="math inline">\(\Re(s) &gt; 1\)</span>.</p></div><div id="fn8"><p><sup>8</sup>&nbsp;The poles of this function will have a variety of orders. For instance, at <span class="math inline">\(\frac{1}{4}\)</span> we have a pole of order 2, since <span class="math inline">\(\frac{1}{4} = \frac{1}{(1)2^2} = \frac{1}{(4)1^2}\)</span>.</p></div></div><p>Note that there are a lot of poles now. In particular, there is a pole at every <span class="math inline">\(\frac{1}{r^2 m}\)</span>, where <span class="math inline">\(r, m \in \mathbb{N}\)</span>. However, we will still have that the largest pole is simple at <span class="math inline">\(1\)</span>, followed by a simple pole at <span class="math inline">\(\frac{1}{2}\)</span>, which allows us to use a very similar contour as last time.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>Using the box contour from last time, we will get a contribution from the pole at <span class="math inline">\(1\)</span>, which gives a term of the form <span class="math inline">\(A x\)</span>, where <span class="math inline">\(A = \prod_{l=1, k=1, (l, k) \ne (1, 1)}^\infty \zeta(lk^2)\)</span>.</p>
+<p>We won’t go through the analysis here <a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, but proceeding as before will give <span class="math inline">\(\frac{1}{x}\sum_{n \le x} r_*(n) \sim A\)</span>.</p>
+
+
+<div class="no-row-height column-margin column-container"><div id="fn9"><p><sup>9</sup>&nbsp;The analysis is very simiilar to before, but there are more <span class="math inline">\(\zeta\)</span> factors to contend with.</p></div></div></section>
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.shoresofinfinity\.net");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

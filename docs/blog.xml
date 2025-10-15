@@ -10,7 +10,292 @@
 <atom:link href="https://www.shoresofinfinity.net/blog.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.8.24</generator>
-<lastBuildDate>Tue, 07 Oct 2025 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 12 Oct 2025 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Counting the number of finite rings</title>
+  <dc:creator>Srinivas Vasudevan</dc:creator>
+  <link>https://www.shoresofinfinity.net/posts/counting_rings/counting_rings.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Inspired by the attempt at <a href="../../posts/counting_abelian_groups/counting_abelian_groups.html">counting abelian groups</a>, we can attempt to look at counting other algebraic structures, this time for rings.</p>
+<p>Our recipe was:</p>
+<ol type="1">
+<li>Write down a multiplicative function for our counting problem.</li>
+<li>Write down and simplify the Dirichlet generating function for said function.</li>
+<li>Use the tools of complex analysis to get asymptotics.</li>
+</ol>
+<p>In general, our counting problems won’t <strong>follow</strong> some of the constraints here, and we’ll have to adapt accordingly.</p>
+<p>For instance, it is nice if a function is multiplicative or completely multiplicative, but not necessary for the Dirichlet generating function. It just could make it easier to find a nice form for the function.</p>
+<p>For 2), we need our counting function <img src="https://latex.codecogs.com/png.latex?f(n)"> to grow at most polynomially in <img src="https://latex.codecogs.com/png.latex?n">. Otherwise, our Dirichlet generating function will not converge anywhere in the complex plane, meaning we can’t use any of our tools. We will have to resort to other counting methods.</p>
+<p>We will look at a few problems on asymptotics on counting rings <img src="https://latex.codecogs.com/png.latex?R">, showing how we may have to use other tools for estimation. And then we will look at a problem that is very similar to our abelian group counting problem, using the same tools as before.</p>
+</section>
+<section id="counting-rings" class="level1 page-columns page-full">
+<h1>Counting Rings</h1>
+<p>A ring <img src="https://latex.codecogs.com/png.latex?R"> is a set <img src="https://latex.codecogs.com/png.latex?R"> with two operations <img src="https://latex.codecogs.com/png.latex?%5Ctimes"> and <img src="https://latex.codecogs.com/png.latex?+">, satisfying the following axioms:</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?R"> is an abelian group under <img src="https://latex.codecogs.com/png.latex?+"></li>
+<li><img src="https://latex.codecogs.com/png.latex?R"> is closed under <img src="https://latex.codecogs.com/png.latex?%5Ctimes">, and <img src="https://latex.codecogs.com/png.latex?%5Ctimes"> is associative.</li>
+<li><img src="https://latex.codecogs.com/png.latex?R"> satisfies left and right distributivity:
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?a%20%5Ctimes%20(b%20+%20c)%20=%20(a%20%5Ctimes%20b)%20+%20(b%20%5Ctimes%20c),%20%5C,%20%5Cforall%20a,%20b,%20c%20%5Cin%20R"></li>
+<li><img src="https://latex.codecogs.com/png.latex?(b%20+%20c)%20%5Ctimes%20a%20=%20(b%20%5Ctimes%20a)%20+%20(c%20%5Ctimes%20a),%20%5C,%20%5Cforall%20a,%20b,%20c%20%5Cin%20R"></li>
+</ul></li>
+</ul>
+<p>If <img src="https://latex.codecogs.com/png.latex?R"> contains a multiplicative identity <img src="https://latex.codecogs.com/png.latex?1">, then this is a ring with unity. Likewise, if <img src="https://latex.codecogs.com/png.latex?%5Ctimes"> is commutative, then this is a commutative ring.</p>
+<p>Let <img src="https://latex.codecogs.com/png.latex?r(n)"> be the number of rings (not necessarily with identity) with <img src="https://latex.codecogs.com/png.latex?n"> elements. Let <img src="https://latex.codecogs.com/png.latex?n%20=%20st"> where <img src="https://latex.codecogs.com/png.latex?(s,%20t)%20=%201">, and <img src="https://latex.codecogs.com/png.latex?R_m%20=%20%5C%7Bx%20%5Cin%20R%20%7C%20mx%20=%200%5C%7D">, where <img src="https://latex.codecogs.com/png.latex?m"> is a natural numbers. Then <img src="https://latex.codecogs.com/png.latex?R_m"> is an ideal of our original ring <img src="https://latex.codecogs.com/png.latex?R">, and in particular <img src="https://latex.codecogs.com/png.latex?R_s"> and <img src="https://latex.codecogs.com/png.latex?R_t"> are both ideals of <img src="https://latex.codecogs.com/png.latex?R"><sup>1</sup></p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;These are double-sided ideals.</p></div></div><p>Now if <img src="https://latex.codecogs.com/png.latex?z%20%5Cin%20R_s%20%5Ccap%20R_t">, then <img src="https://latex.codecogs.com/png.latex?sz%20=%20tz%20=%200">. As <img src="https://latex.codecogs.com/png.latex?(s,%20t)%20=%201">, by Bezout’s theorem we have <img src="https://latex.codecogs.com/png.latex?as%20+%20bt%20=%201">, for some <img src="https://latex.codecogs.com/png.latex?a,%20b%20%5Cin%20%5Cmathbb%7BZ%7D">. Thus <img src="https://latex.codecogs.com/png.latex?z%20=%201z%20=%20asz%20+%20btz%20=%200">, so <img src="https://latex.codecogs.com/png.latex?R_s%20%5Ccap%20R_t%20=%20%5C%7B0%5C%7D">. Finally, if <img src="https://latex.codecogs.com/png.latex?x%20%5Cin%20R">, <img src="https://latex.codecogs.com/png.latex?x%20=%20(1)x%20=%20asx%20+%20btx,%20%5C,%20asx%20%5Cin%20R_t"> and <img src="https://latex.codecogs.com/png.latex?btx%20%5Cin%20R_s"> (since <img src="https://latex.codecogs.com/png.latex?n%20=%20st">), so that makes <img src="https://latex.codecogs.com/png.latex?R%20=%20R_s%20%5Ctimes%20R_t">. Thus, for <img src="https://latex.codecogs.com/png.latex?n%20=%20%5Cprod_%7Bi=1%7D%5Em%20p_i%5E%7Bk_i%7D"> we have <img src="https://latex.codecogs.com/png.latex?R%20=%20%5Cprod_%7Bi=1%7D%5Em%20R_%7Bp_i%5E%7Bk_i%7D%7D">, <img src="https://latex.codecogs.com/png.latex?%7CR_%7Bp_i%5E%7Bk_i%7D%7D%7C%20=%20p_i%5E%7Bk_i%7D">.</p>
+<p>If we constrain our ring to be commutative, than <img src="https://latex.codecogs.com/png.latex?R_s,%20R_t"> will also inherit commutativity, and so we get an analagous decomposition.</p>
+<p>If our ring has a multiplicative identity <img src="https://latex.codecogs.com/png.latex?1">, then <img src="https://latex.codecogs.com/png.latex?1%20=%20as1%20+%20bt1">. Note <img src="https://latex.codecogs.com/png.latex?1%5E2%20=%20(as1%20+%20bt1)%5E2%20=%20(as1)%5E2%20+%20(bt1)%5E2%20=%201">. Hence <img src="https://latex.codecogs.com/png.latex?(as1)%5E2%20=%20as1,%20%5C,%20(bt1)%5E2%20=%20bt1">. We have then found idempotents <img src="https://latex.codecogs.com/png.latex?e_1%20%5Cin%20R_s"> and <img src="https://latex.codecogs.com/png.latex?e_2%20%5Cin%20R_t"> such that <img src="https://latex.codecogs.com/png.latex?e_i%5E2%20=%20e_i,%5C,%20e_1%20e_2%20=%20e_2%20e_1%20=%200,%20e_1%20+%20e_2%20=%201">.</p>
+<p>Thus if <img src="https://latex.codecogs.com/png.latex?z%20%5Cin%20R_s,%20z%20=%20z(1)%20=%20z(e_1%20+%20e_2)%20=%20z(e_1)">, so <img src="https://latex.codecogs.com/png.latex?e_1"> acts like a right identity in <img src="https://latex.codecogs.com/png.latex?R_s">. Likewise, <img src="https://latex.codecogs.com/png.latex?e_1"> acts like a left identity and <img src="https://latex.codecogs.com/png.latex?e_2"> is a multiplicative identity in <img src="https://latex.codecogs.com/png.latex?R_t">. Thus our factorization reduces down to rings with identity.</p>
+<p>Let <img src="https://latex.codecogs.com/png.latex?r%5E*(n)"> be the number of rings with identity, <img src="https://latex.codecogs.com/png.latex?c(n)"> the number of commutative rings and <img src="https://latex.codecogs.com/png.latex?c%5E*(n)"> number of commutative rings with identity.</p>
+<p>Then we have just shown <img src="https://latex.codecogs.com/png.latex?r,%20r%5E*,%20c,%20c%5E*"> are all multiplicative, and so we will need to study <img src="https://latex.codecogs.com/png.latex?f(p%5Ek)">.</p>
+<p>In fact we have the following<sup>2</sup>:</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;This is due to a result by Blackburn and McLean See <a href="https://arxiv.org/abs/2107.13215">here</a> for details.</p></div></div><table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Asymptotics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?r(p%5Ek)"></td>
+<td><img src="https://latex.codecogs.com/png.latex?p%5E%7B%5Cfrac%7B4%7D%7B27%7Dk%5E3%20+%20O(k%5E%7B2.5%7D)%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?r%5E*(p%5Ek)"></td>
+<td><img src="https://latex.codecogs.com/png.latex?p%5E%7B%5Cfrac%7B4%7D%7B27%7Dk%5E3%20+%20O(k%5E%7B2.5%7D)%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?c(p%5Ek)"></td>
+<td><img src="https://latex.codecogs.com/png.latex?p%5E%7B%5Cfrac%7B2%7D%7B27%7Dk%5E3%20+%20O(k%5E%7B2.5%7D)%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?c%5E*(p%5Ek)"></td>
+<td><img src="https://latex.codecogs.com/png.latex?p%5E%7B%5Cfrac%7B2%7D%7B27%7Dk%5E3%20+%20O(k%5E%7B2.5%7D)%7D"></td>
+</tr>
+</tbody>
+</table>
+<p>We can see some plots for these functions in Figure&nbsp;1<sup>3</sup></p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;<img src="https://latex.codecogs.com/png.latex?r(32)%20%3E%2018500">, but the actual value isn’t known. The value is listed in the plot, mostly to show how dramatically this function increases at powers of 2.</p></div></div><div id="fig-rings-n" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rings-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-n-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-n-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-n-output-1.png" class="lightbox" data-gallery="fig-rings-n" title="Figure&nbsp;1&nbsp;(a): Number of rings of order N."><img src="https://www.shoresofinfinity.net/posts/counting_rings/counting_rings_files/figure-html/fig-rings-n-output-1.png" data-ref-parent="fig-rings-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-n-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Number of rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-n-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-n-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-n-output-2.png" class="lightbox" data-gallery="fig-rings-n" title="Figure&nbsp;1&nbsp;(b): Number of rings with identity of order N."><img src="https://www.shoresofinfinity.net/posts/counting_rings/counting_rings_files/figure-html/fig-rings-n-output-2.png" data-ref-parent="fig-rings-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-n-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Number of rings with identity of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-n-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-n-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-n-output-3.png" class="lightbox" data-gallery="fig-rings-n" title="Figure&nbsp;1&nbsp;(c): Number of commutative rings of order N."><img src="https://www.shoresofinfinity.net/posts/counting_rings/counting_rings_files/figure-html/fig-rings-n-output-3.png" data-ref-parent="fig-rings-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-n-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Number of commutative rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-n-4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-n-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-n-output-4.png" class="lightbox" data-gallery="fig-rings-n" title="Figure&nbsp;1&nbsp;(d): Number of commutative rings with identity of order N."><img src="https://www.shoresofinfinity.net/posts/counting_rings/counting_rings_files/figure-html/fig-rings-n-output-4.png" data-ref-parent="fig-rings-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-n-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) Number of commutative rings with identity of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rings-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Number of Rings <img src="https://latex.codecogs.com/png.latex?r(n),%20r%5E*(n),%20c(n),%20c%5E*(n)"> plotted
+</figcaption>
+</figure>
+</div>
+<p>One would expect that the number of (commutative) rings (with identity) would grow super-polynomially based on this. Because of this, we can’t analyze the growth rate directly with Dirichlet generating functions since they wouldn’t converge anywhere.</p>
+<p>For simplification, we will look at a multiplicative function <img src="https://latex.codecogs.com/png.latex?f(p%5Ek)%20=%20p%5E%7Bc%20k%5E3%7D">, for some <img src="https://latex.codecogs.com/png.latex?c%20%3E%200">. Understanding the asymptotics of this, will give some understanding of the asymptotics for all these functions.</p>
+<p>We’ll investigate both <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20f(n)"> and <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20%5Clog%20f(n)">.</p>
+<section id="frac1xsum_n-le-x-fn" class="level2">
+<h2 class="anchored" data-anchor-id="frac1xsum_n-le-x-fn"><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20f(n)"></h2>
+<p>Looking at <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20f(n)">, we can investigate the size of the largest term. If <img src="https://latex.codecogs.com/png.latex?n%20=%202%5E%7B%5Clfloor%20%5Clog_2%20x%20%5Crfloor%7D">, then <img src="https://latex.codecogs.com/png.latex?f(n)%20=%202%5E%7Bc(%5Clfloor%20%5Clog_2%20x%20%5Crfloor)%5E3%7D%20%5Cle%20e%5E%7Bc(%5Clog%202)%5E%7B-2%7D(%5Clog%20x)%5E3%7D">. For <img src="https://latex.codecogs.com/png.latex?x"> large enough this should be the largest term.</p>
+<p>This is because if we look at <img src="https://latex.codecogs.com/png.latex?m%5E%7Bc(%5Clfloor%20%5Clog_m%20x%20%5Crfloor)%5E3%7D">, it can be shown that this is a decreasing function so will be maximized over primes at <img src="https://latex.codecogs.com/png.latex?m=2">. We can then show that once we look at composite numbers, for <img src="https://latex.codecogs.com/png.latex?x"> large enough, as well this function is maximized at a power of <img src="https://latex.codecogs.com/png.latex?2"> (which is left for the reader).</p>
+<p>This then gives a rough bound for <img src="https://latex.codecogs.com/png.latex?e%5E%7Bc(%5Clfloor%20%5Clog_2%20x%20%5Crfloor)%5E3%20-%20%5Clog%20x%7D%20%5Cle%20%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20f(n)%20%5Cle%20e%5E%7Bc(%5Clog%202)%5E%7B-2%7D(%5Clog%20x)%5E3%7D">, and thus we should have <img src="https://latex.codecogs.com/png.latex?e%5E%7Ba(%5Clog%20x)%5E3%7D%20%5Cle%20%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20f(n)%20%5Cle%20e%5E%7Bb(%5Clog%20x)%5E3%7D">, for some constants <img src="https://latex.codecogs.com/png.latex?a"> and <img src="https://latex.codecogs.com/png.latex?b">, showing the super-polynomial / sub-exponential growth.</p>
+</section>
+<section id="frac1xsum_n-le-x-log-fn" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="frac1xsum_n-le-x-log-fn"><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20%5Clog%20f(n)"></h2>
+<div id="fig-rings-log-n" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rings-log-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-log-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-log-n-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-log-n-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-log-n-output-1.png" class="lightbox" data-gallery="fig-rings-log-n" title="Figure&nbsp;2&nbsp;(a): Average of log number of rings of order N."><img src="https://www.shoresofinfinity.net/posts/counting_rings/counting_rings_files/figure-html/fig-rings-log-n-output-1.png" data-ref-parent="fig-rings-log-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-log-n-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Average of log number of rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-log-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-log-n-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-log-n-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-log-n-output-2.png" class="lightbox" data-gallery="fig-rings-log-n" title="Figure&nbsp;2&nbsp;(b): Average of log number of rings with identity of order N."><img src="https://www.shoresofinfinity.net/posts/counting_rings/counting_rings_files/figure-html/fig-rings-log-n-output-2.png" data-ref-parent="fig-rings-log-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-log-n-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Average of log number of rings with identity of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-log-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-log-n-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-log-n-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-log-n-output-3.png" class="lightbox" data-gallery="fig-rings-log-n" title="Figure&nbsp;2&nbsp;(c): Average of log number of commutative rings of order N."><img src="https://www.shoresofinfinity.net/posts/counting_rings/counting_rings_files/figure-html/fig-rings-log-n-output-3.png" data-ref-parent="fig-rings-log-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-log-n-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Average of log number of commutative rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rings-log-n" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rings-log-n-4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rings-log-n-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-rings-log-n-output-4.png" class="lightbox" data-gallery="fig-rings-log-n" title="Figure&nbsp;2&nbsp;(d): Average of log number of commutative rings with identity of order N."><img src="https://www.shoresofinfinity.net/posts/counting_rings/counting_rings_files/figure-html/fig-rings-log-n-output-4.png" data-ref-parent="fig-rings-log-n" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rings-log-n-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) Average of log number of commutative rings with identity of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rings-log-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Average of <img src="https://latex.codecogs.com/png.latex?%5Clog%20r(n),%20%5Clog%20r%5E*(n),%20%5Clog%20c(n),%20%5Clog%20c%5E*(n)">
+</figcaption>
+</figure>
+</div>
+<p>We can look at the average of <img src="https://latex.codecogs.com/png.latex?%5Clog%20f(n)">. Because <img src="https://latex.codecogs.com/png.latex?f(n)"> is so fast growing, most of the terms in the average do not matter, so looking at <img src="https://latex.codecogs.com/png.latex?%5Clog%20f(n)"> might give some additional insight. This also means that <img src="https://latex.codecogs.com/png.latex?f(n)"> acts like a polynomial so we could apply Dirichlet generating functions to this problem. We’ll do this implicitly, by invoking other results in analytic number theory. Figure&nbsp;2 shows <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20%5Clog%20f(n)"> computed for our ring counting functions.</p>
+<p>For simplicity, let <img src="https://latex.codecogs.com/png.latex?c%20=%201"> (this is a multiplicative constant that we can add in front later). In our case <img src="https://latex.codecogs.com/png.latex?%5Clog%20f(p%5Ek)%20=%20k%5E3%5Clog%20p">, and so <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bn%20%5Cle%20x%7D%20%5Clog%20f(n)%20=%20%5Csum_%7Bn%20%5Cle%20x%7D%20%5Csum_%7Bi=1%7D%5Em%20k_i%5E3%20%5Clog%20p_i">. We can rearrange the sum by grouping prime powers: <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bp%5Ek%20%5Cle%20x%7D%20k%5E3%20%5Clog%20p%20%7C%5C%7Bn%20%5Cle%20x%20%7C%5C,%20p%5Ek%20%7C%7C%20n%5C%7D%7C"> The latter set’s cardinality is equal to <img src="https://latex.codecogs.com/png.latex?%5Clfloor%20%5Cfrac%7Bx%7D%7Bp%5Ek%7D%20%5Crfloor%20-%20%5Clfloor%20%5Cfrac%7Bx%7D%7Bp%5E%7Bk+1%7D%7D%20%5Crfloor">, which is <img src="https://latex.codecogs.com/png.latex?x%20(%5Cfrac%7B1%7D%7Bp%5Ek%7D%20-%20%5Cfrac%7B1%7D%7Bp%5E%7Bk+1%7D%7D)%20+%20O(1)">.</p>
+<p>This lets us have <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bp%5Ek%20%5Cle%20x%7D%20k%5E3%20%5Clog%20p%20(x(%5Cfrac%7B1%7D%7Bp%5Ek%7D%20-%20%5Cfrac%7B1%7D%7Bp%5E%7Bk+1%7D%7D)%20+%20O(1))%20=%20x%5Csum_%7Bp%5Ek%20%5Cle%20x%7Dk%5E3%20%5Clog%20p%20%5Cfrac%7Bp%20-%201%7D%7Bp%5E%7Bk+1%7D%7D%20+%20O(%5Csum_%7Bp%5Ek%20%5Cle%20x%7D%20k%5E3%20%5Clog%20p)"></p>
+<p>If we look at the latter sum inside the big-O, we can divide this into:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bp%20%5Cle%20x%7D%20%5Clog%20p%20+%202%5E3%5Csum_%7Bp%5E2%20%5Cle%20x%7D%20%5Clog%20p%20+%203%5E3%20%5Csum_%7Bp%5E3%20%5Cle%20x%7D%20%5Clog%20p%20%5Cldots">. The first term is the second chebyshev function <img src="https://latex.codecogs.com/png.latex?%5Cpsi(x)">. In fact we can write this series as</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=1%7D%5E%7B%5Clfloor%20%5Clog_2%20x%20%5Crfloor%7D%20k%5E3%20%5Cpsi(x%5E%7B%5Cfrac%7B1%7D%7Bk%7D%7D)">. As we have <img src="https://latex.codecogs.com/png.latex?%5Cpsi(x)%20%5Csim%20x"> by the Prime Number Theorem, this series is asympotically <img src="https://latex.codecogs.com/png.latex?x%20+%20O(%5Csqrt%7Bx%7D(%5Clog%20x)%5E4)">.</p>
+<p>For the first term we have <img src="https://latex.codecogs.com/png.latex?x%5Csum_%7Bp%5Ek%20%5Cle%20x%7D%20k%5E3%20%5Clog%20p%20%5Cfrac%7Bp-1%7D%7Bp%5E%7Bk+1%7D%7D">.</p>
+<p>We can bound the latter term by an infinite sum <img src="https://latex.codecogs.com/png.latex?%5Csum_p%20%5Csum_%7Bk=1%7D%5E%5Cinfty%20k%5E3%20%5Clog%20p%20%5Cfrac%7Bp-1%7D%7Bp%5E%7Bk+1%7D%7D%20=%20%5Csum_p%20%5Cfrac%7Bp-1%7D%7Bp%7D%5Clog%20p%5Csum_%7Bk=1%7D%5E%5Cinfty%20%5Cfrac%7Bk%5E4%7D%7Bp%5E%7Bk%7D%7D">.</p>
+<p>One can see that the inner sum is <img src="https://latex.codecogs.com/png.latex?O(%5Cfrac%7B1%7D%7Bp%5E2%7D)">, and so the total sum will be bounded for some constant <img src="https://latex.codecogs.com/png.latex?C"> by <img src="https://latex.codecogs.com/png.latex?C%5Csum_p%20%5Cfrac%7B%5Clog%20p%7D%7Bp%5E2%7D">, which converges.</p>
+<p>Thus we have <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bn%20%5Cle%20x%7D%5Clog%20f(n)%20=%20Mx%20+%20O(x)%20+%20O(%5Csqrt%7Bx%7D(%5Clog%20x)%5E4)">, so <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%5Cle%20x%7D%5Clog%20f(n)%20=%20C%20+%20O(%5Cfrac%7B(%5Clog%20x)%5E4%7D%7B%5Csqrt%7Bx%7D%7D)">, for some constant <img src="https://latex.codecogs.com/png.latex?C">. In particular, for all our functions we have that <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20%5Clog%20f(n)"> is bounded by some constant<sup>4</sup></p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;This is the best we can do since each of these functions <img src="https://latex.codecogs.com/png.latex?%5Clog%20f(n)"> has a <img src="https://latex.codecogs.com/png.latex?O(k%5E%7B2.5%7D%5Clog%20p)"> term that we have ignored. As this term can vary, and does contribute linearly in a similar way to the cubic term, we could theoretically produce two constants <img src="https://latex.codecogs.com/png.latex?C_1"> and <img src="https://latex.codecogs.com/png.latex?C_2">, for which the average fluctuates between.</p></div></div></section>
+</section>
+<section id="counting-semisimple-rings" class="level1 page-columns page-full">
+<h1>Counting semisimple rings</h1>
+<p>A semisimple ring <img src="https://latex.codecogs.com/png.latex?R"> is one which is simple as a left <img src="https://latex.codecogs.com/png.latex?R">-module over itself. Let’s call the number of semisimple rings of order <img src="https://latex.codecogs.com/png.latex?n">, <img src="https://latex.codecogs.com/png.latex?r_*(n)">. Figure&nbsp;3 plots <img src="https://latex.codecogs.com/png.latex?r_*(n)"> and it’s average.</p>
+<p>Semisimple rings are characterized by the Wedderburn-Artin theorem<sup>5</sup>, which says that a semisimple ring is one that is product of matrix algebras over skew fields.</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;See <a href="https://en.wikipedia.org/wiki/Wedderburn%E2%80%93Artin_theorem">here</a> for details.</p></div></div><div id="fig-semisimple-rings" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-semisimple-rings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-semisimple-rings" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-semisimple-rings-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-semisimple-rings-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-semisimple-rings-output-1.png" class="lightbox" data-gallery="fig-semisimple-rings" title="Figure&nbsp;3&nbsp;(a): Number of semisimple rings of order N."><img src="https://www.shoresofinfinity.net/posts/counting_rings/counting_rings_files/figure-html/fig-semisimple-rings-output-1.png" data-ref-parent="fig-semisimple-rings" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-semisimple-rings-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Number of semisimple rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-semisimple-rings" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-semisimple-rings-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-semisimple-rings-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="counting_rings_files/figure-html/fig-semisimple-rings-output-2.png" class="lightbox" data-gallery="fig-semisimple-rings" title="Figure&nbsp;3&nbsp;(b): Average number of semisimple rings of order N."><img src="https://www.shoresofinfinity.net/posts/counting_rings/counting_rings_files/figure-html/fig-semisimple-rings-output-2.png" data-ref-parent="fig-semisimple-rings" width="443" height="299" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-semisimple-rings-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Average number of semisimple rings of order N.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-semisimple-rings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Semisimple rings of order N.
+</figcaption>
+</figure>
+</div>
+<p>In other words <img src="https://latex.codecogs.com/png.latex?R%20=%20%5Cprod_%7Bi=1%7D%5Em%20M_%7Bn_i%20%5Ctimes%20n_i%7D(F_i)">. Because we are dealing with a finite ring <img src="https://latex.codecogs.com/png.latex?R">, due to Wedderburn’s Little Theorem<sup>6</sup>, we have that <img src="https://latex.codecogs.com/png.latex?F_i"> are actually all fields, and thus are order <img src="https://latex.codecogs.com/png.latex?p_i%5E%7Br_i%7D">. The matrix algebra <img src="https://latex.codecogs.com/png.latex?M_%7Bn_i%20%5Ctimes%20n_i%7D(F_i)"> then has the order <img src="https://latex.codecogs.com/png.latex?p_i%5E%7Br_i%5E2%7D">. Let <img src="https://latex.codecogs.com/png.latex?N_i"> bye the product of all <img src="https://latex.codecogs.com/png.latex?M_%7Bn_i%20%5Ctimes%20n_i%7D(F_i)"> that are over fields of the same characteristic <img src="https://latex.codecogs.com/png.latex?p">. Thus each factor <img src="https://latex.codecogs.com/png.latex?N_i"> is a product over matrix rings over fields of different characteristics.</p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;Wedderburn’s Little Theorem states that all finite skew-fields are fields. See <a href="https://en.wikipedia.org/wiki/Wedderburn%27s_little_theorem">here</a> for details.</p></div></div><p>We’ll skip the details here, but this can be leveraged in a very similar way to the abelian group case to show that <img src="https://latex.codecogs.com/png.latex?r_*(n)"> multiplicative.</p>
+<p>Let’s look at <img src="https://latex.codecogs.com/png.latex?r_*(p%5Ek)">. Now <img src="https://latex.codecogs.com/png.latex?R%20=%20%5Cprod_%7Bi=1%7D%5Em%20M_%7Bn_i%20%5Ctimes%20n_i%7D(F_i)">. Now all the <img src="https://latex.codecogs.com/png.latex?F_i"> have to be fields of some prime order <img src="https://latex.codecogs.com/png.latex?p%5E%7Bk_i%7D">. This gives <img src="https://latex.codecogs.com/png.latex?%7CM_%7Bn_i%20%5Ctimes%20n_i%7D(F_i)%7C%20=%20p%5E%7Bk_i%20(n_i)%5E2%7D">, so that <img src="https://latex.codecogs.com/png.latex?k%20=%20%5Csum_%7Bi=1%7D%5Em%20k_i%20(n_i)%5E2">.</p>
+<p>Again, we can leverage this like the abelian group case to get that <img src="https://latex.codecogs.com/png.latex?r_*(p%5Ek)%20=%20s(k)">, where <img src="https://latex.codecogs.com/png.latex?s(k)"> is the number of ways to write <img src="https://latex.codecogs.com/png.latex?k"> as a sum of ‘weighted’ squares <img src="https://latex.codecogs.com/png.latex?k_i%20(n_i)%5E2">. For instance, <img src="https://latex.codecogs.com/png.latex?r_*(p%5E4)%20=%205"> because <img src="https://latex.codecogs.com/png.latex?4"> can be written as</p>
+<p><img src="https://latex.codecogs.com/png.latex?1%5E2%20+%201%5E2%20+%201%5E2%20+%201%5E2%20%5Crightarrow%20M_%7B1%5Ctimes%201%7D(%5Cmathbb%7BF_p%7D)%5E4"></p>
+<p><img src="https://latex.codecogs.com/png.latex?(2)1%5E2%20+%201%5E2%20+%201%5E2%20%5Crightarrow%20M_%7B1%5Ctimes%201%7D(%5Cmathbb%7BF_%7Bp%5E2%7D%7D)%20%5Ctimes%20M_%7B1%20%5Ctimes%201%7D(%5Cmathbb%7BF_%7Bp%7D%7D)%5E2"></p>
+<p><img src="https://latex.codecogs.com/png.latex?(2)1%5E2%20+%20(2)1%5E2%20%5Crightarrow%20M_%7B1%20%20%20%5Ctimes%201%7D(%5Cmathbb%7BF_%7Bp%5E2%7D%7D)%5E2"></p>
+<p><img src="https://latex.codecogs.com/png.latex?(3)1%5E2%20+%201%5E2%20%5Crightarrow%20M_%7B1%20%20%5Ctimes%201%7D(%5Cmathbb%7BF_%7Bp%5E3%7D%7D)%20%5Ctimes%20M_%7B1%20%5Ctimes%201%7D(%5Cmathbb%7BF_%7Bp%7D%7D)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?(4)1%5E2%20%5Crightarrow%20M_%7B1%20%20%20%20%5Ctimes%201%7D(%5Cmathbb%7BF_%7Bp%5E4%7D%7D)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?2%5E2%20%5Crightarrow%20M_%7B2%5Ctimes%202%7D(%5Cmathbb%7BF_%7Bp%7D%7D)"></p>
+<p>Forming the Dirichlet generating function <img src="https://latex.codecogs.com/png.latex?f(s)%20=%20%5Csum_%7Bn=1%7D%5E%5Cinfty%20%5Cfrac%7Br_*(n)%7D%7Bn%5Es%7D">, we have the formal Euler product factorization into</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(s)%20=%20%5Cprod_p%20%5Csum_%7Bk=1%7D%5E%5Cinfty%20%5Cfrac%7Bs(k)%7D%7Bp%5E%7Bks%7D%7D">.</p>
+<p>Let <img src="https://latex.codecogs.com/png.latex?x%20=%20%5Cfrac%7B1%7D%7Bp%5Es%7D">. Then <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=1%7D%5E%5Cinfty%20s(k)x%5Ek"> is the generating function for <img src="https://latex.codecogs.com/png.latex?s(k)">. Now the factor for a square is <img src="https://latex.codecogs.com/png.latex?(1%20+%20x%5E%7Bk%5E2%7D%20+%20x%5E%7B2k%5E2%7D%20+%20x%5E%7B3k%5E2%7D%20+%20%5Cldots%20x%5E%7Bnk%5E2%7D%20%5Cldots)%20=%20%5Cfrac%7B1%7D%7B1%20-%20x%5E%7Bk%5E2%7D%7D">. This means the factor for a weighted square should be <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B1%20-%20x%5E%7Blk%5E2%7D%7D">, where <img src="https://latex.codecogs.com/png.latex?l%20%5Cge%201">.</p>
+<p>Thus we get <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=1%7D%5E%5Cinfty%20s(k)x%5Ek%20=%20%5Cprod_%7Bl=1%7D%5E%5Cinfty%20%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Cfrac%7B1%7D%7B1%20-%20x%5E%7Blk%5E2%7D%7D"> and so</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(s)%20=%20%5Cprod_p%20%5Cprod_%7Bl=1%7D%5E%5Cinfty%20%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Cfrac%7B1%7D%7B1%20-%20(%5Cfrac%7B1%7D%7Bp%7D)%5E%7Blk%5E2s%7D%7D%20=%5Cprod_%7Bl=1%7D%5E%5Cinfty%20%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Cprod_p%20%5Cfrac%7B1%7D%7B1%20-%20(%5Cfrac%7B1%7D%7Bp%7D)%5E%7Blk%5E2s%7D%7D%20=%20%5Cprod_%7Bl=1%7D%5E%5Cinfty%5Cprod_%7Bk=1%7D%5E%5Cinfty%20%5Czeta(lk%5E2s)"><sup>7</sup></p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;We still have to prove absolute convergence, but it can be proven similar to the abelian group case to get convergence for <img src="https://latex.codecogs.com/png.latex?%5CRe(s)%20%3E%201">.</p></div><div id="fn8"><p><sup>8</sup>&nbsp;The poles of this function will have a variety of orders. For instance, at <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B4%7D"> we have a pole of order 2, since <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B4%7D%20=%20%5Cfrac%7B1%7D%7B(1)2%5E2%7D%20=%20%5Cfrac%7B1%7D%7B(4)1%5E2%7D">.</p></div></div><p>Note that there are a lot of poles now. In particular, there is a pole at every <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Br%5E2%20m%7D">, where <img src="https://latex.codecogs.com/png.latex?r,%20m%20%5Cin%20%5Cmathbb%7BN%7D">. However, we will still have that the largest pole is simple at <img src="https://latex.codecogs.com/png.latex?1">, followed by a simple pole at <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B2%7D">, which allows us to use a very similar contour as last time.<sup>8</sup></p>
+<p>Using the box contour from last time, we will get a contribution from the pole at <img src="https://latex.codecogs.com/png.latex?1">, which gives a term of the form <img src="https://latex.codecogs.com/png.latex?A%20x">, where <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cprod_%7Bl=1,%20k=1,%20(l,%20k)%20%5Cne%20(1,%201)%7D%5E%5Cinfty%20%5Czeta(lk%5E2)">.</p>
+<p>We won’t go through the analysis here <sup>9</sup>, but proceeding as before will give <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bx%7D%5Csum_%7Bn%20%5Cle%20x%7D%20r_*(n)%20%5Csim%20A">.</p>
+
+
+<div class="no-row-height column-margin column-container"><div id="fn9"><p><sup>9</sup>&nbsp;The analysis is very simiilar to before, but there are more <img src="https://latex.codecogs.com/png.latex?%5Czeta"> factors to contend with.</p></div></div></section>
+
+
+ ]]></description>
+  <category>ring-theory</category>
+  <category>zeta-function</category>
+  <category>asymptotics</category>
+  <guid>https://www.shoresofinfinity.net/posts/counting_rings/counting_rings.html</guid>
+  <pubDate>Sun, 12 Oct 2025 07:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Counting the number of abelian groups</title>
   <dc:creator>Srinivas Vasudevan</dc:creator>
@@ -20,8 +305,14 @@
 
 
 
-<p>As an undergraduate, I got exposed to group theory and notably the classification of finite abelian groups <sup>1</sup>. I have recently thought about how to count asymptotically the number of these groups up to isomorphism. It turns out this problem was originally solved by Erdos and Szekeres<sup>2</sup>, and we’’ll try to summarize their argument here.</p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;And more generally the classification of finitely generated abelian groups.</p></div><div id="fn2"><p><sup>2</sup>&nbsp;See <a href="https://www.renyi.hu/~p_erdos/1934-05.pdf">here</a> for their solution.</p></div></div><section id="review-whirlwind-group-theory" class="level2">
+<p>As an undergraduate, I got exposed to group theory and notably the classification of finite abelian groups <sup>1</sup>. I have recently thought about how to count asymptotically the number of these groups up to isomorphism. It turns out this problem was originally solved by Erdos and Szekeres<sup>2</sup>, and we’’ll try to summarize an argument for the first order asymptotics here.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;And more generally the classification of finitely generated abelian groups.</p></div><div id="fn2"><p><sup>2</sup>&nbsp;See <a href="https://www.renyi.hu/~p_erdos/1934-05.pdf">here</a> for their solution.</p></div></div><p>The main ideas of this proof are:</p>
+<ol type="1">
+<li>Establish that the function <img src="https://latex.codecogs.com/png.latex?a(n)"> for the number of abelian groups of order <img src="https://latex.codecogs.com/png.latex?n"> is multiplicative.</li>
+<li>Write down a Dirchlet generating function for <img src="https://latex.codecogs.com/png.latex?a(n)"> and show it has a very nice form.</li>
+<li>Use tools of Complex Analysis (particularly Perron’s formula and the Cauchy residue theorem) to get a first order term.</li>
+</ol>
+<section id="review-whirlwind-group-theory" class="level2">
 <h2 class="anchored" data-anchor-id="review-whirlwind-group-theory">Review: Whirlwind Group Theory</h2>
 <p>First, recall a group <img src="https://latex.codecogs.com/png.latex?G"> is a set equipped with an operation <img src="https://latex.codecogs.com/png.latex?*">, satisfying the following axioms:</p>
 <ol type="1">
@@ -159,6 +450,7 @@ Figure&nbsp;3: Modified Contour
 <p><img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cprod_%7Bk=1,%20k%20%5Cne%201%7D%5E%5Cinfty%20%5Czeta(k)"></p>
 <p><img src="https://latex.codecogs.com/png.latex?B%20=%20%5Cprod_%7Bk=1,%20k%20%5Cne%202%7D%5E%5Cinfty%20%5Czeta(%5Cfrac%7Bk%7D%7B2%7D)"></p>
 <p><img src="https://latex.codecogs.com/png.latex?C%20=%20%5Cprod_%7Bk=1,%20k%20%5Cne%203%7D%5E%5Cinfty%20%5Czeta(%5Cfrac%7Bk%7D%7B3%7D)"></p>
+<p>One can see that the constants <img src="https://latex.codecogs.com/png.latex?B"> and <img src="https://latex.codecogs.com/png.latex?C"> come from evaluating the residue of our integrand at the pole at <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B2%7D"> and at <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B3%7D">. The arguments get harder here with our tools because we will start accumulating more factors of <img src="https://latex.codecogs.com/png.latex?%5Czeta(s)"> in the critical strip, which means we need tighter control of the growth rate of <img src="https://latex.codecogs.com/png.latex?%5Czeta(s)"> in the strip.</p>
 
 
 </section>
@@ -297,7 +589,7 @@ Figure&nbsp;4: In our simplified version we have two types of masters. Player pl
 <li><p>The Journey of the Students: Essentially following the previous rules, with vertices of weight <img src="https://latex.codecogs.com/png.latex?2"> interacting and representing the movement of the students. To get the strength of a village, sum the weights of the nodes in all copies of that vertex (the effect is seen in Figure&nbsp;5 (c)).</p></li>
 </ol>
 <div class="cell" data-fig-height="1" data-fig-width="1" data-layout-nrows="3" data-message="false" data-execution_count="5">
-<div id="fig-bos-actions" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="5" data-fig-height="1" data-layout-nrows="3" data-message="false" data-fig-width="1">
+<div id="fig-bos-actions" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-fig-width="1" data-layout-nrows="3" data-execution_count="5" data-message="false" data-fig-height="1">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bos-actions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display">
@@ -495,45 +787,45 @@ Table&nbsp;1: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_3ba45" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_db879" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_3ba45_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_3ba45_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_3ba45_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_3ba45_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_3ba45_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_3ba45_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_3ba45_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_db879_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_db879_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_db879_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_db879_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_db879_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_db879_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_db879_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_3ba45_row0_col0" class="data row0 col0" style="text-align: left;">0.785398</td>
-<td id="T_3ba45_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_3ba45_row0_col2" class="data row0 col2" style="text-align: left;">0.026491</td>
-<td id="T_3ba45_row0_col3" class="data row0 col3" style="text-align: left;">0.019358</td>
-<td id="T_3ba45_row0_col4" class="data row0 col4" style="text-align: left;">0.008144</td>
-<td id="T_3ba45_row0_col5" class="data row0 col5" style="text-align: left;">0.002608</td>
-<td id="T_3ba45_row0_col6" class="data row0 col6" style="text-align: left;">0.001540</td>
+<td id="T_db879_row0_col0" class="data row0 col0" style="text-align: left;">0.785398</td>
+<td id="T_db879_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_db879_row0_col2" class="data row0 col2" style="text-align: left;">0.026491</td>
+<td id="T_db879_row0_col3" class="data row0 col3" style="text-align: left;">0.019358</td>
+<td id="T_db879_row0_col4" class="data row0 col4" style="text-align: left;">0.008144</td>
+<td id="T_db879_row0_col5" class="data row0 col5" style="text-align: left;">0.002608</td>
+<td id="T_db879_row0_col6" class="data row0 col6" style="text-align: left;">0.001540</td>
 </tr>
 <tr class="even">
-<td id="T_3ba45_row1_col0" class="data row1 col0" style="text-align: left;">0.785398</td>
-<td id="T_3ba45_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_3ba45_row1_col2" class="data row1 col2" style="text-align: left;">0.000393</td>
-<td id="T_3ba45_row1_col3" class="data row1 col3" style="text-align: left;">0.000010</td>
-<td id="T_3ba45_row1_col4" class="data row1 col4" style="text-align: left;">0.000038</td>
-<td id="T_3ba45_row1_col5" class="data row1 col5" style="text-align: left;">0.000009</td>
-<td id="T_3ba45_row1_col6" class="data row1 col6" style="text-align: left;">0.000000</td>
+<td id="T_db879_row1_col0" class="data row1 col0" style="text-align: left;">0.785398</td>
+<td id="T_db879_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_db879_row1_col2" class="data row1 col2" style="text-align: left;">0.000393</td>
+<td id="T_db879_row1_col3" class="data row1 col3" style="text-align: left;">0.000010</td>
+<td id="T_db879_row1_col4" class="data row1 col4" style="text-align: left;">0.000038</td>
+<td id="T_db879_row1_col5" class="data row1 col5" style="text-align: left;">0.000009</td>
+<td id="T_db879_row1_col6" class="data row1 col6" style="text-align: left;">0.000000</td>
 </tr>
 <tr class="odd">
-<td id="T_3ba45_row2_col0" class="data row2 col0" style="text-align: left;">0.785398</td>
-<td id="T_3ba45_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_3ba45_row2_col2" class="data row2 col2" style="text-align: left;">0.000002</td>
-<td id="T_3ba45_row2_col3" class="data row2 col3" style="text-align: left;">0.000010</td>
-<td id="T_3ba45_row2_col4" class="data row2 col4" style="text-align: left;">0.000001</td>
-<td id="T_3ba45_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
-<td id="T_3ba45_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
+<td id="T_db879_row2_col0" class="data row2 col0" style="text-align: left;">0.785398</td>
+<td id="T_db879_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_db879_row2_col2" class="data row2 col2" style="text-align: left;">0.000002</td>
+<td id="T_db879_row2_col3" class="data row2 col3" style="text-align: left;">0.000010</td>
+<td id="T_db879_row2_col4" class="data row2 col4" style="text-align: left;">0.000001</td>
+<td id="T_db879_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
+<td id="T_db879_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
 </tr>
 </tbody>
 </table>
@@ -542,45 +834,45 @@ Table&nbsp;1: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_c1887" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_fef4f" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_c1887_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_c1887_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_c1887_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_c1887_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_c1887_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_c1887_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_c1887_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_fef4f_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_fef4f_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_fef4f_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_fef4f_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_fef4f_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_fef4f_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_fef4f_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_c1887_row0_col0" class="data row0 col0" style="text-align: left;">0.488364</td>
-<td id="T_c1887_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_c1887_row0_col2" class="data row0 col2" style="text-align: left;">0.146778</td>
-<td id="T_c1887_row0_col3" class="data row0 col3" style="text-align: left;">0.003383</td>
-<td id="T_c1887_row0_col4" class="data row0 col4" style="text-align: left;">0.026795</td>
-<td id="T_c1887_row0_col5" class="data row0 col5" style="text-align: left;">0.034787</td>
-<td id="T_c1887_row0_col6" class="data row0 col6" style="text-align: left;">0.009164</td>
+<td id="T_fef4f_row0_col0" class="data row0 col0" style="text-align: left;">0.488364</td>
+<td id="T_fef4f_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_fef4f_row0_col2" class="data row0 col2" style="text-align: left;">0.146778</td>
+<td id="T_fef4f_row0_col3" class="data row0 col3" style="text-align: left;">0.003383</td>
+<td id="T_fef4f_row0_col4" class="data row0 col4" style="text-align: left;">0.026795</td>
+<td id="T_fef4f_row0_col5" class="data row0 col5" style="text-align: left;">0.034787</td>
+<td id="T_fef4f_row0_col6" class="data row0 col6" style="text-align: left;">0.009164</td>
 </tr>
 <tr class="even">
-<td id="T_c1887_row1_col0" class="data row1 col0" style="text-align: left;">0.488364</td>
-<td id="T_c1887_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_c1887_row1_col2" class="data row1 col2" style="text-align: left;">0.005188</td>
-<td id="T_c1887_row1_col3" class="data row1 col3" style="text-align: left;">0.000636</td>
-<td id="T_c1887_row1_col4" class="data row1 col4" style="text-align: left;">0.000118</td>
-<td id="T_c1887_row1_col5" class="data row1 col5" style="text-align: left;">0.000022</td>
-<td id="T_c1887_row1_col6" class="data row1 col6" style="text-align: left;">0.000001</td>
+<td id="T_fef4f_row1_col0" class="data row1 col0" style="text-align: left;">0.488364</td>
+<td id="T_fef4f_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_fef4f_row1_col2" class="data row1 col2" style="text-align: left;">0.005188</td>
+<td id="T_fef4f_row1_col3" class="data row1 col3" style="text-align: left;">0.000636</td>
+<td id="T_fef4f_row1_col4" class="data row1 col4" style="text-align: left;">0.000118</td>
+<td id="T_fef4f_row1_col5" class="data row1 col5" style="text-align: left;">0.000022</td>
+<td id="T_fef4f_row1_col6" class="data row1 col6" style="text-align: left;">0.000001</td>
 </tr>
 <tr class="odd">
-<td id="T_c1887_row2_col0" class="data row2 col0" style="text-align: left;">0.488364</td>
-<td id="T_c1887_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_c1887_row2_col2" class="data row2 col2" style="text-align: left;">0.000131</td>
-<td id="T_c1887_row2_col3" class="data row2 col3" style="text-align: left;">0.000002</td>
-<td id="T_c1887_row2_col4" class="data row2 col4" style="text-align: left;">0.000000</td>
-<td id="T_c1887_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
-<td id="T_c1887_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
+<td id="T_fef4f_row2_col0" class="data row2 col0" style="text-align: left;">0.488364</td>
+<td id="T_fef4f_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_fef4f_row2_col2" class="data row2 col2" style="text-align: left;">0.000131</td>
+<td id="T_fef4f_row2_col3" class="data row2 col3" style="text-align: left;">0.000002</td>
+<td id="T_fef4f_row2_col4" class="data row2 col4" style="text-align: left;">0.000000</td>
+<td id="T_fef4f_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
+<td id="T_fef4f_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
 </tr>
 </tbody>
 </table>
@@ -589,45 +881,45 @@ Table&nbsp;1: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_cd5eb" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_2937e" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_cd5eb_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_cd5eb_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_cd5eb_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_cd5eb_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_cd5eb_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_cd5eb_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_cd5eb_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_2937e_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_2937e_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_2937e_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_2937e_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_2937e_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_2937e_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_2937e_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_cd5eb_row0_col0" class="data row0 col0" style="text-align: left;">0.083333</td>
-<td id="T_cd5eb_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_cd5eb_row0_col2" class="data row0 col2" style="text-align: left;">0.178741</td>
-<td id="T_cd5eb_row0_col3" class="data row0 col3" style="text-align: left;">0.057350</td>
-<td id="T_cd5eb_row0_col4" class="data row0 col4" style="text-align: left;">0.007101</td>
-<td id="T_cd5eb_row0_col5" class="data row0 col5" style="text-align: left;">0.011000</td>
-<td id="T_cd5eb_row0_col6" class="data row0 col6" style="text-align: left;">0.000868</td>
+<td id="T_2937e_row0_col0" class="data row0 col0" style="text-align: left;">0.083333</td>
+<td id="T_2937e_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_2937e_row0_col2" class="data row0 col2" style="text-align: left;">0.178741</td>
+<td id="T_2937e_row0_col3" class="data row0 col3" style="text-align: left;">0.057350</td>
+<td id="T_2937e_row0_col4" class="data row0 col4" style="text-align: left;">0.007101</td>
+<td id="T_2937e_row0_col5" class="data row0 col5" style="text-align: left;">0.011000</td>
+<td id="T_2937e_row0_col6" class="data row0 col6" style="text-align: left;">0.000868</td>
 </tr>
 <tr class="even">
-<td id="T_cd5eb_row1_col0" class="data row1 col0" style="text-align: left;">0.083333</td>
-<td id="T_cd5eb_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_cd5eb_row1_col2" class="data row1 col2" style="text-align: left;">0.011265</td>
-<td id="T_cd5eb_row1_col3" class="data row1 col3" style="text-align: left;">0.001467</td>
-<td id="T_cd5eb_row1_col4" class="data row1 col4" style="text-align: left;">0.000173</td>
-<td id="T_cd5eb_row1_col5" class="data row1 col5" style="text-align: left;">0.000051</td>
-<td id="T_cd5eb_row1_col6" class="data row1 col6" style="text-align: left;">0.000002</td>
+<td id="T_2937e_row1_col0" class="data row1 col0" style="text-align: left;">0.083333</td>
+<td id="T_2937e_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_2937e_row1_col2" class="data row1 col2" style="text-align: left;">0.011265</td>
+<td id="T_2937e_row1_col3" class="data row1 col3" style="text-align: left;">0.001467</td>
+<td id="T_2937e_row1_col4" class="data row1 col4" style="text-align: left;">0.000173</td>
+<td id="T_2937e_row1_col5" class="data row1 col5" style="text-align: left;">0.000051</td>
+<td id="T_2937e_row1_col6" class="data row1 col6" style="text-align: left;">0.000002</td>
 </tr>
 <tr class="odd">
-<td id="T_cd5eb_row2_col0" class="data row2 col0" style="text-align: left;">0.083333</td>
-<td id="T_cd5eb_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_cd5eb_row2_col2" class="data row2 col2" style="text-align: left;">0.004317</td>
-<td id="T_cd5eb_row2_col3" class="data row2 col3" style="text-align: left;">0.000017</td>
-<td id="T_cd5eb_row2_col4" class="data row2 col4" style="text-align: left;">0.000001</td>
-<td id="T_cd5eb_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
-<td id="T_cd5eb_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
+<td id="T_2937e_row2_col0" class="data row2 col0" style="text-align: left;">0.083333</td>
+<td id="T_2937e_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_2937e_row2_col2" class="data row2 col2" style="text-align: left;">0.004317</td>
+<td id="T_2937e_row2_col3" class="data row2 col3" style="text-align: left;">0.000017</td>
+<td id="T_2937e_row2_col4" class="data row2 col4" style="text-align: left;">0.000001</td>
+<td id="T_2937e_row2_col5" class="data row2 col5" style="text-align: left;">0.000000</td>
+<td id="T_2937e_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
 </tr>
 </tbody>
 </table>
@@ -690,45 +982,45 @@ Table&nbsp;2: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_cb585" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_25f33" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_cb585_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_cb585_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_cb585_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_cb585_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_cb585_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_cb585_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_cb585_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_25f33_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_25f33_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_25f33_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_25f33_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_25f33_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_25f33_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_25f33_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_cb585_row0_col0" class="data row0 col0" style="text-align: left;">0.849556</td>
-<td id="T_cb585_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_cb585_row0_col2" class="data row0 col2" style="text-align: left;">0.022431</td>
-<td id="T_cb585_row0_col3" class="data row0 col3" style="text-align: left;">0.015612</td>
-<td id="T_cb585_row0_col4" class="data row0 col4" style="text-align: left;">0.006972</td>
-<td id="T_cb585_row0_col5" class="data row0 col5" style="text-align: left;">0.006267</td>
-<td id="T_cb585_row0_col6" class="data row0 col6" style="text-align: left;">0.003704</td>
+<td id="T_25f33_row0_col0" class="data row0 col0" style="text-align: left;">0.849556</td>
+<td id="T_25f33_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_25f33_row0_col2" class="data row0 col2" style="text-align: left;">0.022431</td>
+<td id="T_25f33_row0_col3" class="data row0 col3" style="text-align: left;">0.015612</td>
+<td id="T_25f33_row0_col4" class="data row0 col4" style="text-align: left;">0.006972</td>
+<td id="T_25f33_row0_col5" class="data row0 col5" style="text-align: left;">0.006267</td>
+<td id="T_25f33_row0_col6" class="data row0 col6" style="text-align: left;">0.003704</td>
 </tr>
 <tr class="even">
-<td id="T_cb585_row1_col0" class="data row1 col0" style="text-align: left;">0.849556</td>
-<td id="T_cb585_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_cb585_row1_col2" class="data row1 col2" style="text-align: left;">0.071244</td>
-<td id="T_cb585_row1_col3" class="data row1 col3" style="text-align: left;">0.004386</td>
-<td id="T_cb585_row1_col4" class="data row1 col4" style="text-align: left;">0.001175</td>
-<td id="T_cb585_row1_col5" class="data row1 col5" style="text-align: left;">0.003429</td>
-<td id="T_cb585_row1_col6" class="data row1 col6" style="text-align: left;">0.000172</td>
+<td id="T_25f33_row1_col0" class="data row1 col0" style="text-align: left;">0.849556</td>
+<td id="T_25f33_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_25f33_row1_col2" class="data row1 col2" style="text-align: left;">0.071244</td>
+<td id="T_25f33_row1_col3" class="data row1 col3" style="text-align: left;">0.004386</td>
+<td id="T_25f33_row1_col4" class="data row1 col4" style="text-align: left;">0.001175</td>
+<td id="T_25f33_row1_col5" class="data row1 col5" style="text-align: left;">0.003429</td>
+<td id="T_25f33_row1_col6" class="data row1 col6" style="text-align: left;">0.000172</td>
 </tr>
 <tr class="odd">
-<td id="T_cb585_row2_col0" class="data row2 col0" style="text-align: left;">0.849556</td>
-<td id="T_cb585_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_cb585_row2_col2" class="data row2 col2" style="text-align: left;">0.021684</td>
-<td id="T_cb585_row2_col3" class="data row2 col3" style="text-align: left;">0.000002</td>
-<td id="T_cb585_row2_col4" class="data row2 col4" style="text-align: left;">0.000070</td>
-<td id="T_cb585_row2_col5" class="data row2 col5" style="text-align: left;">0.000004</td>
-<td id="T_cb585_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
+<td id="T_25f33_row2_col0" class="data row2 col0" style="text-align: left;">0.849556</td>
+<td id="T_25f33_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_25f33_row2_col2" class="data row2 col2" style="text-align: left;">0.021684</td>
+<td id="T_25f33_row2_col3" class="data row2 col3" style="text-align: left;">0.000002</td>
+<td id="T_25f33_row2_col4" class="data row2 col4" style="text-align: left;">0.000070</td>
+<td id="T_25f33_row2_col5" class="data row2 col5" style="text-align: left;">0.000004</td>
+<td id="T_25f33_row2_col6" class="data row2 col6" style="text-align: left;">0.000000</td>
 </tr>
 </tbody>
 </table>
@@ -737,45 +1029,45 @@ Table&nbsp;2: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_43f94" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_20fd7" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_43f94_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_43f94_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_43f94_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_43f94_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_43f94_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_43f94_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_43f94_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_20fd7_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_20fd7_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_20fd7_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_20fd7_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_20fd7_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_20fd7_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_20fd7_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_43f94_row0_col0" class="data row0 col0" style="text-align: left;">0.331193</td>
-<td id="T_43f94_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_43f94_row0_col2" class="data row0 col2" style="text-align: left;">0.047922</td>
-<td id="T_43f94_row0_col3" class="data row0 col3" style="text-align: left;">0.032177</td>
-<td id="T_43f94_row0_col4" class="data row0 col4" style="text-align: left;">0.012697</td>
-<td id="T_43f94_row0_col5" class="data row0 col5" style="text-align: left;">0.005025</td>
-<td id="T_43f94_row0_col6" class="data row0 col6" style="text-align: left;">0.003999</td>
+<td id="T_20fd7_row0_col0" class="data row0 col0" style="text-align: left;">0.331193</td>
+<td id="T_20fd7_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_20fd7_row0_col2" class="data row0 col2" style="text-align: left;">0.047922</td>
+<td id="T_20fd7_row0_col3" class="data row0 col3" style="text-align: left;">0.032177</td>
+<td id="T_20fd7_row0_col4" class="data row0 col4" style="text-align: left;">0.012697</td>
+<td id="T_20fd7_row0_col5" class="data row0 col5" style="text-align: left;">0.005025</td>
+<td id="T_20fd7_row0_col6" class="data row0 col6" style="text-align: left;">0.003999</td>
 </tr>
 <tr class="even">
-<td id="T_43f94_row1_col0" class="data row1 col0" style="text-align: left;">0.331193</td>
-<td id="T_43f94_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_43f94_row1_col2" class="data row1 col2" style="text-align: left;">0.000814</td>
-<td id="T_43f94_row1_col3" class="data row1 col3" style="text-align: left;">0.001131</td>
-<td id="T_43f94_row1_col4" class="data row1 col4" style="text-align: left;">0.005256</td>
-<td id="T_43f94_row1_col5" class="data row1 col5" style="text-align: left;">0.001520</td>
-<td id="T_43f94_row1_col6" class="data row1 col6" style="text-align: left;">0.000146</td>
+<td id="T_20fd7_row1_col0" class="data row1 col0" style="text-align: left;">0.331193</td>
+<td id="T_20fd7_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_20fd7_row1_col2" class="data row1 col2" style="text-align: left;">0.000814</td>
+<td id="T_20fd7_row1_col3" class="data row1 col3" style="text-align: left;">0.001131</td>
+<td id="T_20fd7_row1_col4" class="data row1 col4" style="text-align: left;">0.005256</td>
+<td id="T_20fd7_row1_col5" class="data row1 col5" style="text-align: left;">0.001520</td>
+<td id="T_20fd7_row1_col6" class="data row1 col6" style="text-align: left;">0.000146</td>
 </tr>
 <tr class="odd">
-<td id="T_43f94_row2_col0" class="data row2 col0" style="text-align: left;">0.331193</td>
-<td id="T_43f94_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_43f94_row2_col2" class="data row2 col2" style="text-align: left;">0.011204</td>
-<td id="T_43f94_row2_col3" class="data row2 col3" style="text-align: left;">0.000972</td>
-<td id="T_43f94_row2_col4" class="data row2 col4" style="text-align: left;">0.001880</td>
-<td id="T_43f94_row2_col5" class="data row2 col5" style="text-align: left;">0.001769</td>
-<td id="T_43f94_row2_col6" class="data row2 col6" style="text-align: left;">0.000013</td>
+<td id="T_20fd7_row2_col0" class="data row2 col0" style="text-align: left;">0.331193</td>
+<td id="T_20fd7_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_20fd7_row2_col2" class="data row2 col2" style="text-align: left;">0.011204</td>
+<td id="T_20fd7_row2_col3" class="data row2 col3" style="text-align: left;">0.000972</td>
+<td id="T_20fd7_row2_col4" class="data row2 col4" style="text-align: left;">0.001880</td>
+<td id="T_20fd7_row2_col5" class="data row2 col5" style="text-align: left;">0.001769</td>
+<td id="T_20fd7_row2_col6" class="data row2 col6" style="text-align: left;">0.000013</td>
 </tr>
 </tbody>
 </table>
@@ -784,45 +1076,45 @@ Table&nbsp;2: Absolute Error in estimating the integral of <img src="https://lat
 <style type="text/css">
 </style>
 
-<table id="T_fb595" class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table id="T_dae22" class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_fb595_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
-<th id="T_fb595_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th id="T_fb595_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
-<th id="T_fb595_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
-<th id="T_fb595_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
-<th id="T_fb595_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
-<th id="T_fb595_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
+<th id="T_dae22_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Integral</th>
+<th id="T_dae22_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th id="T_dae22_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">N=10</th>
+<th id="T_dae22_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">N=50</th>
+<th id="T_dae22_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">N=100</th>
+<th id="T_dae22_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">N=200</th>
+<th id="T_dae22_level0_col6" class="col_heading level0 col6" style="text-align: left;" data-quarto-table-cell-role="th">N=1000</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_fb595_row0_col0" class="data row0 col0" style="text-align: left;">-0.085714</td>
-<td id="T_fb595_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
-<td id="T_fb595_row0_col2" class="data row0 col2" style="text-align: left;">0.061996</td>
-<td id="T_fb595_row0_col3" class="data row0 col3" style="text-align: left;">0.014922</td>
-<td id="T_fb595_row0_col4" class="data row0 col4" style="text-align: left;">0.000664</td>
-<td id="T_fb595_row0_col5" class="data row0 col5" style="text-align: left;">0.006580</td>
-<td id="T_fb595_row0_col6" class="data row0 col6" style="text-align: left;">0.001264</td>
+<td id="T_dae22_row0_col0" class="data row0 col0" style="text-align: left;">-0.085714</td>
+<td id="T_dae22_row0_col1" class="data row0 col1" style="text-align: left;">Monte Carlo</td>
+<td id="T_dae22_row0_col2" class="data row0 col2" style="text-align: left;">0.061996</td>
+<td id="T_dae22_row0_col3" class="data row0 col3" style="text-align: left;">0.014922</td>
+<td id="T_dae22_row0_col4" class="data row0 col4" style="text-align: left;">0.000664</td>
+<td id="T_dae22_row0_col5" class="data row0 col5" style="text-align: left;">0.006580</td>
+<td id="T_dae22_row0_col6" class="data row0 col6" style="text-align: left;">0.001264</td>
 </tr>
 <tr class="even">
-<td id="T_fb595_row1_col0" class="data row1 col0" style="text-align: left;">-0.085714</td>
-<td id="T_fb595_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
-<td id="T_fb595_row1_col2" class="data row1 col2" style="text-align: left;">0.009933</td>
-<td id="T_fb595_row1_col3" class="data row1 col3" style="text-align: left;">0.001845</td>
-<td id="T_fb595_row1_col4" class="data row1 col4" style="text-align: left;">0.000278</td>
-<td id="T_fb595_row1_col5" class="data row1 col5" style="text-align: left;">0.000761</td>
-<td id="T_fb595_row1_col6" class="data row1 col6" style="text-align: left;">0.000123</td>
+<td id="T_dae22_row1_col0" class="data row1 col0" style="text-align: left;">-0.085714</td>
+<td id="T_dae22_row1_col1" class="data row1 col1" style="text-align: left;">Trapezoid Rule</td>
+<td id="T_dae22_row1_col2" class="data row1 col2" style="text-align: left;">0.009933</td>
+<td id="T_dae22_row1_col3" class="data row1 col3" style="text-align: left;">0.001845</td>
+<td id="T_dae22_row1_col4" class="data row1 col4" style="text-align: left;">0.000278</td>
+<td id="T_dae22_row1_col5" class="data row1 col5" style="text-align: left;">0.000761</td>
+<td id="T_dae22_row1_col6" class="data row1 col6" style="text-align: left;">0.000123</td>
 </tr>
 <tr class="odd">
-<td id="T_fb595_row2_col0" class="data row2 col0" style="text-align: left;">-0.085714</td>
-<td id="T_fb595_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
-<td id="T_fb595_row2_col2" class="data row2 col2" style="text-align: left;">0.015353</td>
-<td id="T_fb595_row2_col3" class="data row2 col3" style="text-align: left;">0.000206</td>
-<td id="T_fb595_row2_col4" class="data row2 col4" style="text-align: left;">0.001751</td>
-<td id="T_fb595_row2_col5" class="data row2 col5" style="text-align: left;">0.001618</td>
-<td id="T_fb595_row2_col6" class="data row2 col6" style="text-align: left;">0.000059</td>
+<td id="T_dae22_row2_col0" class="data row2 col0" style="text-align: left;">-0.085714</td>
+<td id="T_dae22_row2_col1" class="data row2 col1" style="text-align: left;">Simpson's 1/3 Rule</td>
+<td id="T_dae22_row2_col2" class="data row2 col2" style="text-align: left;">0.015353</td>
+<td id="T_dae22_row2_col3" class="data row2 col3" style="text-align: left;">0.000206</td>
+<td id="T_dae22_row2_col4" class="data row2 col4" style="text-align: left;">0.001751</td>
+<td id="T_dae22_row2_col5" class="data row2 col5" style="text-align: left;">0.001618</td>
+<td id="T_dae22_row2_col6" class="data row2 col6" style="text-align: left;">0.000059</td>
 </tr>
 </tbody>
 </table>

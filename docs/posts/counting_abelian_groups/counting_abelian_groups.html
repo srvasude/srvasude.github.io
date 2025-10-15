@@ -225,8 +225,14 @@ window.Quarto = {
 </header>
 
 
-<p>As an undergraduate, I got exposed to group theory and notably the classification of finite abelian groups <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. I have recently thought about how to count asymptotically the number of these groups up to isomorphism. It turns out this problem was originally solved by Erdos and Szekeres<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, and we’’ll try to summarize their argument here.</p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;And more generally the classification of finitely generated abelian groups.</p></div><div id="fn2"><p><sup>2</sup>&nbsp;See <a href="https://www.renyi.hu/~p_erdos/1934-05.pdf">here</a> for their solution.</p></div></div><section id="review-whirlwind-group-theory" class="level2">
+<p>As an undergraduate, I got exposed to group theory and notably the classification of finite abelian groups <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. I have recently thought about how to count asymptotically the number of these groups up to isomorphism. It turns out this problem was originally solved by Erdos and Szekeres<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, and we’’ll try to summarize an argument for the first order asymptotics here.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;And more generally the classification of finitely generated abelian groups.</p></div><div id="fn2"><p><sup>2</sup>&nbsp;See <a href="https://www.renyi.hu/~p_erdos/1934-05.pdf">here</a> for their solution.</p></div></div><p>The main ideas of this proof are:</p>
+<ol type="1">
+<li>Establish that the function <span class="math inline">\(a(n)\)</span> for the number of abelian groups of order <span class="math inline">\(n\)</span> is multiplicative.</li>
+<li>Write down a Dirchlet generating function for <span class="math inline">\(a(n)\)</span> and show it has a very nice form.</li>
+<li>Use tools of Complex Analysis (particularly Perron’s formula and the Cauchy residue theorem) to get a first order term.</li>
+</ol>
+<section id="review-whirlwind-group-theory" class="level2">
 <h2 class="anchored" data-anchor-id="review-whirlwind-group-theory">Review: Whirlwind Group Theory</h2>
 <p>First, recall a group <span class="math inline">\(G\)</span> is a set equipped with an operation <span class="math inline">\(*\)</span>, satisfying the following axioms:</p>
 <ol type="1">
@@ -364,6 +370,7 @@ Figure&nbsp;3: Modified Contour
 <p><span class="math inline">\(A = \prod_{k=1, k \ne 1}^\infty \zeta(k)\)</span></p>
 <p><span class="math inline">\(B = \prod_{k=1, k \ne 2}^\infty \zeta(\frac{k}{2})\)</span></p>
 <p><span class="math inline">\(C = \prod_{k=1, k \ne 3}^\infty \zeta(\frac{k}{3})\)</span></p>
+<p>One can see that the constants <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> come from evaluating the residue of our integrand at the pole at <span class="math inline">\(\frac{1}{2}\)</span> and at <span class="math inline">\(\frac{1}{3}\)</span>. The arguments get harder here with our tools because we will start accumulating more factors of <span class="math inline">\(\zeta(s)\)</span> in the critical strip, which means we need tighter control of the growth rate of <span class="math inline">\(\zeta(s)\)</span> in the strip.</p>
 
 
 </section>
